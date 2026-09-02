@@ -34,16 +34,16 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto px-4 pt-20 pb-24 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-6">
             <Zap className="w-3.5 h-3.5" />
-            Better than the top affirmation apps
+            Daily affirmations that feel personal
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
-            Daily affirmations
+            Affirmations
             <br />
             <span className="text-primary">in your own voice</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-10 leading-relaxed">
-            The effortless delivery of I Am. The proven power of ThinkUp&apos;s own-voice recording.
-            Plus AI personalization. Built to actually change how you talk to yourself.
+            A calm place to practice positive self-talk. Record affirmations in your voice,
+            explore thoughtful categories, and build a practice that feels like yours.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
@@ -54,10 +54,10 @@ export default function LandingPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
-              href="#why"
+              href="#features"
               className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-muted text-foreground font-medium hover:bg-muted/80 transition-colors"
             >
-              Why it&apos;s better
+              Learn more
             </a>
           </div>
           <p className="mt-4 text-sm text-muted-foreground">
@@ -93,94 +93,47 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Why better */}
-      <section id="why" className="border-t border-border py-20">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
-            Built from the best of the top apps
-          </h2>
-          <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-14">
-            We studied I Am, ThinkUp, Innertune, Selfpause, Gratitude, Mantra and others.
-            Then we took what actually works and removed what doesn&apos;t.
-          </p>
-
-          <div className="grid sm:grid-cols-2 gap-6 mb-16">
-            {[
-              {
-                from: "From I Am",
-                title: "Effortless daily presence",
-                desc: "Beautiful cards and smart reminders so positivity finds you — without needing to open an app every time.",
-              },
-              {
-                from: "From ThinkUp & Selfpause",
-                title: "Your own voice",
-                desc: "Record affirmations and hear them in your voice. Research shows this is significantly more effective than reading someone else’s words.",
-              },
-              {
-                from: "From Innertune",
-                title: "Rich, high-quality library",
-                desc: "Carefully written affirmations across confidence, anxiety, self-love, motivation, gratitude, success and more.",
-              },
-              {
-                from: "From newer AI apps",
-                title: "Personal, not generic",
-                desc: "AI-generated affirmations tailored to your actual goals and situation — not the same recycled lines everyone else gets.",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl border border-border bg-card p-6"
-              >
-                <p className="text-xs font-medium text-primary mb-2">{item.from}</p>
-                <h3 className="font-semibold mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Features */}
-      <section className="border-t border-border py-20 bg-card/30">
+      <section id="features" className="border-t border-border py-20">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
-            Everything you need. Nothing you don’t.
+            Simple tools for a meaningful practice
           </h2>
           <p className="text-muted-foreground text-center max-w-lg mx-auto mb-14">
-            A focused practice tool — not another cluttered wellness app.
+            Designed to help you show up for yourself, one affirmation at a time.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 icon: Mic,
-                title: "Own-voice recording",
-                desc: "Record once, listen anytime. The single most effective way to internalize affirmations.",
+                title: "Your own voice",
+                desc: "Record affirmations and listen back in your voice. A simple way to make the words feel more real.",
               },
               {
                 icon: Brain,
-                title: "AI personalization",
-                desc: "Describe a goal or feeling. Get affirmations written specifically for you.",
+                title: "Personal to you",
+                desc: "Create your own affirmations or get suggestions based on what you’re working on.",
               },
               {
                 icon: Layers,
-                title: "Curated categories",
-                desc: "Confidence, anxiety, self-love, motivation, gratitude, success, relationships and more.",
+                title: "Thoughtful categories",
+                desc: "Confidence, calm, self-love, motivation, gratitude, and more — choose what fits today.",
               },
               {
                 icon: Bell,
-                title: "Smart reminders",
-                desc: "Gentle, controllable notifications that actually help instead of becoming noise.",
+                title: "Gentle reminders",
+                desc: "Optional notifications that support your practice without becoming noise.",
               },
               {
                 icon: Heart,
-                title: "Favorites & custom",
-                desc: "Save what resonates. Write your own. Build a personal library that grows with you.",
+                title: "Your personal library",
+                desc: "Save favorites, write your own, and keep the affirmations that truly resonate.",
               },
               {
                 icon: Shield,
                 title: "Private by design",
-                desc: "Your recordings and personal affirmations stay yours. Clean, respectful product.",
+                desc: "Your recordings and personal affirmations stay yours. A calm, respectful space.",
               },
             ].map((f) => (
               <div
@@ -198,30 +151,30 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Roadmap / Coming soon */}
-      <section className="border-t border-border py-20">
+      {/* Roadmap */}
+      <section className="border-t border-border py-20 bg-card/30">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-6">
             <Smartphone className="w-3.5 h-3.5" />
-            Roadmap
+            What’s next
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">
             Web today. Native apps next.
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-8 max-w-xl mx-auto">
-            The web app is live so you can start practicing and give feedback right away.
-            Native iOS and Android apps are planned next — same powerful core, refined for mobile.
+            The web app is here so you can start practicing and share feedback.
+            Native iOS and Android apps are on the way.
           </p>
           <div className="flex flex-wrap justify-center gap-3 text-sm text-muted-foreground mb-10">
-            <span className="px-3 py-1.5 rounded-full bg-muted">Web app — live</span>
-            <span className="px-3 py-1.5 rounded-full bg-muted">AI personalization — soon</span>
+            <span className="px-3 py-1.5 rounded-full bg-muted">Web app — available</span>
+            <span className="px-3 py-1.5 rounded-full bg-muted">More personalization — soon</span>
             <span className="px-3 py-1.5 rounded-full bg-muted">iOS & Android — planned</span>
           </div>
           <Link
             href="/app"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
           >
-            Try the web app free
+            Try the web app
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -234,7 +187,7 @@ export default function LandingPage() {
             <Sparkles className="w-4 h-4 text-primary" />
             <span>iAffirm</span>
           </div>
-          <p>Built to help you change your self-talk for good.</p>
+          <p>A quiet space for better self-talk.</p>
         </div>
       </footer>
     </div>

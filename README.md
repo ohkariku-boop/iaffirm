@@ -1,41 +1,28 @@
 # iAffirm
 
-Daily affirmations that actually stick — in your own voice.
+A calm place to practice positive self-talk — with affirmations in your own voice.
 
-The effortless delivery of the best widget apps + the proven power of own-voice recording + AI personalization.
-
-**Web app available now · Native iOS & Android planned next.**
+**Web app available now · Native iOS & Android coming soon.**
 
 ## Live Structure
 
 | Path | Purpose |
 |------|---------|
-| `/` | Promotional landing page |
+| `/` | Landing page |
 | `/app` | The iAffirm web application |
 
-## Strategy
+## About
 
-We ship the web version first so people can use it, give feedback, and validate the core experience.  
-Native mobile apps (iOS + Android) come next — same backend, refined mobile experience.
+iAffirm helps you build a simple, personal affirmation practice. Record affirmations in your own voice, explore thoughtful categories, save what resonates, and return to them whenever you need.
 
-The web app also serves as the marketing site and early-access product.
-
-## Why iAffirm
-
-We studied the top affirmation apps (I Am, ThinkUp, Innertune, Selfpause, Gratitude, Mantra, Say After Me, and others) and combined their strongest ideas:
-
-- **From I Am** → Frictionless daily presence and beautiful presentation
-- **From ThinkUp / Selfpause** → Own-voice recording (research-backed as more effective)
-- **From Innertune** → High-quality, categorized library
-- **From newer AI apps** → Personalized affirmations generated for your goals
-- **Plus** → Clean modern design, respectful product, path to native apps
+The web version is available now so people can start using it and share feedback. Native mobile apps are planned next.
 
 ## Stack
 
 - **Frontend**: Next.js 15 (App Router) + TypeScript + Tailwind CSS
 - **Backend**: Supabase (Auth, Postgres, Storage)
 - **Hosting**: Vercel (web)
-- **Future**: Native iOS & Android (React Native / Expo or similar), same Supabase backend
+- **Future**: Native iOS & Android, same Supabase backend
 
 ## Getting Started
 
@@ -66,31 +53,29 @@ npm run dev
 ## Feature Roadmap
 
 ### Now (Web MVP)
-- [x] Beautiful affirmation cards + category filters
+- [x] Affirmation cards + category filters
 - [x] Own-voice recording
-- [x] Curated library (10 categories, 50+ affirmations)
-- [x] Dark, calm UI
-- [x] Promotional landing page
+- [x] Curated library (categories + sample affirmations)
+- [x] Calm, focused UI
+- [x] Landing page
 - [ ] Wire real Supabase data (replace mocks)
 - [ ] Auth (email + social)
-- [ ] Save recordings to Supabase Storage
+- [ ] Save recordings to Storage
 - [ ] Create & edit custom affirmations
 
 ### Next
-- [ ] AI-generated personalized affirmations
-- [ ] Background music / ambient layer for playback
-- [ ] Smart, controllable reminders
-- [ ] Streaks & simple mood check-in
+- [ ] More personalization options
+- [ ] Background audio for playback
+- [ ] Optional reminders
+- [ ] Streaks & simple check-ins
 - [ ] Personal library (favorites + customs + recordings)
 
 ### Later
 - [ ] Native iOS app
 - [ ] Native Android app
-- [ ] Home screen widgets (native)
-- [ ] “Say after me” active practice mode
-- [ ] Light journaling / reflection prompts
-- [ ] Structured rituals (morning / evening)
-- [ ] Apple Watch / companion support
+- [ ] Home screen widgets
+- [ ] Additional practice modes
+- [ ] Light journaling / reflection
 
 ## Project Structure
 
@@ -99,12 +84,12 @@ src/
   app/
     page.tsx          # Landing page
     app/page.tsx      # Main web application
-  components/         # UI components
-  lib/supabase/       # Supabase clients + data helpers
+  components/
+  lib/supabase/
   types/
 supabase/
-  migrations/         # Schema + RLS
-  seed.sql            # Categories + sample affirmations
+  migrations/
+  seed.sql
 ```
 
 ## License
