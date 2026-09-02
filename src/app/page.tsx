@@ -1,191 +1,182 @@
-"use client";
+import Link from "next/link";
+import { Sparkles, Mic, Smartphone, Heart, Zap, Shield, ArrowRight } from "lucide-react";
 
-import { useState, useEffect } from "react";
-import { AffirmationCard } from "@/components/AffirmationCard";
-import { CategoryPills } from "@/components/CategoryPills";
-import { VoiceRecorder } from "@/components/VoiceRecorder";
-import { Sparkles, Plus, User, Bell, Loader2 } from "lucide-react";
-import { getCategories, getAffirmations } from "@/lib/supabase/data";
-import type { Affirmation, Category } from "@/types";
-
-// Fallback mock data if Supabase is not yet seeded
-const MOCK_CATEGORIES: Category[] = [
-  { id: "1", name: "Confidence", slug: "confidence", description: null, icon: "💪", color: "#F59E0B", sort_order: 1 },
-  { id: "2", name: "Self-Love", slug: "self-love", description: null, icon: "❤️", color: "#EC4899", sort_order: 2 },
-  { id: "3", name: "Anxiety Relief", slug: "anxiety", description: null, icon: "🌊", color: "#3B82F6", sort_order: 3 },
-  { id: "4", name: "Motivation", slug: "motivation", description: null, icon: "🔥", color: "#EF4444", sort_order: 4 },
-  { id: "5", name: "Gratitude", slug: "gratitude", description: null, icon: "🙏", color: "#10B981", sort_order: 5 },
-  { id: "6", name: "Success", slug: "success", description: null, icon: "🏆", color: "#8B5CF6", sort_order: 6 },
-];
-
-const MOCK_AFFIRMATIONS: Affirmation[] = [
-  { id: "a1", content: "I am confident in my abilities and trust myself completely.", category_id: "1", is_system: true, language: "en", tags: [], category: MOCK_CATEGORIES[0] },
-  { id: "a2", content: "I am enough exactly as I am right now.", category_id: "2", is_system: true, language: "en", tags: [], category: MOCK_CATEGORIES[1] },
-  { id: "a3", content: "I am safe in this moment. I breathe in calm and exhale tension.", category_id: "3", is_system: true, language: "en", tags: [], category: MOCK_CATEGORIES[2] },
-  { id: "a4", content: "I take consistent action toward my goals every day.", category_id: "4", is_system: true, language: "en", tags: [], category: MOCK_CATEGORIES[3] },
-  { id: "a5", content: "I am grateful for all the abundance already in my life.", category_id: "5", is_system: true, language: "en", tags: [], category: MOCK_CATEGORIES[4] },
-  { id: "a6", content: "I am creating the life I desire with every choice I make.", category_id: "6", is_system: true, language: "en", tags: [], category: MOCK_CATEGORIES[5] },
-  { id: "a7", content: "I speak with clarity and my voice matters.", category_id: "1", is_system: true, language: "en", tags: [], category: MOCK_CATEGORIES[0] },
-  { id: "a8", content: "I treat myself with the same kindness I give others.", category_id: "2", is_system: true, language: "en", tags: [], category: MOCK_CATEGORIES[1] },
-];
-
-export default function HomePage() {
-  const [categories, setCategories] = useState<Category[]>(MOCK_CATEGORIES);
-  const [affirmations, setAffirmations] = useState<Affirmation[]>(MOCK_AFFIRMATIONS);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [showRecorder, setShowRecorder] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [usingMock, setUsingMock] = useState(true);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const [cats, affs] = await Promise.all([
-          getCategories(),
-          getAffirmations(selectedCategory),
-        ]);
-        if (cats.length > 0) {
-          setCategories(cats);
-          setUsingMock(false);
-        }
-        if (affs.length > 0) {
-          setAffirmations(affs);
-          setUsingMock(false);
-        }
-      } catch (e) {
-        console.warn("Using mock data – run the SQL migration + seed in Supabase", e);
-      } finally {
-        setLoading(false);
-      }
-    }
-    load();
-  }, [selectedCategory]);
-
-  const filtered = selectedCategory
-    ? affirmations.filter((a) => a.category?.slug === selectedCategory)
-    : affirmations;
-
-  const current = filtered[currentIndex % (filtered.length || 1)] || filtered[0];
-
-  const nextAffirmation = () => {
-    if (filtered.length) setCurrentIndex((i) => (i + 1) % filtered.length);
-  };
-
-  const handleSaveRecording = async (blob: Blob) => {
-    console.log("Recording saved locally:", blob.size, "bytes");
-    // TODO: upload to Supabase Storage bucket "recordings"
-    setShowRecorder(false);
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
+export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Nav */}
+      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
+        <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-primary" />
             <span className="font-semibold tracking-tight">iAffirm</span>
-            {usingMock && (
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400">
-                MOCK
-              </span>
-            )}
           </div>
-          <div className="flex items-center gap-1">
-            <button className="p-2 rounded-full hover:bg-muted text-muted-foreground">
-              <Bell className="w-5 h-5" />
-            </button>
-            <button className="p-2 rounded-full hover:bg-muted text-muted-foreground">
-              <User className="w-5 h-5" />
-            </button>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/app"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Open App
+            </Link>
+            <Link
+              href="/app"
+              className="px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
+            >
+              Try Free
+            </Link>
           </div>
         </div>
       </header>
 
-      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-6 space-y-6">
-        <CategoryPills
-          categories={categories}
-          selected={selectedCategory}
-          onSelect={setSelectedCategory}
-        />
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-4 pt-20 pb-24 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-6">
+            <Zap className="w-3.5 h-3.5" />
+            Affirmations that actually stick
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
+            Daily affirmations
+            <br />
+            <span className="text-primary">in your own voice</span>
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-10 leading-relaxed">
+            Beautiful, personalized affirmations delivered as a glanceable PWA.
+            Record them in your voice — the way research shows works best.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link
+              href="/app"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-primary text-primary-foreground font-medium flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors"
+            >
+              Launch App
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <a
+              href="#features"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-muted text-foreground font-medium hover:bg-muted/80 transition-colors"
+            >
+              See how it works
+            </a>
+          </div>
 
-        {current && (
-          <div className="space-y-4">
-            <AffirmationCard
-              affirmation={current}
-              large
-              onPractice={() => setShowRecorder(true)}
-            />
-            <div className="flex gap-3">
-              <button
-                onClick={nextAffirmation}
-                className="flex-1 py-3 rounded-2xl bg-muted text-sm font-medium hover:bg-muted/80 transition-colors"
-              >
-                Next affirmation
-              </button>
-              <button
-                onClick={() => setShowRecorder(true)}
-                className="px-5 py-3 rounded-2xl bg-primary text-primary-foreground text-sm font-medium flex items-center gap-2 hover:bg-primary/90 transition-colors"
-              >
-                <Plus className="w-4 h-4" />
-                Record
-              </button>
+          {/* Fake phone preview */}
+          <div className="mt-16 mx-auto max-w-xs">
+            <div className="rounded-[2rem] border border-border bg-card p-3 shadow-2xl shadow-primary/10">
+              <div className="rounded-[1.5rem] bg-background overflow-hidden">
+                <div className="h-8 flex items-center justify-center">
+                  <div className="w-20 h-1 rounded-full bg-muted" />
+                </div>
+                <div className="px-5 pb-8 pt-4 space-y-4">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span className="font-medium">iAffirm</span>
+                  </div>
+                  <div className="rounded-2xl bg-card border border-border p-5 text-center">
+                    <p className="text-sm text-muted-foreground mb-2">Confidence</p>
+                    <p className="text-lg font-medium leading-snug">
+                      I am confident in my abilities and trust myself completely.
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="flex-1 h-10 rounded-xl bg-muted" />
+                    <div className="w-24 h-10 rounded-xl bg-primary/80" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        )}
+        </div>
+      </section>
 
-        <section className="space-y-3">
-          <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-            More for you
+      {/* Features */}
+      <section id="features" className="border-t border-border py-20">
+        <div className="max-w-5xl mx-auto px-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
+            Why iAffirm is different
           </h2>
-          <div className="grid gap-3">
-            {filtered.slice(0, 8).map((a) => (
-              <AffirmationCard
-                key={a.id}
-                affirmation={a}
-                onPractice={() => {
-                  const idx = filtered.findIndex((x) => x.id === a.id);
-                  if (idx >= 0) setCurrentIndex(idx);
-                  setShowRecorder(true);
-                }}
-              />
+          <p className="text-muted-foreground text-center max-w-lg mx-auto mb-14">
+            Most affirmation apps only show you text. We help you internalize it.
+          </p>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Mic,
+                title: "Your own voice",
+                desc: "Record affirmations and hear them in your voice — the method research supports most.",
+              },
+              {
+                icon: Smartphone,
+                title: "Install as PWA",
+                desc: "Add to your home screen. Works offline. Feels like a native app on iOS and Android.",
+              },
+              {
+                icon: Heart,
+                title: "Beautiful & calm",
+                desc: "Dark, distraction-free design with glanceable cards and smooth interactions.",
+              },
+              {
+                icon: Zap,
+                title: "Smart categories",
+                desc: "Confidence, anxiety, self-love, motivation, gratitude, success and more.",
+              },
+              {
+                icon: Shield,
+                title: "Private by design",
+                desc: "Your recordings and custom affirmations stay in your account. You control your data.",
+              },
+              {
+                icon: Sparkles,
+                title: "Coming soon: AI",
+                desc: "Generate personalized affirmations for any goal or situation in seconds.",
+              },
+            ].map((f) => (
+              <div
+                key={f.title}
+                className="rounded-2xl border border-border bg-card p-6 hover:border-primary/30 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <f.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-semibold mb-2">{f.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+              </div>
             ))}
           </div>
-        </section>
-      </main>
-
-      <nav className="sticky bottom-0 bg-background/90 backdrop-blur-xl border-t border-border">
-        <div className="max-w-lg mx-auto px-6 h-16 flex items-center justify-around text-muted-foreground">
-          <button className="flex flex-col items-center gap-0.5 text-primary">
-            <Sparkles className="w-5 h-5" />
-            <span className="text-[10px]">Home</span>
-          </button>
-          <button className="flex flex-col items-center gap-0.5">
-            <Plus className="w-5 h-5" />
-            <span className="text-[10px]">Create</span>
-          </button>
-          <button className="flex flex-col items-center gap-0.5">
-            <User className="w-5 h-5" />
-            <span className="text-[10px]">Profile</span>
-          </button>
         </div>
-      </nav>
+      </section>
 
-      {showRecorder && current && (
-        <VoiceRecorder
-          affirmationText={current.content}
-          onSave={handleSaveRecording}
-          onClose={() => setShowRecorder(false)}
-        />
-      )}
+      {/* CTA */}
+      <section className="border-t border-border py-20">
+        <div className="max-w-5xl mx-auto px-4 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+            Start shifting your self-talk today
+          </h2>
+          <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+            Free to try. No account required to explore. Install the PWA for the best experience.
+          </p>
+          <Link
+            href="/app"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+          >
+            Open iAffirm
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border py-8">
+        <div className="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span>iAffirm</span>
+          </div>
+          <p>Built with care for better self-talk.</p>
+        </div>
+      </footer>
     </div>
   );
 }
