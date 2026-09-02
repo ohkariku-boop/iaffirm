@@ -48,18 +48,6 @@ html {
   background: color-mix(in srgb, var(--primary) 40%, transparent);
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--muted);
-  border-radius: 3px;
-}
-
 .affirmation-glow {
   box-shadow: 0 0 40px -10px color-mix(in srgb, var(--primary) 30%, transparent);
 }
