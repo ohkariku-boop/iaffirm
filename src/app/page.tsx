@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles, Mic, Smartphone, Heart, Zap, Shield, ArrowRight } from "lucide-react";
+import { Sparkles, Mic, Heart, Zap, Shield, ArrowRight, Brain, Layers, Bell, Smartphone } from "lucide-react";
 
 export default function LandingPage() {
   return (
@@ -34,7 +34,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto px-4 pt-20 pb-24 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-6">
             <Zap className="w-3.5 h-3.5" />
-            Affirmations that actually stick
+            Better than the top affirmation apps
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
             Daily affirmations
@@ -42,8 +42,8 @@ export default function LandingPage() {
             <span className="text-primary">in your own voice</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-10 leading-relaxed">
-            Beautiful, personalized affirmations delivered as a glanceable PWA.
-            Record them in your voice — the way research shows works best.
+            The effortless delivery of I Am. The proven power of ThinkUp&apos;s own-voice recording.
+            Plus AI personalization. Built to actually change how you talk to yourself.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
@@ -54,14 +54,14 @@ export default function LandingPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
-              href="#features"
+              href="#why"
               className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-muted text-foreground font-medium hover:bg-muted/80 transition-colors"
             >
-              See how it works
+              Why it&apos;s better
             </a>
           </div>
 
-          {/* Fake phone preview */}
+          {/* Phone preview */}
           <div className="mt-16 mx-auto max-w-xs">
             <div className="rounded-[2rem] border border-border bg-card p-3 shadow-2xl shadow-primary/10">
               <div className="rounded-[1.5rem] bg-background overflow-hidden">
@@ -90,47 +90,94 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="border-t border-border py-20">
+      {/* Why better */}
+      <section id="why" className="border-t border-border py-20">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
-            Why iAffirm is different
+            Built from the best of the top apps
+          </h2>
+          <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-14">
+            We studied I Am, ThinkUp, Innertune, Selfpause, Gratitude, Mantra and others.
+            Then we took what actually works and removed what doesn&apos;t.
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-6 mb-16">
+            {[
+              {
+                from: "From I Am",
+                title: "Effortless daily presence",
+                desc: "Beautiful cards and smart reminders so positivity finds you — without needing to open an app every time.",
+              },
+              {
+                from: "From ThinkUp & Selfpause",
+                title: "Your own voice",
+                desc: "Record affirmations and hear them in your voice. Research shows this is significantly more effective than reading someone else’s words.",
+              },
+              {
+                from: "From Innertune",
+                title: "Rich, high-quality library",
+                desc: "Carefully written affirmations across confidence, anxiety, self-love, motivation, gratitude, success and more.",
+              },
+              {
+                from: "From newer AI apps",
+                title: "Personal, not generic",
+                desc: "AI-generated affirmations tailored to your actual goals and situation — not the same recycled lines everyone else gets.",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-border bg-card p-6"
+              >
+                <p className="text-xs font-medium text-primary mb-2">{item.from}</p>
+                <h3 className="font-semibold mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="border-t border-border py-20 bg-card/30">
+        <div className="max-w-5xl mx-auto px-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
+            Everything you need. Nothing you don’t.
           </h2>
           <p className="text-muted-foreground text-center max-w-lg mx-auto mb-14">
-            Most affirmation apps only show you text. We help you internalize it.
+            A focused practice tool — not another cluttered wellness app.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 icon: Mic,
-                title: "Your own voice",
-                desc: "Record affirmations and hear them in your voice — the method research supports most.",
+                title: "Own-voice recording",
+                desc: "Record once, listen anytime. The single most effective way to internalize affirmations.",
               },
               {
-                icon: Smartphone,
-                title: "Install as PWA",
-                desc: "Add to your home screen. Works offline. Feels like a native app on iOS and Android.",
+                icon: Brain,
+                title: "AI personalization",
+                desc: "Describe a goal or feeling. Get affirmations written specifically for you.",
+              },
+              {
+                icon: Layers,
+                title: "Curated categories",
+                desc: "Confidence, anxiety, self-love, motivation, gratitude, success, relationships and more.",
+              },
+              {
+                icon: Bell,
+                title: "Smart reminders",
+                desc: "Gentle, controllable notifications that actually help instead of becoming noise.",
               },
               {
                 icon: Heart,
-                title: "Beautiful & calm",
-                desc: "Dark, distraction-free design with glanceable cards and smooth interactions.",
-              },
-              {
-                icon: Zap,
-                title: "Smart categories",
-                desc: "Confidence, anxiety, self-love, motivation, gratitude, success and more.",
+                title: "Favorites & custom",
+                desc: "Save what resonates. Write your own. Build a personal library that grows with you.",
               },
               {
                 icon: Shield,
                 title: "Private by design",
-                desc: "Your recordings and custom affirmations stay in your account. You control your data.",
-              },
-              {
-                icon: Sparkles,
-                title: "Coming soon: AI",
-                desc: "Generate personalized affirmations for any goal or situation in seconds.",
+                desc: "Your recordings and personal affirmations stay yours. Clean, respectful product.",
               },
             ].map((f) => (
               <div
@@ -148,20 +195,23 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Comparison-style statement */}
       <section className="border-t border-border py-20">
-        <div className="max-w-5xl mx-auto px-4 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-            Start shifting your self-talk today
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6">
+            Most apps give you one piece.
+            <br />
+            <span className="text-primary">iAffirm gives you the combination that works.</span>
           </h2>
-          <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-            Free to try. No account required to explore. Install the PWA for the best experience.
+          <p className="text-muted-foreground leading-relaxed mb-8">
+            Passive widgets alone are too shallow. Voice recording alone is too much friction for many people.
+            Generic libraries feel empty. iAffirm brings the best parts together into one calm, effective practice.
           </p>
           <Link
             href="/app"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
           >
-            Open iAffirm
+            Try iAffirm free
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -174,7 +224,7 @@ export default function LandingPage() {
             <Sparkles className="w-4 h-4 text-primary" />
             <span>iAffirm</span>
           </div>
-          <p>Built with care for better self-talk.</p>
+          <p>Built to help you change your self-talk for good.</p>
         </div>
       </footer>
     </div>
