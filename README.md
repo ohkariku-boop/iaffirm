@@ -4,12 +4,21 @@ Daily affirmations that actually stick — in your own voice.
 
 The effortless delivery of the best widget apps + the proven power of own-voice recording + AI personalization.
 
+**Web app available now · Native iOS & Android planned next.**
+
 ## Live Structure
 
 | Path | Purpose |
 |------|---------|
 | `/` | Promotional landing page |
-| `/app` | The iAffirm application |
+| `/app` | The iAffirm web application |
+
+## Strategy
+
+We ship the web version first so people can use it, give feedback, and validate the core experience.  
+Native mobile apps (iOS + Android) come next — same backend, refined mobile experience.
+
+The web app also serves as the marketing site and early-access product.
 
 ## Why iAffirm
 
@@ -19,13 +28,14 @@ We studied the top affirmation apps (I Am, ThinkUp, Innertune, Selfpause, Gratit
 - **From ThinkUp / Selfpause** → Own-voice recording (research-backed as more effective)
 - **From Innertune** → High-quality, categorized library
 - **From newer AI apps** → Personalized affirmations generated for your goals
-- **Plus** → Clean modern design, cross-platform, respectful product
+- **Plus** → Clean modern design, respectful product, path to native apps
 
 ## Stack
 
 - **Frontend**: Next.js 15 (App Router) + TypeScript + Tailwind CSS
 - **Backend**: Supabase (Auth, Postgres, Storage)
-- **Hosting**: Vercel
+- **Hosting**: Vercel (web)
+- **Future**: Native iOS & Android (React Native / Expo or similar), same Supabase backend
 
 ## Getting Started
 
@@ -55,11 +65,10 @@ npm run dev
 
 ## Feature Roadmap
 
-### Now (MVP)
+### Now (Web MVP)
 - [x] Beautiful affirmation cards + category filters
-- [x] Own-voice recording (MediaRecorder)
+- [x] Own-voice recording
 - [x] Curated library (10 categories, 50+ affirmations)
-- [x] Favorites-ready data model
 - [x] Dark, calm UI
 - [x] Promotional landing page
 - [ ] Wire real Supabase data (replace mocks)
@@ -75,13 +84,13 @@ npm run dev
 - [ ] Personal library (favorites + customs + recordings)
 
 ### Later
+- [ ] Native iOS app
+- [ ] Native Android app
+- [ ] Home screen widgets (native)
 - [ ] “Say after me” active practice mode
 - [ ] Light journaling / reflection prompts
-- [ ] Structured rituals (e.g. morning / evening)
-- [ ] Native mobile apps (iOS + Android)
-- [ ] Home screen widgets (native)
+- [ ] Structured rituals (morning / evening)
 - [ ] Apple Watch / companion support
-- [ ] Advanced progress insights
 
 ## Project Structure
 
@@ -89,7 +98,7 @@ npm run dev
 src/
   app/
     page.tsx          # Landing page
-    app/page.tsx      # Main application
+    app/page.tsx      # Main web application
   components/         # UI components
   lib/supabase/       # Supabase clients + data helpers
   types/

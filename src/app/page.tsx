@@ -50,7 +50,7 @@ export default function LandingPage() {
               href="/app"
               className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-primary text-primary-foreground font-medium flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors"
             >
-              Launch App
+              Try the Web App
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
@@ -60,6 +60,9 @@ export default function LandingPage() {
               Why it&apos;s better
             </a>
           </div>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Web app available now · Native iOS & Android coming soon
+          </p>
 
           {/* Phone preview */}
           <div className="mt-16 mx-auto max-w-xs">
@@ -195,23 +198,30 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Comparison-style statement */}
+      {/* Roadmap / Coming soon */}
       <section className="border-t border-border py-20">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-6">
-            Most apps give you one piece.
-            <br />
-            <span className="text-primary">iAffirm gives you the combination that works.</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-6">
+            <Smartphone className="w-3.5 h-3.5" />
+            Roadmap
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+            Web today. Native apps next.
           </h2>
-          <p className="text-muted-foreground leading-relaxed mb-8">
-            Passive widgets alone are too shallow. Voice recording alone is too much friction for many people.
-            Generic libraries feel empty. iAffirm brings the best parts together into one calm, effective practice.
+          <p className="text-muted-foreground leading-relaxed mb-8 max-w-xl mx-auto">
+            The web app is live so you can start practicing and give feedback right away.
+            Native iOS and Android apps are planned next — same powerful core, refined for mobile.
           </p>
+          <div className="flex flex-wrap justify-center gap-3 text-sm text-muted-foreground mb-10">
+            <span className="px-3 py-1.5 rounded-full bg-muted">Web app — live</span>
+            <span className="px-3 py-1.5 rounded-full bg-muted">AI personalization — soon</span>
+            <span className="px-3 py-1.5 rounded-full bg-muted">iOS & Android — planned</span>
+          </div>
           <Link
             href="/app"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
           >
-            Try iAffirm free
+            Try the web app free
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
