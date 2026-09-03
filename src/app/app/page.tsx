@@ -4,18 +4,18 @@ import { useState, useEffect } from "react";
 import { AffirmationCard } from "@/components/AffirmationCard";
 import { CategoryPills } from "@/components/CategoryPills";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
-import { Sparkles, Plus, User, Bell, Loader2 } from "lucide-react";
+import { Sparkles, Plus, User, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { getCategories, getAffirmations } from "@/lib/supabase/data";
 import type { Affirmation, Category } from "@/types";
 
-// Fallback mock data if Supabase is not yet seeded
 const MOCK_CATEGORIES: Category[] = [
-  { id: "1", name: "Confidence", slug: "confidence", description: null, icon: "💪", color: "#F59E0B", sort_order: 1 },
-  { id: "2", name: "Self-Love", slug: "self-love", description: null, icon: "❤️", color: "#EC4899", sort_order: 2 },
-  { id: "3", name: "Anxiety Relief", slug: "anxiety", description: null, icon: "🌊", color: "#3B82F6", sort_order: 3 },
-  { id: "4", name: "Motivation", slug: "motivation", description: null, icon: "🔥", color: "#EF4444", sort_order: 4 },
-  { id: "5", name: "Gratitude", slug: "gratitude", description: null, icon: "🙏", color: "#10B981", sort_order: 5 },
-  { id: "6", name: "Success", slug: "success", description: null, icon: "🏆", color: "#8B5CF6", sort_order: 6 },
+  { id: "1", name: "Confidence", slug: "confidence", description: null, icon: "🌿", color: "#5b8a72", sort_order: 1 },
+  { id: "2", name: "Self-Love", slug: "self-love", description: null, icon: "💗", color: "#c45c7a", sort_order: 2 },
+  { id: "3", name: "Calm", slug: "anxiety", description: null, icon: "🌊", color: "#5a8a9e", sort_order: 3 },
+  { id: "4", name: "Motivation", slug: "motivation", description: null, icon: "☀️", color: "#c49a5c", sort_order: 4 },
+  { id: "5", name: "Gratitude", slug: "gratitude", description: null, icon: "🙏", color: "#7a9e5a", sort_order: 5 },
+  { id: "6", name: "Success", slug: "success", description: null, icon: "✨", color: "#8a7ac4", sort_order: 6 },
 ];
 
 const MOCK_AFFIRMATIONS: Affirmation[] = [
@@ -29,7 +29,7 @@ const MOCK_AFFIRMATIONS: Affirmation[] = [
   { id: "a8", content: "I treat myself with the same kindness I give others.", category_id: "2", is_system: true, language: "en", tags: [], category: MOCK_CATEGORIES[1] },
 ];
 
-export default function HomePage() {
+export default function AppPage() {
   const [categories, setCategories] = useState<Category[]>(MOCK_CATEGORIES);
   const [affirmations, setAffirmations] = useState<Affirmation[]>(MOCK_AFFIRMATIONS);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -53,8 +53,8 @@ export default function HomePage() {
           setAffirmations(affs);
           setUsingMock(false);
         }
-      } catch (e) {
-        console.warn("Using mock data – run the SQL migration + seed in Supabase", e);
+      } catch {
+        // keep mocks
       } finally {
         setLoading(false);
       }
@@ -73,40 +73,33 @@ export default function HomePage() {
   };
 
   const handleSaveRecording = async (blob: Blob) => {
-    console.log("Recording saved locally:", blob.size, "bytes");
-    // TODO: upload to Supabase Storage bucket "recordings"
+    console.log("Recording saved:", blob.size, "bytes");
     setShowRecorder(false);
   };
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <Loader2 className="w-7 h-7 animate-spin text-primary" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
+    <div className="min-h-screen flex flex-col bg-background">
+      <header className="sticky top-0 z-40 bg-background/90 backdrop-blur-md border-b border-border">
         <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-primary" />
-            <span className="font-semibold tracking-tight">iAffirm</span>
+          <Link href="/" className="flex items-center gap-2">
+            <span className="font-medium tracking-tight text-foreground">iAffirm</span>
             {usingMock && (
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400">
-                MOCK
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
+                demo
               </span>
             )}
-          </div>
-          <div className="flex items-center gap-1">
-            <button className="p-2 rounded-full hover:bg-muted text-muted-foreground">
-              <Bell className="w-5 h-5" />
-            </button>
-            <button className="p-2 rounded-full hover:bg-muted text-muted-foreground">
-              <User className="w-5 h-5" />
-            </button>
-          </div>
+          </Link>
+          <button className="p-2 rounded-full text-muted-foreground hover:bg-muted transition-colors">
+            <User className="w-5 h-5" />
+          </button>
         </div>
       </header>
 
@@ -124,30 +117,21 @@ export default function HomePage() {
               large
               onPractice={() => setShowRecorder(true)}
             />
-            <div className="flex gap-3">
-              <button
-                onClick={nextAffirmation}
-                className="flex-1 py-3 rounded-2xl bg-muted text-sm font-medium hover:bg-muted/80 transition-colors"
-              >
-                Next affirmation
-              </button>
-              <button
-                onClick={() => setShowRecorder(true)}
-                className="px-5 py-3 rounded-2xl bg-primary text-primary-foreground text-sm font-medium flex items-center gap-2 hover:bg-primary/90 transition-colors"
-              >
-                <Plus className="w-4 h-4" />
-                Record
-              </button>
-            </div>
+            <button
+              onClick={nextAffirmation}
+              className="w-full py-3 rounded-xl bg-white border border-border text-sm font-medium text-foreground hover:bg-muted/50 transition-colors"
+            >
+              Next affirmation
+            </button>
           </div>
         )}
 
-        <section className="space-y-3">
-          <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+        <section className="space-y-3 pt-2">
+          <h2 className="text-xs font-medium text-muted-foreground tracking-wide uppercase">
             More for you
           </h2>
           <div className="grid gap-3">
-            {filtered.slice(0, 8).map((a) => (
+            {filtered.slice(0, 6).map((a) => (
               <AffirmationCard
                 key={a.id}
                 affirmation={a}
@@ -162,8 +146,8 @@ export default function HomePage() {
         </section>
       </main>
 
-      <nav className="sticky bottom-0 bg-background/90 backdrop-blur-xl border-t border-border">
-        <div className="max-w-lg mx-auto px-6 h-16 flex items-center justify-around text-muted-foreground">
+      <nav className="sticky bottom-0 bg-white/95 backdrop-blur-md border-t border-border">
+        <div className="max-w-lg mx-auto px-6 h-14 flex items-center justify-around text-muted-foreground">
           <button className="flex flex-col items-center gap-0.5 text-primary">
             <Sparkles className="w-5 h-5" />
             <span className="text-[10px]">Home</span>

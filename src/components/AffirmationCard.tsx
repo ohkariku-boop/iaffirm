@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Heart, Volume2, Mic, Share2 } from "lucide-react";
+import { Heart, Mic } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Affirmation } from "@/types";
 
@@ -32,13 +32,13 @@ export function AffirmationCard({
   return (
     <div
       className={cn(
-        "relative rounded-3xl bg-card border border-border p-6 md:p-8 affirmation-glow transition-all duration-300",
-        large ? "min-h-[280px] flex flex-col justify-center" : "",
+        "relative rounded-2xl p-6 md:p-8 transition-all",
+        large ? "affirmation-card-featured min-h-[240px] flex flex-col justify-center" : "affirmation-card",
         className
       )}
     >
       {affirmation.category && (
-        <div className="absolute top-4 left-4 flex items-center gap-1.5 text-xs text-muted-foreground">
+        <div className="absolute top-4 left-5 flex items-center gap-1.5 text-xs text-muted-foreground">
           <span>{affirmation.category.icon}</span>
           <span>{affirmation.category.name}</span>
         </div>
@@ -46,47 +46,33 @@ export function AffirmationCard({
 
       <p
         className={cn(
-          "text-center font-medium leading-relaxed tracking-tight",
-          large ? "text-2xl md:text-3xl" : "text-lg md:text-xl"
+          "text-center font-medium leading-relaxed text-foreground",
+          large ? "text-xl md:text-2xl mt-4" : "text-base md:text-lg"
         )}
       >
         {affirmation.content}
       </p>
 
-      <div className="mt-6 flex items-center justify-center gap-3">
+      <div className={cn("flex items-center justify-center gap-2", large ? "mt-8" : "mt-5")}>
         <button
           onClick={handleFavorite}
           className={cn(
             "p-2.5 rounded-full transition-colors",
             favorited
-              ? "bg-pink-500/20 text-pink-400"
-              : "bg-muted/50 text-muted-foreground hover:text-pink-400"
+              ? "bg-[#fce8e8] text-[#c45c5c]"
+              : "bg-muted text-muted-foreground hover:text-[#c45c5c]"
           )}
           aria-label="Favorite"
         >
-          <Heart className={cn("w-5 h-5", favorited && "fill-current")} />
+          <Heart className={cn("w-4 h-4", favorited && "fill-current")} />
         </button>
 
         <button
           onClick={onPractice}
-          className="p-2.5 rounded-full bg-primary/20 text-primary hover:bg-primary/30 transition-colors"
-          aria-label="Practice / Speak"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
         >
-          <Mic className="w-5 h-5" />
-        </button>
-
-        <button
-          className="p-2.5 rounded-full bg-muted/50 text-muted-foreground hover:text-foreground transition-colors"
-          aria-label="Listen"
-        >
-          <Volume2 className="w-5 h-5" />
-        </button>
-
-        <button
-          className="p-2.5 rounded-full bg-muted/50 text-muted-foreground hover:text-foreground transition-colors"
-          aria-label="Share"
-        >
-          <Share2 className="w-5 h-5" />
+          <Mic className="w-4 h-4" />
+          Record
         </button>
       </div>
     </div>

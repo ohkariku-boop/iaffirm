@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
-  --card: #141414;
-  --card-foreground: #fafafa;
-  --primary: #8b5cf6;
+  --background: #faf8f5;
+  --foreground: #2c2a26;
+  --card: #ffffff;
+  --card-foreground: #2c2a26;
+  --primary: #5b8a72;
   --primary-foreground: #ffffff;
-  --muted: #27272a;
-  --muted-foreground: #a1a1aa;
-  --accent: #1e1e24;
-  --border: #27272a;
-  --ring: #8b5cf6;
+  --muted: #f0ebe3;
+  --muted-foreground: #6b6560;
+  --accent: #f5f0e8;
+  --border: #e8e2d9;
+  --ring: #5b8a72;
+  --soft: #e8f0eb;
 }
 
 @theme inline {
@@ -45,9 +46,17 @@ html {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--primary) 40%, transparent);
+  background: color-mix(in srgb, var(--primary) 25%, transparent);
 }
 
-.affirmation-glow {
-  box-shadow: 0 0 40px -10px color-mix(in srgb, var(--primary) 30%, transparent);
+.affirmation-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(44, 42, 38, 0.04);
+}
+
+.affirmation-card-featured {
+  background: linear-gradient(165deg, #ffffff 0%, #f7faf8 100%);
+  border: 1px solid #d4e5db;
+  box-shadow: 0 4px 24px rgba(91, 138, 114, 0.08);
 }

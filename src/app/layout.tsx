@@ -13,18 +13,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "iAffirm — Daily Affirmations That Stick",
-  description: "Personalized daily affirmations with your own voice, beautiful widgets, and AI-powered mindset practice.",
+  title: "iAffirm — Affirmations in your own voice",
+  description: "A quiet space to practice positive self-talk. Record affirmations in your voice and return to them when you need lifting.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: "iAffirm",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: "#faf8f5",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
