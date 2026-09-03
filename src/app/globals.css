@@ -48,26 +48,41 @@ html {
   background: color-mix(in srgb, var(--primary) 22%, transparent);
 }
 
-/* App page atmospheric background */
+/* App atmospheric background with illustration */
 .app-atmosphere {
-  background-color: #f4f0ea;
+  background-color: #f3efe8;
   background-image:
-    radial-gradient(ellipse 90% 60% at 10% -10%, rgba(74, 124, 104, 0.14), transparent 55%),
-    radial-gradient(ellipse 70% 50% at 95% 5%, rgba(212, 175, 120, 0.12), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(140, 170, 150, 0.1), transparent 55%),
-    linear-gradient(180deg, #f7f3ed 0%, #f4f0ea 40%, #f1ebe4 100%);
-  background-attachment: fixed;
+    url("/illustrations/calm-scene.svg"),
+    radial-gradient(ellipse 90% 55% at 15% 0%, rgba(74, 124, 104, 0.11), transparent 55%),
+    radial-gradient(ellipse 70% 45% at 90% 10%, rgba(212, 175, 120, 0.1), transparent 50%),
+    linear-gradient(180deg, #f8f4ee 0%, #f3efe8 45%, #efe9e1 100%);
+  background-size: min(900px, 120%) auto, auto, auto, auto;
+  background-position: center bottom, 0 0, 100% 0, 0 0;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed, fixed, fixed, fixed;
 }
 
-/* Featured affirmation — soft paper + nature wash */
+/* Landing */
+.landing-atmosphere {
+  background-color: #f7f3ed;
+  background-image:
+    url("/illustrations/calm-scene.svg"),
+    radial-gradient(ellipse 100% 60% at 50% -15%, rgba(74, 124, 104, 0.1), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 40%, rgba(212, 175, 120, 0.08), transparent 50%),
+    linear-gradient(180deg, #faf7f2 0%, #f7f3ed 50%, #f2ede6 100%);
+  background-size: min(1000px, 110%) auto, auto, auto, auto;
+  background-position: center 85%, 0 0, 100% 0, 0 0;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+}
+
 .affirmation-hero {
   background:
-    linear-gradient(155deg, rgba(255,255,255,0.95) 0%, rgba(252,250,246,0.9) 40%, rgba(245,250,246,0.92) 100%);
+    linear-gradient(155deg, rgba(255,255,255,0.97) 0%, rgba(252,250,246,0.94) 45%, rgba(248,252,249,0.95) 100%);
   border: 1px solid rgba(74, 124, 104, 0.14);
   box-shadow:
     0 1px 2px rgba(42, 40, 37, 0.04),
-    0 8px 32px rgba(74, 124, 104, 0.08),
-    0 20px 48px rgba(42, 40, 37, 0.04);
+    0 10px 36px rgba(74, 124, 104, 0.09),
+    0 24px 56px rgba(42, 40, 37, 0.05);
   position: relative;
   overflow: hidden;
 }
@@ -77,29 +92,20 @@ html {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 85% 15%, rgba(74, 124, 104, 0.1), transparent 50%),
-    radial-gradient(ellipse 60% 50% at 10% 90%, rgba(212, 175, 120, 0.09), transparent 50%);
+    radial-gradient(ellipse 80% 55% at 90% 10%, rgba(74, 124, 104, 0.09), transparent 50%),
+    radial-gradient(ellipse 55% 45% at 5% 95%, rgba(212, 175, 120, 0.08), transparent 50%);
   pointer-events: none;
 }
 
 .affirmation-card {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(224, 217, 206, 0.9);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(224, 217, 206, 0.95);
   box-shadow: 0 1px 4px rgba(42, 40, 37, 0.04);
 }
 
 .affirmation-card:hover {
-  border-color: rgba(74, 124, 104, 0.25);
-  box-shadow: 0 4px 20px rgba(74, 124, 104, 0.07);
-  background: rgba(255, 255, 255, 0.95);
-}
-
-/* Landing soft gradient */
-.landing-atmosphere {
-  background-color: #f7f3ed;
-  background-image:
-    radial-gradient(ellipse 100% 70% at 50% -20%, rgba(74, 124, 104, 0.12), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 100% 50%, rgba(212, 175, 120, 0.08), transparent 50%),
-    linear-gradient(180deg, #faf7f2 0%, #f7f3ed 50%, #f3efe8 100%);
+  border-color: rgba(74, 124, 104, 0.28);
+  box-shadow: 0 6px 24px rgba(74, 124, 104, 0.08);
+  background: rgba(255, 255, 255, 0.97);
 }

@@ -103,7 +103,7 @@ export default function AppPage() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-lg mx-auto w-full px-5 py-7 space-y-7">
+      <main className="flex-1 max-w-lg mx-auto w-full px-5 py-7 pb-28 space-y-7">
         <CategoryPills
           categories={categories}
           selected={selectedCategory}
@@ -146,7 +146,7 @@ export default function AppPage() {
         </section>
       </main>
 
-      <nav className="sticky bottom-0 bg-white/70 backdrop-blur-md border-t border-border/50">
+      <nav className="sticky bottom-0 bg-white/55 backdrop-blur-md border-t border-border/40">
         <div className="max-w-lg mx-auto px-8 h-14 flex items-center justify-between text-muted-foreground text-[11px]">
           <button className="text-primary font-medium">Today</button>
           <button className="hover:text-foreground transition-colors">Library</button>
