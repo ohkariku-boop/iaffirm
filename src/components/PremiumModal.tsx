@@ -17,13 +17,7 @@ export function PremiumModal({ open, onClose, onSubscribe }: PremiumModalProps) 
   if (!open) return null;
 
   const handleSubscribe = () => {
-    // Placeholder: wire Stripe / App Store later
     onSubscribe?.(plan);
-    alert(
-      plan === "yearly"
-        ? "Yearly plan selected ($29.99/year). Payment integration coming soon."
-        : "Monthly plan selected ($3.99/month). Payment integration coming soon."
-    );
     onClose();
   };
 
@@ -47,11 +41,10 @@ export function PremiumModal({ open, onClose, onSubscribe }: PremiumModalProps) 
             A deeper practice,<br />still gentle.
           </h2>
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-            Unlock unlimited recordings, ambient sounds, personal affirmations, and a library that grows with you.
+            Unlimited recordings, all ambient sounds, AI personal affirmations, and a library that grows with you.
           </p>
         </div>
 
-        {/* Plans */}
         <div className="px-6 space-y-3">
           <button
             onClick={() => setPlan("yearly")}
@@ -100,7 +93,6 @@ export function PremiumModal({ open, onClose, onSubscribe }: PremiumModalProps) 
           </button>
         </div>
 
-        {/* Features */}
         <div className="px-6 py-5 space-y-3">
           {PREMIUM.features.map((f) => (
             <div key={f.id} className="flex gap-3">
@@ -123,7 +115,7 @@ export function PremiumModal({ open, onClose, onSubscribe }: PremiumModalProps) 
             Continue with {plan === "yearly" ? "Yearly" : "Monthly"}
           </button>
           <p className="text-center text-[11px] text-muted-foreground leading-relaxed">
-            Payment coming soon. Free users can still browse and try a few recordings.
+            Demo mode: activates Premium on this device. Real payments (Stripe / stores) come next.
           </p>
         </div>
       </div>

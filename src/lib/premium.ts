@@ -6,46 +6,96 @@ export const PREMIUM = {
   freeLimits: {
     recordings: 3,
     customAffirmations: 5,
-    ambientTypes: ["pad"] as const,
+    aiGenerations: 3,
+    ambientTypes: ["pad", "off"] as const,
   },
   features: [
     {
       id: "unlimited-recordings",
       title: "Unlimited voice recordings",
       description: "Record and save as many affirmations as you like in your own voice.",
-      free: false,
     },
     {
       id: "all-ambient",
       title: "All ambient sounds",
       description: "Soft pad, soft rain, quiet bowls — and more as we add them.",
-      free: false,
     },
     {
       id: "ai-personal",
       title: "AI personal affirmations",
       description: "Affirmations written for your goals and how you’re feeling.",
-      free: false,
     },
     {
       id: "custom-library",
       title: "Personal library",
       description: "Favorites, customs, and recordings in one calm place.",
-      free: false,
     },
     {
       id: "reminders",
       title: "Gentle reminders",
       description: "Optional prompts that support your practice without pressure.",
-      free: false,
-    },
-    {
-      id: "all-categories",
-      title: "Full category library",
-      description: "Everything unlocked — confidence, calm, self-love, and more.",
-      free: true, // core free for goodwill; premium still listed as full access
     },
   ],
 } as const;
 
 export type PlanId = "monthly" | "yearly";
+
+export type PremiumUsage = {
+  isPremium: boolean;
+  recordingsUsed: number;
+  aiGenerationsUsed: number;
+  customUsed: number;
+};
+
+const STORAGE_KEY = "iaffirm_premium_usage_v1";
+
+const defaultUsage = (): PremiumUsage => ({
+  isPremium: false,
+  recordingsUsed: 0,
+  aiGenerationsUsed: 0,
+  customUsed: 0,
+});
+
+export function loadUsage(): PremiumUsage {
+  if (typeof window === "undefined") return defaultUsage();
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultUsage();
+    return { ...defaultUsage(), ...JSON.parse(raw) };
+  } catch {
+    return defaultUsage();
+  }
+}
+
+export function saveUsage(usage: PremiumUsage) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(usage));
+}
+
+export function canRecord(usage: PremiumUsage): boolean {
+  if (usage.isPremium) return true;
+  return usage.recordingsUsed < PREMIUM.freeLimits.recordings;
+}
+
+export function canUseAi(usage: PremiumUsage): boolean {
+  if (usage.isPremium) return true;
+  return usage.aiGenerationsUsed < PREMIUM.freeLimits.aiGenerations;
+}
+
+export function canUseAmbient(
+  usage: PremiumUsage,
+  type: string
+): boolean {
+  if (usage.isPremium) return true;
+  return (PREMIUM.freeLimits.ambientTypes as readonly string[]).includes(type);
+}
+
+export function recordingsLeft(usage: PremiumUsage): number | "unlimited" {
+  if (usage.isPremium) return "unlimited";
+  return Math.max(0, PREMIUM.freeLimits.recordings - usage.recordingsUsed);
+}
+
+export function aiLeft(usage: PremiumUsage): number | "unlimited" {
+  if (usage.isPremium) return "unlimited";
+  return Math.max(0, PREMIUM.freeLimits.aiGenerations - usage.aiGenerationsUsed);
+}

@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import { AffirmationCard } from "@/components/AffirmationCard";
 import { CategoryPills } from "@/components/CategoryPills";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
-import { User, Loader2, Sparkles } from "lucide-react";
+import { PersonalAffirmation } from "@/components/PersonalAffirmation";
 import { PremiumModal } from "@/components/PremiumModal";
+import { User, Loader2, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { getCategories, getAffirmations } from "@/lib/supabase/data";
+import { usePremium } from "@/hooks/usePremium";
 import type { Affirmation, Category } from "@/types";
 
 const MOCK_CATEGORIES: Category[] = [
@@ -37,8 +39,11 @@ export default function AppPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showRecorder, setShowRecorder] = useState(false);
   const [showPremium, setShowPremium] = useState(false);
+  const [practiceText, setPracticeText] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [usingMock, setUsingMock] = useState(true);
+
+  const premium = usePremium();
 
   useEffect(() => {
     async function load() {
@@ -74,12 +79,22 @@ export default function AppPage() {
     if (filtered.length) setCurrentIndex((i) => (i + 1) % filtered.length);
   };
 
-  const handleSaveRecording = async (blob: Blob) => {
-    console.log("Recording saved:", blob.size, "bytes");
-    setShowRecorder(false);
+  const openRecorder = (text?: string) => {
+    if (!premium.canRecord) {
+      setShowPremium(true);
+      return;
+    }
+    setPracticeText(text || current?.content || null);
+    setShowRecorder(true);
   };
 
-  if (loading) {
+  const handleSaveRecording = async (_blob: Blob) => {
+    premium.markRecording();
+    setShowRecorder(false);
+    setPracticeText(null);
+  };
+
+  if (loading || !premium.ready) {
     return (
       <div className="min-h-screen flex items-center justify-center app-atmosphere">
         <Loader2 className="w-7 h-7 animate-spin text-primary" />
@@ -98,15 +113,22 @@ export default function AppPage() {
                 demo
               </span>
             )}
+            {premium.isPremium && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#e8f0eb] text-primary">
+                premium
+              </span>
+            )}
           </Link>
           <div className="flex items-center gap-1">
-            <button
-              onClick={() => setShowPremium(true)}
-              className="flex items-center gap-1 text-xs font-medium text-primary px-2.5 py-1.5 rounded-full bg-[#e8f0eb] hover:bg-[#dce8e0] transition-colors"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              Premium
-            </button>
+            {!premium.isPremium && (
+              <button
+                onClick={() => setShowPremium(true)}
+                className="flex items-center gap-1 text-xs font-medium text-primary px-2.5 py-1.5 rounded-full bg-[#e8f0eb] hover:bg-[#dce8e0] transition-colors"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                Premium
+              </button>
+            )}
             <button className="p-2 rounded-full text-muted-foreground hover:bg-muted/80 transition-colors">
               <User className="w-5 h-5" />
             </button>
@@ -121,12 +143,27 @@ export default function AppPage() {
           onSelect={setSelectedCategory}
         />
 
+        {/* Usage hint for free users */}
+        {!premium.isPremium && (
+          <p className="text-xs text-muted-foreground text-center">
+            {typeof premium.recordingsLeft === "number"
+              ? `${premium.recordingsLeft} free recording${premium.recordingsLeft === 1 ? "" : "s"} left`
+              : null}
+            {typeof premium.recordingsLeft === "number" && typeof premium.aiLeft === "number"
+              ? " · "
+              : null}
+            {typeof premium.aiLeft === "number"
+              ? `${premium.aiLeft} free AI suggestion${premium.aiLeft === 1 ? "" : "s"} left`
+              : null}
+          </p>
+        )}
+
         {current && (
           <div className="space-y-4">
             <AffirmationCard
               affirmation={current}
               large
-              onPractice={() => setShowRecorder(true)}
+              onPractice={() => openRecorder()}
             />
             <button
               onClick={nextAffirmation}
@@ -137,6 +174,14 @@ export default function AppPage() {
           </div>
         )}
 
+        <PersonalAffirmation
+          canUseAi={premium.canUseAi}
+          aiLeft={premium.aiLeft}
+          onNeedPremium={() => setShowPremium(true)}
+          onPractice={(text) => openRecorder(text)}
+          onGenerated={() => premium.markAiGeneration()}
+        />
+
         <section className="space-y-4 pt-1">
           <h2 className="text-[11px] font-medium text-muted-foreground tracking-[0.14em] uppercase">
             More for you
@@ -146,11 +191,7 @@ export default function AppPage() {
               <AffirmationCard
                 key={a.id}
                 affirmation={a}
-                onPractice={() => {
-                  const idx = filtered.findIndex((x) => x.id === a.id);
-                  if (idx >= 0) setCurrentIndex(idx);
-                  setShowRecorder(true);
-                }}
+                onPractice={() => openRecorder(a.content)}
               />
             ))}
           </div>
@@ -166,14 +207,24 @@ export default function AppPage() {
       </nav>
 
       {showPremium && (
-        <PremiumModal open={showPremium} onClose={() => setShowPremium(false)} />
+        <PremiumModal
+          open={showPremium}
+          onClose={() => setShowPremium(false)}
+          onSubscribe={(plan) => {
+            premium.activatePremium(plan);
+          }}
+        />
       )}
 
-      {showRecorder && current && (
+      {showRecorder && practiceText && (
         <VoiceRecorder
-          affirmationText={current.content}
+          affirmationText={practiceText}
           onSave={handleSaveRecording}
-          onClose={() => setShowRecorder(false)}
+          onClose={() => {
+            setShowRecorder(false);
+            setPracticeText(null);
+          }}
+          isPremium={premium.isPremium}
           onUpgrade={() => {
             setShowRecorder(false);
             setShowPremium(true);
