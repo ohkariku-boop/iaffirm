@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { AffirmationCard } from "@/components/AffirmationCard";
 import { CategoryPills } from "@/components/CategoryPills";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
-import { User, Loader2 } from "lucide-react";
+import { User, Loader2, Sparkles } from "lucide-react";
+import { PremiumModal } from "@/components/PremiumModal";
 import Link from "next/link";
 import { getCategories, getAffirmations } from "@/lib/supabase/data";
 import type { Affirmation, Category } from "@/types";
@@ -35,6 +36,7 @@ export default function AppPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showRecorder, setShowRecorder] = useState(false);
+  const [showPremium, setShowPremium] = useState(false);
   const [loading, setLoading] = useState(true);
   const [usingMock, setUsingMock] = useState(true);
 
@@ -97,9 +99,18 @@ export default function AppPage() {
               </span>
             )}
           </Link>
-          <button className="p-2 rounded-full text-muted-foreground hover:bg-muted/80 transition-colors">
-            <User className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setShowPremium(true)}
+              className="flex items-center gap-1 text-xs font-medium text-primary px-2.5 py-1.5 rounded-full bg-[#e8f0eb] hover:bg-[#dce8e0] transition-colors"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              Premium
+            </button>
+            <button className="p-2 rounded-full text-muted-foreground hover:bg-muted/80 transition-colors">
+              <User className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -154,11 +165,19 @@ export default function AppPage() {
         </div>
       </nav>
 
+      {showPremium && (
+        <PremiumModal open={showPremium} onClose={() => setShowPremium(false)} />
+      )}
+
       {showRecorder && current && (
         <VoiceRecorder
           affirmationText={current.content}
           onSave={handleSaveRecording}
           onClose={() => setShowRecorder(false)}
+          onUpgrade={() => {
+            setShowRecorder(false);
+            setShowPremium(true);
+          }}
         />
       )}
     </div>

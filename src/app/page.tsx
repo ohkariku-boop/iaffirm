@@ -82,9 +82,12 @@ export default function LandingPage() {
           <h2 className="text-2xl sm:text-3xl font-medium mb-6 leading-snug text-[#2c2a26]">
             Better days often begin<br />with how we speak to ourselves.
           </h2>
-          <p className="text-[#6b6560] mb-10 max-w-md mx-auto leading-relaxed">
+          <p className="text-[#6b6560] mb-6 max-w-md mx-auto leading-relaxed">
             Start with one affirmation. See how it feels.
             The web app is ready when you are. Native apps are on the way.
+          </p>
+          <p className="text-sm text-[#6b6560]/80 mb-10">
+            Free to try · Premium from $3.99/month
           </p>
           <Link
             href="/app"

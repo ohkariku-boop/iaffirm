@@ -10,9 +10,11 @@ interface VoiceRecorderProps {
   affirmationText: string;
   onSave?: (audioBlob: Blob) => void;
   onClose?: () => void;
+  onUpgrade?: () => void;
+  isPremium?: boolean;
 }
 
-export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorderProps) {
+export function VoiceRecorder({ affirmationText, onSave, onClose, onUpgrade, isPremium = false }: VoiceRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -222,6 +224,11 @@ export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorde
 
   // If user changes ambience while playing, restart it
   const changeAmbience = async (type: AmbienceType) => {
+    // Free: pad + voice only; rain/bowls require premium
+    if (!isPremium && (type === "rain" || type === "bowls")) {
+      onUpgrade?.();
+      return;
+    }
     setAmbience(type);
     if (isPlaying) {
       stopAmbience();
@@ -248,10 +255,10 @@ export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorde
   const formatTime = (s: number) =>
     `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
 
-  const ambienceOptions: { id: AmbienceType; label: string }[] = [
+  const ambienceOptions: { id: AmbienceType; label: string; premium?: boolean }[] = [
     { id: "pad", label: "Soft pad" },
-    { id: "rain", label: "Soft rain" },
-    { id: "bowls", label: "Quiet bowls" },
+    { id: "rain", label: "Soft rain", premium: true },
+    { id: "bowls", label: "Quiet bowls", premium: true },
     { id: "off", label: "Voice only" },
   ];
 
@@ -332,6 +339,7 @@ export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorde
                         )}
                       >
                         {opt.label}
+                        {opt.premium && !isPremium ? " · Pro" : ""}
                       </button>
                     ))}
                   </div>

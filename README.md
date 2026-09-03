@@ -50,6 +50,17 @@ npm run dev
 - Landing page → http://localhost:3000
 - App → http://localhost:3000/app
 
+
+## Pricing (planned)
+
+| Plan | Price | Notes |
+|------|-------|-------|
+| Free | $0 | Browse, limited recordings, core ambient |
+| Monthly | **$3.99**/mo | Unlimited recordings, all ambient, AI personal, library, reminders |
+| Yearly | **$29.99**/yr (~$2.50/mo) | Best value |
+
+Compared to common market rates (I Am often higher monthly; ThinkUp ~$3–8/mo; many yearly plans ~$30).
+
 ## Feature Roadmap
 
 ### Now (Web MVP)
