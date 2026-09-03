@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { Mic, Square, Play, Pause, Trash2, Check, X, Volume2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+type AmbienceType = "pad" | "rain" | "bowls" | "off";
+
 interface VoiceRecorderProps {
   affirmationText: string;
   onSave?: (audioBlob: Blob) => void;
@@ -15,70 +17,150 @@ export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorde
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
-  const [musicEnabled, setMusicEnabled] = useState(true);
+  const [ambience, setAmbience] = useState<AmbienceType>("pad");
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const voiceRef = useRef<HTMLAudioElement | null>(null);
-  const musicRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
-  const musicGainRef = useRef<GainNode | null>(null);
+  const nodesRef = useRef<AudioNode[]>([]);
   const oscRefs = useRef<OscillatorNode[]>([]);
+  const noiseSourceRef = useRef<AudioBufferSourceNode | null>(null);
 
-  // Soft ambient pad using Web Audio (no external file needed)
-  const startAmbientMusic = async () => {
-    if (!musicEnabled) return;
-    try {
-      const ctx = new AudioContext();
-      audioCtxRef.current = ctx;
-      const gain = ctx.createGain();
-      gain.gain.value = 0.04; // very soft
-      gain.connect(ctx.destination);
-      musicGainRef.current = gain;
-
-      // Gentle ethereal tones (C major-ish soft pad)
-      const freqs = [130.81, 164.81, 196.0, 261.63]; // C3 E3 G3 C4
-      oscRefs.current = freqs.map((freq, i) => {
-        const osc = ctx.createOscillator();
-        const oscGain = ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.value = freq;
-        oscGain.gain.value = 0.15 - i * 0.02;
-        // subtle slow tremolo
-        const lfo = ctx.createOscillator();
-        const lfoGain = ctx.createGain();
-        lfo.frequency.value = 0.15 + i * 0.05;
-        lfoGain.gain.value = 0.03;
-        lfo.connect(lfoGain);
-        lfoGain.connect(oscGain.gain);
-        osc.connect(oscGain);
-        oscGain.connect(gain);
-        osc.start();
-        lfo.start();
-        return osc;
-      });
-    } catch (e) {
-      console.warn("Ambient music unavailable", e);
-    }
-  };
-
-  const stopAmbientMusic = () => {
+  const stopAmbience = () => {
     oscRefs.current.forEach((o) => {
       try { o.stop(); } catch { /* already stopped */ }
     });
     oscRefs.current = [];
+    if (noiseSourceRef.current) {
+      try { noiseSourceRef.current.stop(); } catch { /* */ }
+      noiseSourceRef.current = null;
+    }
+    nodesRef.current = [];
     if (audioCtxRef.current) {
       audioCtxRef.current.close().catch(() => {});
       audioCtxRef.current = null;
     }
-    musicGainRef.current = null;
+  };
+
+  // Warm, soft drone pad — slower, lower, more sustained
+  const startPad = (ctx: AudioContext, master: GainNode) => {
+    master.gain.value = 0.035;
+    // Warm low drone + soft upper partials (C major-ish, darker)
+    const freqs = [65.41, 98.0, 130.81, 164.81]; // C2 G2 C3 E3
+    oscRefs.current = freqs.map((freq, i) => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = i === 0 ? "sine" : "sine";
+      osc.frequency.value = freq;
+      // Slight detune for warmth
+      osc.detune.value = (i % 2 === 0 ? 1 : -1) * (3 + i);
+      g.gain.value = 0.22 - i * 0.04;
+      // Very slow amplitude movement
+      const lfo = ctx.createOscillator();
+      const lfoG = ctx.createGain();
+      lfo.type = "sine";
+      lfo.frequency.value = 0.08 + i * 0.03;
+      lfoG.gain.value = 0.025;
+      lfo.connect(lfoG);
+      lfoG.connect(g.gain);
+      osc.connect(g);
+      g.connect(master);
+      osc.start();
+      lfo.start();
+      return osc;
+    });
+  };
+
+  // Soft rain-like filtered noise
+  const startRain = (ctx: AudioContext, master: GainNode) => {
+    master.gain.value = 0.05;
+    const bufferSize = ctx.sampleRate * 2;
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+    noise.loop = true;
+    noiseSourceRef.current = noise;
+
+    // Bandpass to soften into rain texture
+    const filter = ctx.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.frequency.value = 1200;
+    filter.Q.value = 0.5;
+
+    const filter2 = ctx.createBiquadFilter();
+    filter2.type = "lowpass";
+    filter2.frequency.value = 2800;
+
+    const g = ctx.createGain();
+    g.gain.value = 0.35;
+
+    noise.connect(filter);
+    filter.connect(filter2);
+    filter2.connect(g);
+    g.connect(master);
+    noise.start();
+  };
+
+  // Quiet singing-bowl style: soft resonant tones with slow beats
+  const startBowls = (ctx: AudioContext, master: GainNode) => {
+    master.gain.value = 0.03;
+    // Two close frequencies create a gentle beating (like bowls)
+    const pairs: [number, number][] = [
+      [174.61, 175.2],   // F3-ish
+      [220.0, 220.8],    // A3
+      [261.63, 262.5],   // C4
+    ];
+    oscRefs.current = [];
+    pairs.forEach(([f1, f2], pairIdx) => {
+      [f1, f2].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        g.gain.value = 0.12 - pairIdx * 0.02;
+        // Slow fade envelope feel via LFO
+        const lfo = ctx.createOscillator();
+        const lfoG = ctx.createGain();
+        lfo.frequency.value = 0.06 + pairIdx * 0.02;
+        lfoG.gain.value = 0.04;
+        lfo.connect(lfoG);
+        lfoG.connect(g.gain);
+        osc.connect(g);
+        g.connect(master);
+        osc.start();
+        lfo.start();
+        oscRefs.current.push(osc);
+      });
+    });
+  };
+
+  const startAmbience = async (type: AmbienceType) => {
+    if (type === "off") return;
+    stopAmbience();
+    try {
+      const ctx = new AudioContext();
+      audioCtxRef.current = ctx;
+      const master = ctx.createGain();
+      master.connect(ctx.destination);
+
+      if (type === "pad") startPad(ctx, master);
+      else if (type === "rain") startRain(ctx, master);
+      else if (type === "bowls") startBowls(ctx, master);
+    } catch (e) {
+      console.warn("Ambience unavailable", e);
+    }
   };
 
   useEffect(() => {
     return () => {
       if (audioUrl) URL.revokeObjectURL(audioUrl);
       if (timerRef.current) clearInterval(timerRef.current);
-      stopAmbientMusic();
+      stopAmbience();
     };
   }, [audioUrl]);
 
@@ -123,10 +205,10 @@ export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorde
 
     if (isPlaying) {
       voiceRef.current.pause();
-      stopAmbientMusic();
+      stopAmbience();
       setIsPlaying(false);
     } else {
-      if (musicEnabled) await startAmbientMusic();
+      await startAmbience(ambience);
       voiceRef.current.currentTime = 0;
       await voiceRef.current.play();
       setIsPlaying(true);
@@ -134,8 +216,17 @@ export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorde
   };
 
   const handleVoiceEnded = () => {
-    stopAmbientMusic();
+    stopAmbience();
     setIsPlaying(false);
+  };
+
+  // If user changes ambience while playing, restart it
+  const changeAmbience = async (type: AmbienceType) => {
+    setAmbience(type);
+    if (isPlaying) {
+      stopAmbience();
+      if (type !== "off") await startAmbience(type);
+    }
   };
 
   const handleSave = () => {
@@ -146,7 +237,7 @@ export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorde
   };
 
   const reset = () => {
-    stopAmbientMusic();
+    stopAmbience();
     if (audioUrl) URL.revokeObjectURL(audioUrl);
     setAudioUrl(null);
     setIsPlaying(false);
@@ -157,10 +248,16 @@ export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorde
   const formatTime = (s: number) =>
     `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
 
+  const ambienceOptions: { id: AmbienceType; label: string }[] = [
+    { id: "pad", label: "Soft pad" },
+    { id: "rain", label: "Soft rain" },
+    { id: "bowls", label: "Quiet bowls" },
+    { id: "off", label: "Voice only" },
+  ];
+
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/30 backdrop-blur-sm p-4">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-border overflow-hidden">
-        {/* Header */}
         <div className="flex items-center justify-between px-5 pt-5 pb-2">
           <h3 className="text-base font-medium text-foreground">Record your affirmation</h3>
           <button
@@ -201,11 +298,7 @@ export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorde
               </>
             ) : (
               <>
-                <audio
-                  ref={voiceRef}
-                  src={audioUrl}
-                  onEnded={handleVoiceEnded}
-                />
+                <audio ref={voiceRef} src={audioUrl} onEnded={handleVoiceEnded} />
                 <button
                   onClick={togglePlayback}
                   className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm"
@@ -217,21 +310,32 @@ export function VoiceRecorder({ affirmationText, onSave, onClose }: VoiceRecorde
                   )}
                 </button>
                 <p className="text-sm text-muted-foreground">
-                  {isPlaying ? "Playing with soft ambient tone…" : "Listen to your recording"}
+                  {isPlaying ? "Playing…" : "Listen to your recording"}
                 </p>
 
-                <button
-                  onClick={() => setMusicEnabled(!musicEnabled)}
-                  className={cn(
-                    "flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border transition-colors",
-                    musicEnabled
-                      ? "border-primary/40 text-primary bg-[#e8f0eb]"
-                      : "border-border text-muted-foreground"
-                  )}
-                >
-                  <Volume2 className="w-3.5 h-3.5" />
-                  {musicEnabled ? "Ambient sound on" : "Ambient sound off"}
-                </button>
+                {/* Ambience selector */}
+                <div className="w-full space-y-2 pt-1">
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground justify-center">
+                    <Volume2 className="w-3.5 h-3.5" />
+                    <span>Background sound</span>
+                  </div>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {ambienceOptions.map((opt) => (
+                      <button
+                        key={opt.id}
+                        onClick={() => changeAmbience(opt.id)}
+                        className={cn(
+                          "text-xs px-3 py-1.5 rounded-full border transition-colors",
+                          ambience === opt.id
+                            ? "border-primary/50 text-primary bg-[#e8f0eb]"
+                            : "border-border text-muted-foreground hover:border-primary/30"
+                        )}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
                 <button
                   onClick={reset}
