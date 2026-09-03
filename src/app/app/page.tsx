@@ -89,7 +89,7 @@ export default function AppPage() {
 
   return (
     <div className="min-h-screen flex flex-col app-atmosphere">
-      <header className="sticky top-0 z-40 bg-white/50 backdrop-blur-md border-b border-border/50">
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="max-w-lg mx-auto px-5 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="font-medium tracking-tight text-foreground text-[15px]">iAffirm</span>
@@ -157,7 +157,7 @@ export default function AppPage() {
         </section>
       </main>
 
-      <nav className="sticky bottom-0 bg-white/55 backdrop-blur-md border-t border-border/40">
+      <nav className="sticky bottom-0 bg-white border-t border-border">
         <div className="max-w-lg mx-auto px-8 h-14 flex items-center justify-between text-muted-foreground text-[11px]">
           <button className="text-primary font-medium">Today</button>
           <button className="hover:text-foreground transition-colors">Library</button>
