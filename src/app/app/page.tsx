@@ -5,8 +5,9 @@ import { AffirmationCard } from "@/components/AffirmationCard";
 import { CategoryPills } from "@/components/CategoryPills";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { PersonalAffirmation } from "@/components/PersonalAffirmation";
-import { PremiumModal } from "@/components/PremiumModal";
-import { User, Loader2, Sparkles } from "lucide-react";
+import { PremiumModal, type PremiumReason } from "@/components/PremiumModal";
+import { LimitBanner } from "@/components/LimitBanner";
+import { User, Loader2, Sparkles, Check } from "lucide-react";
 import Link from "next/link";
 import { getCategories, getAffirmations } from "@/lib/supabase/data";
 import { usePremium } from "@/hooks/usePremium";
@@ -39,7 +40,9 @@ export default function AppPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showRecorder, setShowRecorder] = useState(false);
   const [showPremium, setShowPremium] = useState(false);
+  const [premiumReason, setPremiumReason] = useState<PremiumReason>("general");
   const [practiceText, setPracticeText] = useState<string | null>(null);
+  const [saveNudge, setSaveNudge] = useState(false);
   const [loading, setLoading] = useState(true);
   const [usingMock, setUsingMock] = useState(true);
 
@@ -75,13 +78,14 @@ export default function AppPage() {
 
   const current = filtered[currentIndex % (filtered.length || 1)] || filtered[0];
 
-  const nextAffirmation = () => {
-    if (filtered.length) setCurrentIndex((i) => (i + 1) % filtered.length);
+  const openPremium = (reason: PremiumReason = "general") => {
+    setPremiumReason(reason);
+    setShowPremium(true);
   };
 
   const openRecorder = (text?: string) => {
     if (!premium.canRecord) {
-      setShowPremium(true);
+      openPremium("recordings");
       return;
     }
     setPracticeText(text || current?.content || null);
@@ -92,6 +96,11 @@ export default function AppPage() {
     premium.markRecording();
     setShowRecorder(false);
     setPracticeText(null);
+    // After save: gentle nudge if free and running low / out
+    if (!premium.isPremium) {
+      setSaveNudge(true);
+      setTimeout(() => setSaveNudge(false), 8000);
+    }
   };
 
   if (loading || !premium.ready) {
@@ -122,7 +131,7 @@ export default function AppPage() {
           <div className="flex items-center gap-1">
             {!premium.isPremium && (
               <button
-                onClick={() => setShowPremium(true)}
+                onClick={() => openPremium("general")}
                 className="flex items-center gap-1 text-xs font-medium text-primary px-2.5 py-1.5 rounded-full bg-[#e8f0eb] hover:bg-[#dce8e0] transition-colors"
               >
                 <Sparkles className="w-3.5 h-3.5" />
@@ -136,26 +145,60 @@ export default function AppPage() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-lg mx-auto w-full px-5 py-7 pb-28 space-y-7">
+      <main className="flex-1 max-w-lg mx-auto w-full px-5 py-7 pb-28 space-y-6">
         <CategoryPills
           categories={categories}
           selected={selectedCategory}
           onSelect={setSelectedCategory}
         />
 
-        {/* Usage hint for free users */}
         {!premium.isPremium && (
-          <p className="text-xs text-muted-foreground text-center">
-            {typeof premium.recordingsLeft === "number"
-              ? `${premium.recordingsLeft} free recording${premium.recordingsLeft === 1 ? "" : "s"} left`
-              : null}
-            {typeof premium.recordingsLeft === "number" && typeof premium.aiLeft === "number"
-              ? " · "
-              : null}
-            {typeof premium.aiLeft === "number"
-              ? `${premium.aiLeft} free AI suggestion${premium.aiLeft === 1 ? "" : "s"} left`
-              : null}
-          </p>
+          <LimitBanner
+            recordingsLeft={premium.recordingsLeft}
+            aiLeft={premium.aiLeft}
+            onUpgrade={() =>
+              openPremium(
+                premium.recordingsLeft === 0
+                  ? "recordings"
+                  : premium.aiLeft === 0
+                    ? "ai"
+                    : "general"
+              )
+            }
+          />
+        )}
+
+        {/* Post-save nudge */}
+        {saveNudge && !premium.isPremium && (
+          <div className="rounded-2xl border border-primary/20 bg-white px-4 py-3 flex items-start gap-3">
+            <div className="w-8 h-8 rounded-full bg-[#e8f0eb] flex items-center justify-center shrink-0">
+              <Check className="w-4 h-4 text-primary" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-foreground">Saved to this session</p>
+              <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                {premium.recordingsLeft === 0
+                  ? "That was your last free recording. Premium keeps the practice going."
+                  : premium.recordingsLeft === 1
+                    ? "1 free recording left. Upgrade anytime for unlimited."
+                    : `Nice. ${premium.recordingsLeft} free recordings left.`}
+              </p>
+              {(premium.recordingsLeft === 0 || premium.recordingsLeft === 1) && (
+                <button
+                  onClick={() => openPremium("recordings")}
+                  className="mt-2 text-xs font-medium text-primary"
+                >
+                  See Premium →
+                </button>
+              )}
+            </div>
+            <button
+              onClick={() => setSaveNudge(false)}
+              className="text-xs text-muted-foreground shrink-0"
+            >
+              Dismiss
+            </button>
+          </div>
         )}
 
         {current && (
@@ -166,7 +209,9 @@ export default function AppPage() {
               onPractice={() => openRecorder()}
             />
             <button
-              onClick={nextAffirmation}
+              onClick={() => {
+                if (filtered.length) setCurrentIndex((i) => (i + 1) % filtered.length);
+              }}
               className="w-full py-3 rounded-2xl bg-white/80 border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:border-primary/25 transition-colors"
             >
               Next affirmation
@@ -177,7 +222,7 @@ export default function AppPage() {
         <PersonalAffirmation
           canUseAi={premium.canUseAi}
           aiLeft={premium.aiLeft}
-          onNeedPremium={() => setShowPremium(true)}
+          onNeedPremium={() => openPremium("ai")}
           onPractice={(text) => openRecorder(text)}
           onGenerated={() => premium.markAiGeneration()}
         />
@@ -209,10 +254,9 @@ export default function AppPage() {
       {showPremium && (
         <PremiumModal
           open={showPremium}
+          reason={premiumReason}
           onClose={() => setShowPremium(false)}
-          onSubscribe={(plan) => {
-            premium.activatePremium(plan);
-          }}
+          onSubscribe={(plan) => premium.activatePremium(plan)}
         />
       )}
 
@@ -227,7 +271,7 @@ export default function AppPage() {
           isPremium={premium.isPremium}
           onUpgrade={() => {
             setShowRecorder(false);
-            setShowPremium(true);
+            openPremium("ambient");
           }}
         />
       )}

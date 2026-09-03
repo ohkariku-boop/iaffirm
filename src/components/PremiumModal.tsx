@@ -1,25 +1,56 @@
 "use client";
 
 import { useState } from "react";
-import { X, Check, Sparkles } from "lucide-react";
+import { X, Check, Sparkles, Mic, Volume2, Brain } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PREMIUM, type PlanId } from "@/lib/premium";
+
+export type PremiumReason = "recordings" | "ai" | "ambient" | "general";
 
 interface PremiumModalProps {
   open: boolean;
   onClose: () => void;
   onSubscribe?: (plan: PlanId) => void;
+  reason?: PremiumReason;
 }
 
-export function PremiumModal({ open, onClose, onSubscribe }: PremiumModalProps) {
-  const [plan, setPlan] = useState<PlanId>("yearly");
+const REASON_COPY: Record<
+  PremiumReason,
+  { title: string; body: string; icon: typeof Mic }
+> = {
+  recordings: {
+    title: "You’ve used your free recordings",
+    body: "Premium lets you record without limits — so the words that matter can live in your own voice.",
+    icon: Mic,
+  },
+  ai: {
+    title: "You’ve used your free AI suggestions",
+    body: "Premium unlocks personal affirmations whenever you need lines that fit this moment.",
+    icon: Brain,
+  },
+  ambient: {
+    title: "That sound is in Premium",
+    body: "Soft rain and quiet bowls sit gently under your voice. Unlock all ambient sounds with Premium.",
+    icon: Volume2,
+  },
+  general: {
+    title: "A deeper practice, still gentle",
+    body: "Unlimited recordings, all ambient sounds, and AI affirmations written for you.",
+    icon: Sparkles,
+  },
+};
 
+export function PremiumModal({
+  open,
+  onClose,
+  onSubscribe,
+  reason = "general",
+}: PremiumModalProps) {
+  const [plan, setPlan] = useState<PlanId>("yearly");
   if (!open) return null;
 
-  const handleSubscribe = () => {
-    onSubscribe?.(plan);
-    onClose();
-  };
+  const copy = REASON_COPY[reason];
+  const Icon = copy.icon;
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-4">
@@ -33,15 +64,14 @@ export function PremiumModal({ open, onClose, onSubscribe }: PremiumModalProps) 
             <X className="w-5 h-5" />
           </button>
 
-          <div className="flex items-center gap-2 text-primary mb-2">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-xs font-medium tracking-wide uppercase">iAffirm Premium</span>
+          <div className="w-11 h-11 rounded-full bg-[#e8f0eb] flex items-center justify-center mb-4">
+            <Icon className="w-5 h-5 text-primary" />
           </div>
-          <h2 className="text-2xl font-medium text-foreground leading-snug">
-            A deeper practice,<br />still gentle.
+          <h2 className="text-xl font-medium text-foreground leading-snug">
+            {copy.title}
           </h2>
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-            Unlimited recordings, all ambient sounds, AI personal affirmations, and a library that grows with you.
+            {copy.body}
           </p>
         </div>
 
@@ -93,29 +123,33 @@ export function PremiumModal({ open, onClose, onSubscribe }: PremiumModalProps) 
           </button>
         </div>
 
-        <div className="px-6 py-5 space-y-3">
+        <div className="px-6 py-5 space-y-2.5">
           {PREMIUM.features.map((f) => (
-            <div key={f.id} className="flex gap-3">
-              <div className="mt-0.5 w-5 h-5 rounded-full bg-[#e8f0eb] flex items-center justify-center shrink-0">
-                <Check className="w-3 h-3 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">{f.title}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">{f.description}</p>
-              </div>
+            <div key={f.id} className="flex gap-2.5 items-start">
+              <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+              <p className="text-sm text-foreground">{f.title}</p>
             </div>
           ))}
         </div>
 
         <div className="px-6 pb-6 space-y-3">
           <button
-            onClick={handleSubscribe}
+            onClick={() => {
+              onSubscribe?.(plan);
+              onClose();
+            }}
             className="w-full py-3.5 rounded-2xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            Continue with {plan === "yearly" ? "Yearly" : "Monthly"}
+            Unlock Premium · {plan === "yearly" ? `$${PREMIUM.yearlyPrice}/yr` : `$${PREMIUM.monthlyPrice}/mo`}
           </button>
-          <p className="text-center text-[11px] text-muted-foreground leading-relaxed">
-            Demo mode: activates Premium on this device. Real payments (Stripe / stores) come next.
+          <button
+            onClick={onClose}
+            className="w-full py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Not now — keep browsing
+          </button>
+          <p className="text-center text-[11px] text-muted-foreground">
+            Demo: activates on this device. Real checkout comes next.
           </p>
         </div>
       </div>
