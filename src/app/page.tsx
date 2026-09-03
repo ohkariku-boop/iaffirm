@@ -3,8 +3,8 @@ import { ArrowRight } from "lucide-react";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#faf8f5] text-[#2c2a26]">
-      <header className="sticky top-0 z-50 bg-[#faf8f5]/90 backdrop-blur-md border-b border-[#e8e2d9]">
+    <div className="min-h-screen landing-atmosphere text-[#2a2825]">
+      <header className="sticky top-0 z-50 bg-[#f7f3ed]/85 backdrop-blur-md border-b border-[#e8e2d9]">
         <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
           <span className="text-[15px] font-medium tracking-wide">iAffirm</span>
           <Link
@@ -37,7 +37,7 @@ export default function LandingPage() {
         </Link>
       </section>
 
-      <section className="border-y border-[#e8e2d9] bg-white">
+      <section className="border-y border-[#e5dfd5] bg-white/70 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-6 py-20 text-center">
           <p className="text-2xl sm:text-3xl font-medium leading-snug text-[#2c2a26] max-w-lg mx-auto">
             “I am learning to speak to myself the way I would speak to someone I love.”
@@ -77,7 +77,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="border-t border-[#e8e2d9] bg-white">
+      <section className="border-t border-[#e5dfd5] bg-white/70 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-6 py-24 text-center">
           <h2 className="text-2xl sm:text-3xl font-medium mb-6 leading-snug text-[#2c2a26]">
             Better days often begin<br />with how we speak to ourselves.
