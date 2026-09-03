@@ -7,7 +7,7 @@ import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { PersonalAffirmation } from "@/components/PersonalAffirmation";
 import { PremiumModal, type PremiumReason } from "@/components/PremiumModal";
 import { LimitBanner } from "@/components/LimitBanner";
-import { User, Loader2, Sparkles, Check } from "lucide-react";
+import { User, Loader2, Heart, Check } from "lucide-react";
 import Link from "next/link";
 import { getCategories, getAffirmations } from "@/lib/supabase/data";
 import { usePremium } from "@/hooks/usePremium";
@@ -123,8 +123,8 @@ export default function AppPage() {
               </span>
             )}
             {premium.isPremium && (
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#e8f0eb] text-primary">
-                premium
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#fdf0f0] text-[#b85c5c]">
+                full practice
               </span>
             )}
           </Link>
@@ -132,10 +132,10 @@ export default function AppPage() {
             {!premium.isPremium && (
               <button
                 onClick={() => openPremium("general")}
-                className="flex items-center gap-1 text-xs font-medium text-primary px-2.5 py-1.5 rounded-full bg-[#e8f0eb] hover:bg-[#dce8e0] transition-colors"
+                className="flex items-center gap-1 text-xs font-medium text-primary px-2.5 py-1.5 rounded-full bg-[#fdf0f0] hover:bg-[#fce8e8] transition-colors"
               >
-                <Sparkles className="w-3.5 h-3.5" />
-                Premium
+                <Heart className="w-3.5 h-3.5 text-[#b85c5c]" />
+                Full practice
               </button>
             )}
             <button className="p-2 rounded-full text-muted-foreground hover:bg-muted/80 transition-colors">
@@ -178,7 +178,7 @@ export default function AppPage() {
               <p className="text-sm font-medium text-foreground">Saved to this session</p>
               <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
                 {premium.recordingsLeft === 0
-                  ? "That was your last free recording. Premium keeps the practice going."
+                  ? "That was your last free recording. The full practice keeps it going."
                   : premium.recordingsLeft === 1
                     ? "1 free recording left. Upgrade anytime for unlimited."
                     : `Nice. ${premium.recordingsLeft} free recordings left.`}
@@ -188,7 +188,7 @@ export default function AppPage() {
                   onClick={() => openPremium("recordings")}
                   className="mt-2 text-xs font-medium text-primary"
                 >
-                  See Premium →
+                  See full practice →
                 </button>
               )}
             </div>

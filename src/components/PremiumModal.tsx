@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Check, Sparkles, Mic, Volume2, Brain } from "lucide-react";
+import { X, Check, Heart, Mic, Volume2, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PREMIUM, type PlanId } from "@/lib/premium";
 
@@ -20,23 +20,23 @@ const REASON_COPY: Record<
 > = {
   recordings: {
     title: "You’ve used your free recordings",
-    body: "Premium lets you record without limits — so the words that matter can live in your own voice.",
+    body: "Keep going in your own voice — unlimited recordings when you’re ready for a fuller practice.",
     icon: Mic,
   },
   ai: {
-    title: "You’ve used your free AI suggestions",
-    body: "Premium unlocks personal affirmations whenever you need lines that fit this moment.",
-    icon: Brain,
+    title: "You’ve used your free personal lines",
+    body: "Get affirmations written for what you’re actually going through, anytime you need them.",
+    icon: Pencil,
   },
   ambient: {
-    title: "That sound is in Premium",
-    body: "Soft rain and quiet bowls sit gently under your voice. Unlock all ambient sounds with Premium.",
+    title: "That sound is part of the fuller practice",
+    body: "Soft rain and quiet bowls sit under your voice. They’re included when you open the full practice.",
     icon: Volume2,
   },
   general: {
-    title: "A deeper practice, still gentle",
-    body: "Unlimited recordings, all ambient sounds, and AI affirmations written for you.",
-    icon: Sparkles,
+    title: "Your practice, a little deeper",
+    body: "Unlimited recordings in your voice, personal lines for your situation, and gentle sounds under them.",
+    icon: Heart,
   },
 };
 
@@ -64,8 +64,8 @@ export function PremiumModal({
             <X className="w-5 h-5" />
           </button>
 
-          <div className="w-11 h-11 rounded-full bg-[#e8f0eb] flex items-center justify-center mb-4">
-            <Icon className="w-5 h-5 text-primary" />
+          <div className="w-11 h-11 rounded-full bg-[#fce8e8] flex items-center justify-center mb-4">
+            <Icon className="w-5 h-5 text-[#b85c5c]" />
           </div>
           <h2 className="text-xl font-medium text-foreground leading-snug">
             {copy.title}
@@ -124,10 +124,16 @@ export function PremiumModal({
         </div>
 
         <div className="px-6 py-5 space-y-2.5">
-          {PREMIUM.features.map((f) => (
-            <div key={f.id} className="flex gap-2.5 items-start">
+          {[
+            "Unlimited recordings in your own voice",
+            "Personal lines written for your situation",
+            "All gentle background sounds",
+            "A library of what you’ve saved",
+            "Optional reminders, on your terms",
+          ].map((label) => (
+            <div key={label} className="flex gap-2.5 items-start">
               <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-              <p className="text-sm text-foreground">{f.title}</p>
+              <p className="text-sm text-foreground">{label}</p>
             </div>
           ))}
         </div>
@@ -140,7 +146,7 @@ export function PremiumModal({
             }}
             className="w-full py-3.5 rounded-2xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            Unlock Premium · {plan === "yearly" ? `$${PREMIUM.yearlyPrice}/yr` : `$${PREMIUM.monthlyPrice}/mo`}
+            Continue · {plan === "yearly" ? `$${PREMIUM.yearlyPrice}/year` : `$${PREMIUM.monthlyPrice}/month`}
           </button>
           <button
             onClick={onClose}
@@ -149,7 +155,7 @@ export function PremiumModal({
             Not now — keep browsing
           </button>
           <p className="text-center text-[11px] text-muted-foreground">
-            Demo: activates on this device. Real checkout comes next.
+            Demo: unlocks on this device. Real checkout comes next.
           </p>
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, Loader2, Mic, X } from "lucide-react";
+import { Pencil, Loader2, Mic, X, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PersonalAffirmationProps {
@@ -70,16 +70,16 @@ export function PersonalAffirmation({
       >
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-[#e8f0eb] flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-primary" />
+            <Pencil className="w-4 h-4 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium text-foreground">Make it personal</p>
+            <p className="text-sm font-medium text-foreground">Write for me</p>
             <p className="text-xs text-muted-foreground">
               {canUseAi
                 ? aiLeft === "unlimited"
-                  ? "AI affirmations for your situation"
-                  : `${aiLeft} free AI suggestion${aiLeft === 1 ? "" : "s"} left`
-                : "Premium · unlock AI affirmations"}
+                  ? "Lines written for your situation"
+                  : `${aiLeft} free personal line${aiLeft === 1 ? "" : "s"} left`
+                : "Unlock personal lines"}
             </p>
           </div>
         </div>
@@ -142,8 +142,8 @@ export function PersonalAffirmation({
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-4 h-4" />
-                    Suggest affirmations
+                    <Pencil className="w-4 h-4" />
+                    Suggest lines
                   </>
                 )}
               </button>
