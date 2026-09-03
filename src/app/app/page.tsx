@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import { AffirmationCard } from "@/components/AffirmationCard";
 import { CategoryPills } from "@/components/CategoryPills";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
-import { Sparkles, Plus, User, Loader2 } from "lucide-react";
+import { User, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { getCategories, getAffirmations } from "@/lib/supabase/data";
 import type { Affirmation, Category } from "@/types";
 
 const MOCK_CATEGORIES: Category[] = [
-  { id: "1", name: "Confidence", slug: "confidence", description: null, icon: "🌿", color: "#5b8a72", sort_order: 1 },
+  { id: "1", name: "Confidence", slug: "confidence", description: null, icon: "🌿", color: "#4a7c68", sort_order: 1 },
   { id: "2", name: "Self-Love", slug: "self-love", description: null, icon: "💗", color: "#c45c7a", sort_order: 2 },
   { id: "3", name: "Calm", slug: "anxiety", description: null, icon: "🌊", color: "#5a8a9e", sort_order: 3 },
   { id: "4", name: "Motivation", slug: "motivation", description: null, icon: "☀️", color: "#c49a5c", sort_order: 4 },
@@ -87,23 +87,23 @@ export default function AppPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <header className="sticky top-0 z-40 bg-background/90 backdrop-blur-md border-b border-border">
-        <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md border-b border-border/70">
+        <div className="max-w-lg mx-auto px-5 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <span className="font-medium tracking-tight text-foreground">iAffirm</span>
+            <span className="font-medium tracking-tight text-foreground text-[15px]">iAffirm</span>
             {usingMock && (
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground">
                 demo
               </span>
             )}
           </Link>
-          <button className="p-2 rounded-full text-muted-foreground hover:bg-muted transition-colors">
+          <button className="p-2 rounded-full text-muted-foreground hover:bg-muted/80 transition-colors">
             <User className="w-5 h-5" />
           </button>
         </div>
       </header>
 
-      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-6 space-y-6">
+      <main className="flex-1 max-w-lg mx-auto w-full px-5 py-7 space-y-7">
         <CategoryPills
           categories={categories}
           selected={selectedCategory}
@@ -119,15 +119,15 @@ export default function AppPage() {
             />
             <button
               onClick={nextAffirmation}
-              className="w-full py-3 rounded-xl bg-white border border-border text-sm font-medium text-foreground hover:bg-muted/50 transition-colors"
+              className="w-full py-3 rounded-2xl bg-white/80 border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:border-primary/25 transition-colors"
             >
               Next affirmation
             </button>
           </div>
         )}
 
-        <section className="space-y-3 pt-2">
-          <h2 className="text-xs font-medium text-muted-foreground tracking-wide uppercase">
+        <section className="space-y-4 pt-1">
+          <h2 className="text-[11px] font-medium text-muted-foreground tracking-[0.14em] uppercase">
             More for you
           </h2>
           <div className="grid gap-3">
@@ -146,20 +146,11 @@ export default function AppPage() {
         </section>
       </main>
 
-      <nav className="sticky bottom-0 bg-white/95 backdrop-blur-md border-t border-border">
-        <div className="max-w-lg mx-auto px-6 h-14 flex items-center justify-around text-muted-foreground">
-          <button className="flex flex-col items-center gap-0.5 text-primary">
-            <Sparkles className="w-5 h-5" />
-            <span className="text-[10px]">Home</span>
-          </button>
-          <button className="flex flex-col items-center gap-0.5">
-            <Plus className="w-5 h-5" />
-            <span className="text-[10px]">Create</span>
-          </button>
-          <button className="flex flex-col items-center gap-0.5">
-            <User className="w-5 h-5" />
-            <span className="text-[10px]">Profile</span>
-          </button>
+      <nav className="sticky bottom-0 bg-white/90 backdrop-blur-md border-t border-border/70">
+        <div className="max-w-lg mx-auto px-8 h-14 flex items-center justify-between text-muted-foreground text-[11px]">
+          <button className="text-primary font-medium">Today</button>
+          <button className="hover:text-foreground transition-colors">Library</button>
+          <button className="hover:text-foreground transition-colors">You</button>
         </div>
       </nav>
 

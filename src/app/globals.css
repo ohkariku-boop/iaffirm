@@ -1,18 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #faf8f5;
-  --foreground: #2c2a26;
+  --background: #f7f4ef;
+  --foreground: #2a2825;
   --card: #ffffff;
-  --card-foreground: #2c2a26;
-  --primary: #5b8a72;
+  --card-foreground: #2a2825;
+  --primary: #4a7c68;
   --primary-foreground: #ffffff;
-  --muted: #f0ebe3;
-  --muted-foreground: #6b6560;
-  --accent: #f5f0e8;
-  --border: #e8e2d9;
-  --ring: #5b8a72;
-  --soft: #e8f0eb;
+  --muted: #efeae3;
+  --muted-foreground: #6f6a63;
+  --accent: #f3efe8;
+  --border: #e5dfd5;
+  --ring: #4a7c68;
 }
 
 @theme inline {
@@ -46,17 +45,26 @@ html {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--primary) 25%, transparent);
+  background: color-mix(in srgb, var(--primary) 22%, transparent);
+}
+
+/* Soft nature-inspired card surfaces */
+.affirmation-hero {
+  background:
+    linear-gradient(165deg, rgba(255,255,255,0.92) 0%, rgba(247,250,246,0.88) 45%, rgba(240,245,238,0.9) 100%);
+  border: 1px solid rgba(74, 124, 104, 0.12);
+  box-shadow:
+    0 1px 2px rgba(42, 40, 37, 0.04),
+    0 12px 40px rgba(74, 124, 104, 0.07);
 }
 
 .affirmation-card {
-  background: var(--card);
+  background: #ffffff;
   border: 1px solid var(--border);
-  box-shadow: 0 1px 3px rgba(44, 42, 38, 0.04);
+  box-shadow: 0 1px 3px rgba(42, 40, 37, 0.03);
 }
 
-.affirmation-card-featured {
-  background: linear-gradient(165deg, #ffffff 0%, #f7faf8 100%);
-  border: 1px solid #d4e5db;
-  box-shadow: 0 4px 24px rgba(91, 138, 114, 0.08);
+.affirmation-card:hover {
+  border-color: rgba(74, 124, 104, 0.22);
+  box-shadow: 0 4px 16px rgba(74, 124, 104, 0.06);
 }

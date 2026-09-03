@@ -11,14 +11,14 @@ interface CategoryPillsProps {
 
 export function CategoryPills({ categories, selected, onSelect }: CategoryPillsProps) {
   return (
-    <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+    <div className="flex gap-2 overflow-x-auto pb-0.5 -mx-0.5 px-0.5 scrollbar-hide">
       <button
         onClick={() => onSelect(null)}
         className={cn(
-          "shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all",
+          "shrink-0 px-4 py-2 rounded-full text-[13px] font-medium transition-all",
           selected === null
-            ? "bg-primary text-primary-foreground"
-            : "bg-white text-muted-foreground border border-border hover:border-primary/40"
+            ? "bg-primary text-primary-foreground shadow-sm"
+            : "bg-white text-muted-foreground border border-border hover:border-primary/30"
         )}
       >
         All
@@ -28,13 +28,13 @@ export function CategoryPills({ categories, selected, onSelect }: CategoryPillsP
           key={cat.id}
           onClick={() => onSelect(cat.slug)}
           className={cn(
-            "shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-1.5",
+            "shrink-0 px-4 py-2 rounded-full text-[13px] font-medium transition-all flex items-center gap-1.5",
             selected === cat.slug
-              ? "bg-primary text-primary-foreground"
-              : "bg-white text-muted-foreground border border-border hover:border-primary/40"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "bg-white text-muted-foreground border border-border hover:border-primary/30"
           )}
         >
-          <span className="text-xs">{cat.icon}</span>
+          <span className="text-[12px]">{cat.icon}</span>
           <span>{cat.name}</span>
         </button>
       ))}
