@@ -40,6 +40,7 @@ export default function AppPage() {
   const [themeId, setThemeId] = useState<ThemeId>("sage");
   const [themeReady, setThemeReady] = useState(false);
   const [ambientId, setAmbientId] = useState<AmbienceId>("pad");
+  const [previewThemeId, setPreviewThemeId] = useState<ThemeId | null>(null);
 
   const premium = usePremium();
   const library = useLibrary();
@@ -141,8 +142,9 @@ export default function AppPage() {
       className="min-h-screen flex flex-col transition-colors duration-500"
       style={
         {
-          background: theme.pageBg,
+          background: theme.pageBackground || theme.pageBg,
           color: theme.text,
+          fontFamily: theme.fontUi,
           ["--primary" as string]: theme.accent,
           ["--background" as string]: theme.pageBg,
         } as React.CSSProperties
@@ -280,6 +282,19 @@ export default function AppPage() {
                   isFavorite={library.isFavorite(current.id)}
                   onFavorite={() => library.toggleFavorite(current.id)}
                   onPractice={() => openRecorder()}
+                  themeStyle={{
+                    cardBackground: theme.cardBackground,
+                    cardBorder: theme.cardBorder,
+                    cardShadow: theme.cardShadow,
+                    text: theme.text,
+                    muted: theme.muted,
+                    accent: theme.accent,
+                    fontAffirmation: theme.fontAffirmation,
+                    affirmTracking: theme.affirmTracking,
+                    affirmWeight: theme.affirmWeight,
+                    affirmSize: theme.affirmSize,
+                    heroWash: theme.heroWash,
+                  }}
                 />
                 <div className="flex gap-2">
                   <button
@@ -386,6 +401,8 @@ export default function AppPage() {
                 isPremium={premium.isPremium}
                 onSelect={handleThemeSelect}
                 onNeedPremium={() => openPremium("general")}
+                previewId={previewThemeId ?? undefined}
+                onPreview={setPreviewThemeId}
               />
               <SoundPicker
                 current={ambientId}

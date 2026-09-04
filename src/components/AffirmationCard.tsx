@@ -12,6 +12,20 @@ interface AffirmationCardProps {
   onPractice?: () => void;
   className?: string;
   large?: boolean;
+  /** Atmosphere styles for hero card */
+  themeStyle?: {
+    cardBackground?: string;
+    cardBorder?: string;
+    cardShadow?: string;
+    text?: string;
+    muted?: string;
+    accent?: string;
+    fontAffirmation?: string;
+    affirmTracking?: string;
+    affirmWeight?: number;
+    affirmSize?: string;
+    heroWash?: string;
+  };
 }
 
 export function AffirmationCard({
@@ -21,6 +35,7 @@ export function AffirmationCard({
   onPractice,
   className,
   large = false,
+  themeStyle,
 }: AffirmationCardProps) {
   const [favorited, setFavorited] = useState(isFavorite);
 
@@ -37,9 +52,19 @@ export function AffirmationCard({
     return (
       <div
         className={cn(
-          "relative rounded-[1.75rem] px-7 py-12 md:px-10 md:py-14 affirmation-hero overflow-hidden",
+          "relative rounded-[1.75rem] px-7 py-12 md:px-10 md:py-14 overflow-hidden",
+          !themeStyle && "affirmation-hero",
           className
         )}
+        style={
+          themeStyle
+            ? {
+                background: themeStyle.cardBackground,
+                border: `1px solid ${themeStyle.cardBorder}`,
+                boxShadow: themeStyle.cardShadow,
+              }
+            : undefined
+        }
       >
         {/* Soft decorative wash */}
         <div
@@ -58,7 +83,16 @@ export function AffirmationCard({
           </div>
         )}
 
-        <p className="relative text-center text-[1.35rem] md:text-[1.65rem] font-medium leading-[1.45] tracking-[-0.01em] text-foreground max-w-sm mx-auto">
+        <p
+          className="relative text-center leading-[1.45] max-w-sm mx-auto"
+          style={{
+            color: themeStyle?.text,
+            fontFamily: themeStyle?.fontAffirmation,
+            fontWeight: themeStyle?.affirmWeight ?? 500,
+            letterSpacing: themeStyle?.affirmTracking ?? "-0.01em",
+            fontSize: themeStyle?.affirmSize ?? "1.45rem",
+          }}
+        >
           {affirmation.content}
         </p>
 

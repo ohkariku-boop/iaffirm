@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Cormorant_Garamond, Fraunces, DM_Sans } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,9 +12,28 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const affirmSerif = Cormorant_Garamond({
+  variable: "--font-affirm-serif",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const affirmDisplay = Fraunces({
+  variable: "--font-affirm-display",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const affirmSans = DM_Sans({
+  variable: "--font-affirm-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "iAffirm — Affirmations in your own voice",
-  description: "A quiet space to practice positive self-talk. Record affirmations in your voice and return to them when you need lifting.",
+  description:
+    "A quiet space to practice positive self-talk. Record affirmations in your voice and return to them when you need lifting.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -37,7 +56,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${affirmSerif.variable} ${affirmDisplay.variable} ${affirmSans.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}
       </body>
