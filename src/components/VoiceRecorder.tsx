@@ -12,14 +12,15 @@ interface VoiceRecorderProps {
   onClose?: () => void;
   onUpgrade?: () => void;
   isPremium?: boolean;
+  defaultAmbience?: AmbienceType;
 }
 
-export function VoiceRecorder({ affirmationText, onSave, onClose, onUpgrade, isPremium = false }: VoiceRecorderProps) {
+export function VoiceRecorder({ affirmationText, onSave, onClose, onUpgrade, isPremium = false, defaultAmbience = "pad" }: VoiceRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
-  const [ambience, setAmbience] = useState<AmbienceType>("pad");
+  const [ambience, setAmbience] = useState<AmbienceType>(defaultAmbience);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const voiceRef = useRef<HTMLAudioElement | null>(null);
@@ -28,6 +29,11 @@ export function VoiceRecorder({ affirmationText, onSave, onClose, onUpgrade, isP
   const nodesRef = useRef<AudioNode[]>([]);
   const oscRefs = useRef<OscillatorNode[]>([]);
   const noiseSourceRef = useRef<AudioBufferSourceNode | null>(null);
+
+  useEffect(() => {
+    const allowed = isPremium || defaultAmbience === "pad" || defaultAmbience === "off";
+    setAmbience(allowed ? defaultAmbience : "pad");
+  }, [defaultAmbience, isPremium]);
 
   const stopAmbience = () => {
     oscRefs.current.forEach((o) => {

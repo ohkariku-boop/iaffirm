@@ -10,6 +10,7 @@ import { LimitBanner } from "@/components/LimitBanner";
 import { AboutPractice } from "@/components/AboutPractice";
 import { LibraryView } from "@/components/LibraryView";
 import { ThemePicker } from "@/components/ThemePicker";
+import { SoundPicker } from "@/components/SoundPicker";
 import { RemindersPanel } from "@/components/RemindersPanel";
 import { Logo } from "@/components/Logo";
 import { User, Loader2, Heart, Check, Lock } from "lucide-react";
@@ -21,6 +22,7 @@ import {
   ALL_AFFIRMATIONS,
 } from "@/lib/content";
 import { getTheme, loadThemeId, saveThemeId, type ThemeId } from "@/lib/themes";
+import { loadPreferredAmbience, savePreferredAmbience, type AmbienceId } from "@/lib/sound";
 import type { Affirmation } from "@/types";
 
 type Tab = "today" | "library" | "you";
@@ -37,12 +39,14 @@ export default function AppPage() {
   const [showAbout, setShowAbout] = useState(false);
   const [themeId, setThemeId] = useState<ThemeId>("sage");
   const [themeReady, setThemeReady] = useState(false);
+  const [ambientId, setAmbientId] = useState<AmbienceId>("pad");
 
   const premium = usePremium();
   const library = useLibrary();
 
   useEffect(() => {
     setThemeId(loadThemeId());
+    setAmbientId(loadPreferredAmbience());
     setThemeReady(true);
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js").catch(() => {});
@@ -109,6 +113,12 @@ export default function AppPage() {
   const handleThemeSelect = (id: ThemeId) => {
     setThemeId(id);
     saveThemeId(id);
+    // Align default sound with theme when user picks an atmosphere
+    const t = getTheme(id);
+    if (premium.isPremium || t.ambientDefault === "pad" || t.ambientDefault === "off") {
+      setAmbientId(t.ambientDefault);
+      savePreferredAmbience(t.ambientDefault);
+    }
   };
 
   const lockedCategoryCount = premium.isPremium
@@ -364,12 +374,30 @@ export default function AppPage() {
               </p>
             </div>
 
-            <ThemePicker
-              current={themeId}
-              isPremium={premium.isPremium}
-              onSelect={handleThemeSelect}
-              onNeedPremium={() => openPremium("general")}
-            />
+            <div className="rounded-2xl border bg-white px-4 py-4 space-y-6" style={{ borderColor: `${theme.accent}20` }}>
+              <div>
+                <h3 className="text-sm font-medium mb-1">Look & sound</h3>
+                <p className="text-xs" style={{ color: theme.muted }}>
+                  Full practice unlocks every atmosphere and background sound.
+                </p>
+              </div>
+              <ThemePicker
+                current={themeId}
+                isPremium={premium.isPremium}
+                onSelect={handleThemeSelect}
+                onNeedPremium={() => openPremium("general")}
+              />
+              <SoundPicker
+                current={ambientId}
+                isPremium={premium.isPremium}
+                accent={theme.accent}
+                onNeedPremium={() => openPremium("ambient")}
+                onSelect={(id) => {
+                  setAmbientId(id);
+                  savePreferredAmbience(id);
+                }}
+              />
+            </div>
 
             <RemindersPanel
               isPremium={premium.isPremium}
@@ -477,6 +505,7 @@ export default function AppPage() {
             setPracticeText(null);
           }}
           isPremium={premium.isPremium}
+          defaultAmbience={ambientId}
           onUpgrade={() => {
             setShowRecorder(false);
             openPremium("ambient");
