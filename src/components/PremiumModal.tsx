@@ -47,7 +47,38 @@ export function PremiumModal({
   reason = "general",
 }: PremiumModalProps) {
   const [plan, setPlan] = useState<PlanId>("yearly");
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
   if (!open) return null;
+
+  const handleCheckout = async () => {
+    setLoading(true);
+    setErr(null);
+    try {
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan }),
+      });
+      const data = await res.json();
+      if (res.ok && data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      // Stripe not configured — demo unlock on device
+      if (data.demo || res.status === 503) {
+        onSubscribe?.(plan);
+        onClose();
+        return;
+      }
+      setErr(data.error || "Checkout unavailable. Try again later.");
+    } catch {
+      onSubscribe?.(plan);
+      onClose();
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const copy = REASON_COPY[reason];
   const Icon = copy.icon;
@@ -134,13 +165,13 @@ export function PremiumModal({
 
         <div className="px-6 pb-6 space-y-3">
           <button
-            onClick={() => {
-              onSubscribe?.(plan);
-              onClose();
-            }}
-            className="w-full py-3.5 rounded-2xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
+            onClick={handleCheckout}
+            disabled={loading}
+            className="w-full py-3.5 rounded-2xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-60"
           >
-            Continue · {plan === "yearly" ? `$${PREMIUM.yearlyPrice}/year` : `$${PREMIUM.monthlyPrice}/month`}
+            {loading
+              ? "Redirecting…"
+              : `Continue · ${plan === "yearly" ? `$${PREMIUM.yearlyPrice}/year` : `$${PREMIUM.monthlyPrice}/month`}`}
           </button>
           <button
             onClick={onClose}
@@ -148,8 +179,9 @@ export function PremiumModal({
           >
             Not now — keep browsing
           </button>
+          {err && <p className="text-center text-[11px] text-red-600">{err}</p>}
           <p className="text-center text-[11px] text-muted-foreground">
-            Demo: unlocks on this device. Real checkout comes next.
+            Secure checkout when Stripe is configured. Otherwise unlocks on this device for demo.
           </p>
         </div>
       </div>

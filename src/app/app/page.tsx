@@ -11,6 +11,8 @@ import { AboutPractice } from "@/components/AboutPractice";
 import { LibraryView } from "@/components/LibraryView";
 import { ThemePicker } from "@/components/ThemePicker";
 import { SoundPicker } from "@/components/SoundPicker";
+import { Onboarding } from "@/components/Onboarding";
+import { TodayRitual } from "@/components/TodayRitual";
 import { RemindersPanel } from "@/components/RemindersPanel";
 import { Logo } from "@/components/Logo";
 import { User, Loader2, Heart, Check, Lock } from "lucide-react";
@@ -23,6 +25,15 @@ import {
 } from "@/lib/content";
 import { getTheme, loadThemeId, saveThemeId, type ThemeId } from "@/lib/themes";
 import { loadPreferredAmbience, savePreferredAmbience, type AmbienceId } from "@/lib/sound";
+import {
+  hasOnboarded,
+  setOnboarded,
+  setFocusSlug,
+  getFocusSlug,
+  pickDailyAffirmation,
+  isDailyPracticed,
+  markDailyPracticed,
+} from "@/lib/daily";
 import type { Affirmation } from "@/types";
 
 type Tab = "today" | "library" | "you";
@@ -41,6 +52,10 @@ export default function AppPage() {
   const [themeReady, setThemeReady] = useState(false);
   const [ambientId, setAmbientId] = useState<AmbienceId>("pad");
   const [previewThemeId, setPreviewThemeId] = useState<ThemeId | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [dailyDone, setDailyDone] = useState(false);
+  const [focusSlug, setFocusSlugState] = useState<string | null>(null);
+  const [openRecorderAfterOnboard, setOpenRecorderAfterOnboard] = useState(false);
 
   const premium = usePremium();
   const library = useLibrary();
@@ -49,6 +64,11 @@ export default function AppPage() {
     setThemeId(loadThemeId());
     setAmbientId(loadPreferredAmbience());
     setThemeReady(true);
+    setShowOnboarding(!hasOnboarded());
+    setDailyDone(isDailyPracticed());
+    const f = getFocusSlug();
+    setFocusSlugState(f);
+    if (f) setSelectedCategory(f);
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js").catch(() => {});
     }
@@ -81,6 +101,19 @@ export default function AppPage() {
 
   const current = filtered[currentIndex % (filtered.length || 1)] || filtered[0];
 
+  const dailyPool = useMemo(() => {
+    if (focusSlug) {
+      const focused = affirmations.filter((a) => a.category?.slug === focusSlug);
+      if (focused.length) return focused;
+    }
+    return affirmations;
+  }, [affirmations, focusSlug]);
+
+  const dailyAffirmation = useMemo(
+    () => pickDailyAffirmation(dailyPool),
+    [dailyPool]
+  );
+
   // Reset index when category or tier changes
   useEffect(() => {
     setCurrentIndex(0);
@@ -103,12 +136,25 @@ export default function AppPage() {
   const handleSaveRecording = async (_blob: Blob) => {
     if (practiceText) library.addRecording(practiceText);
     premium.markRecording();
+    markDailyPracticed();
+    setDailyDone(true);
     setShowRecorder(false);
     setPracticeText(null);
     if (!premium.isPremium) {
       setSaveNudge(true);
       setTimeout(() => setSaveNudge(false), 8000);
     }
+  };
+
+  const completeOnboarding = (slug: string | null) => {
+    setOnboarded();
+    if (slug) {
+      setFocusSlug(slug);
+      setFocusSlugState(slug);
+      setSelectedCategory(slug);
+    }
+    setShowOnboarding(false);
+    setOpenRecorderAfterOnboard(true);
   };
 
   const handleThemeSelect = (id: ThemeId) => {
@@ -121,6 +167,16 @@ export default function AppPage() {
       savePreferredAmbience(t.ambientDefault);
     }
   };
+
+  useEffect(() => {
+    if (openRecorderAfterOnboard && dailyAffirmation && premium.ready) {
+      setOpenRecorderAfterOnboard(false);
+      if (premium.canRecord) {
+        setPracticeText(dailyAffirmation.content);
+        setShowRecorder(true);
+      }
+    }
+  }, [openRecorderAfterOnboard, dailyAffirmation, premium.ready, premium.canRecord]);
 
   const lockedCategoryCount = premium.isPremium
     ? 0
@@ -194,6 +250,26 @@ export default function AppPage() {
       <main className="flex-1 max-w-lg mx-auto w-full px-5 py-6 pb-28 space-y-6">
         {tab === "today" && (
           <>
+            {dailyAffirmation && (
+              <TodayRitual
+                affirmation={dailyAffirmation}
+                practiced={dailyDone}
+                onPractice={() => openRecorder(dailyAffirmation.content)}
+                theme={{
+                  accent: theme.accent,
+                  accentSoft: theme.accentSoft,
+                  text: theme.text,
+                  muted: theme.muted,
+                  cardBackground: theme.cardBackground,
+                  cardBorder: theme.cardBorder,
+                  cardShadow: theme.cardShadow,
+                  fontAffirmation: theme.fontAffirmation,
+                  affirmTracking: theme.affirmTracking,
+                  affirmWeight: theme.affirmWeight,
+                }}
+              />
+            )}
+
             <CategoryPills
               categories={categories}
               selected={selectedCategory}
@@ -499,6 +575,13 @@ export default function AppPage() {
           ))}
         </div>
       </nav>
+
+      {showOnboarding && (
+        <Onboarding
+          categories={getCategoriesForTier(false)}
+          onComplete={completeOnboarding}
+        />
+      )}
 
       {showAbout && (
         <AboutPractice open={showAbout} onClose={() => setShowAbout(false)} />
