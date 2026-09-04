@@ -11,29 +11,34 @@ export const PREMIUM = {
   },
   features: [
     {
+      id: "full-library",
+      title: "Full affirmation library",
+      description: "Every category and line — confidence, calm, resilience, and more.",
+    },
+    {
       id: "unlimited-recordings",
       title: "Unlimited voice recordings",
-      description: "Record and save as many affirmations as you like in your own voice.",
+      description: "Record and save as many practices as you like in your own voice.",
+    },
+    {
+      id: "themes",
+      title: "Atmospheres & themes",
+      description: "Dawn, ocean, dusk, sand, lavender — colors that match your mood.",
     },
     {
       id: "all-ambient",
-      title: "All ambient sounds",
-      description: "Soft pad, soft rain, quiet bowls — and more as we add them.",
+      title: "All background sounds",
+      description: "Soft pad, soft rain, quiet bowls under your voice.",
     },
     {
       id: "ai-personal",
-      title: "AI personal affirmations",
-      description: "Affirmations written for your goals and how you’re feeling.",
+      title: "Personal lines",
+      description: "Lines written for your situation, ready to record.",
     },
     {
       id: "custom-library",
-      title: "Personal library",
-      description: "Favorites, customs, and recordings in one calm place.",
-    },
-    {
-      id: "reminders",
-      title: "Gentle reminders",
-      description: "Optional prompts that support your practice without pressure.",
+      title: "Your library",
+      description: "Favorites, personal lines, and saved practices in one place.",
     },
   ],
 } as const;

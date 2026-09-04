@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Heart, Mic } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Affirmation } from "@/types";
@@ -23,6 +23,10 @@ export function AffirmationCard({
   large = false,
 }: AffirmationCardProps) {
   const [favorited, setFavorited] = useState(isFavorite);
+
+  useEffect(() => {
+    setFavorited(isFavorite);
+  }, [isFavorite]);
 
   const handleFavorite = () => {
     setFavorited(!favorited);

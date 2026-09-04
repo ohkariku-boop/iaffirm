@@ -124,16 +124,10 @@ export function PremiumModal({
         </div>
 
         <div className="px-6 py-5 space-y-2.5">
-          {[
-            "Unlimited recordings in your own voice",
-            "Personal lines written for your situation",
-            "All gentle background sounds",
-            "A library of what you’ve saved",
-            "Optional reminders, on your terms",
-          ].map((label) => (
-            <div key={label} className="flex gap-2.5 items-start">
+          {PREMIUM.features.map((f) => (
+            <div key={f.id} className="flex gap-2.5 items-start">
               <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-              <p className="text-sm text-foreground">{label}</p>
+              <p className="text-sm text-foreground">{f.title}</p>
             </div>
           ))}
         </div>
