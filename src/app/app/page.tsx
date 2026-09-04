@@ -10,6 +10,7 @@ import { LimitBanner } from "@/components/LimitBanner";
 import { AboutPractice } from "@/components/AboutPractice";
 import { LibraryView } from "@/components/LibraryView";
 import { ThemePicker } from "@/components/ThemePicker";
+import { RemindersPanel } from "@/components/RemindersPanel";
 import { Logo } from "@/components/Logo";
 import { User, Loader2, Heart, Check, Lock } from "lucide-react";
 import { usePremium } from "@/hooks/usePremium";
@@ -43,6 +44,9 @@ export default function AppPage() {
   useEffect(() => {
     setThemeId(loadThemeId());
     setThemeReady(true);
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
   }, []);
 
   const theme = getTheme(themeId);
@@ -365,6 +369,13 @@ export default function AppPage() {
               isPremium={premium.isPremium}
               onSelect={handleThemeSelect}
               onNeedPremium={() => openPremium("general")}
+            />
+
+            <RemindersPanel
+              isPremium={premium.isPremium}
+              onNeedPremium={() => openPremium("general")}
+              accent={theme.accent}
+              muted={theme.muted}
             />
 
             <div className="rounded-2xl border bg-white px-4 py-4 space-y-3" style={{ borderColor: `${theme.accent}20` }}>

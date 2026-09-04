@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 interface PersonalAffirmationProps {
   canUseAi: boolean;
   aiLeft: number | "unlimited";
+  isPremium?: boolean;
   onNeedPremium: () => void;
   onPractice: (text: string) => void;
   onGenerated?: () => void;
@@ -15,6 +16,7 @@ interface PersonalAffirmationProps {
 export function PersonalAffirmation({
   canUseAi,
   aiLeft,
+  isPremium = false,
   onNeedPremium,
   onPractice,
   onGenerated,
@@ -46,7 +48,7 @@ export function PersonalAffirmation({
       const res = await fetch("/api/ai/affirmations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, mood }),
+        body: JSON.stringify({ prompt, mood, isPremium }),
       });
       const data = await res.json();
       if (!res.ok) {
