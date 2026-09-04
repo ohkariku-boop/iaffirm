@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" fill="none">
+  <circle cx="96" cy="96" r="96" fill="#5b8a72"/>
+  <text
+    x="96"
+    y="96"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    font-weight="700"
+    font-size="78"
+    fill="#ffffff"
+    letter-spacing="-0.03em"
+  >iA</text>
+</svg>
