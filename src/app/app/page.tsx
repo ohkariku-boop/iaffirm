@@ -9,6 +9,7 @@ import { PremiumModal, type PremiumReason } from "@/components/PremiumModal";
 import { LimitBanner } from "@/components/LimitBanner";
 import { User, Loader2, Heart, Check } from "lucide-react";
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 import { getCategories, getAffirmations } from "@/lib/supabase/data";
 import { usePremium } from "@/hooks/usePremium";
 import type { Affirmation, Category } from "@/types";
@@ -115,8 +116,8 @@ export default function AppPage() {
     <div className="min-h-screen flex flex-col app-atmosphere">
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="max-w-lg mx-auto px-5 h-14 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="font-medium tracking-tight text-foreground text-[15px]">iAffirm</span>
+          <div className="flex items-center gap-2">
+            <Logo href="/" size="sm" />
             {usingMock && (
               <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground">
                 demo
@@ -127,7 +128,7 @@ export default function AppPage() {
                 full practice
               </span>
             )}
-          </Link>
+          </div>
           <div className="flex items-center gap-1">
             {!premium.isPremium && (
               <button

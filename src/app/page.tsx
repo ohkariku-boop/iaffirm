@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Logo } from "@/components/Logo";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen landing-atmosphere text-[#2a2825]">
       <header className="sticky top-0 z-50 bg-[#f7f3ed]/85 backdrop-blur-md border-b border-[#e8e2d9]">
         <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="text-[15px] font-medium tracking-wide">iAffirm</span>
+          <Logo />
           <Link
             href="/app"
             className="text-sm text-[#6b6560] hover:text-[#2c2a26] transition-colors"
@@ -20,7 +21,7 @@ export default function LandingPage() {
         <p className="text-sm tracking-wide text-[#5b8a72] mb-8">
           A quiet practice for better days
         </p>
-        <h1 className="text-4xl sm:text-5xl md:text-[3.25rem] font-medium leading-[1.15] tracking-tight mb-8 text-[#2c2a26]">
+        <h1 className="text-4xl sm:text-5xl md:text-[3.25rem] font-semibold leading-[1.15] tracking-tight mb-8 text-[#2c2a26]">
           The words you speak to yourself matter.
         </h1>
         <p className="text-lg sm:text-xl text-[#6b6560] leading-relaxed max-w-xl mb-12">
@@ -87,7 +88,7 @@ export default function LandingPage() {
             The web app is ready when you are. Native apps are on the way.
           </p>
           <p className="text-sm text-[#6b6560]/80 mb-10">
-            Free to try · Premium from $3.99/month
+            Free to try · Full practice from $3.99/month
           </p>
           <Link
             href="/app"
@@ -99,10 +100,43 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-[#e8e2d9]">
-        <div className="max-w-3xl mx-auto px-6 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm text-[#6b6560]">
-          <span className="text-[#2c2a26]">iAffirm</span>
-          <p>Made for anyone who wants a little more kindness toward themselves.</p>
+      <footer className="border-t border-[#e8e2d9] bg-[#f7f3ed]/80">
+        <div className="max-w-3xl mx-auto px-6 py-12 space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-8">
+            <div className="space-y-3 max-w-xs">
+              <Logo />
+              <p className="text-sm text-[#6b6560] leading-relaxed">
+                A quiet space for kinder self-talk — in your own voice.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-8 text-sm">
+              <div className="space-y-2">
+                <p className="font-medium text-[#2a2825]">Product</p>
+                <Link href="/app" className="block text-[#6b6560] hover:text-[#2a2825]">
+                  Open app
+                </Link>
+                <Link href="/app" className="block text-[#6b6560] hover:text-[#2a2825]">
+                  Full practice
+                </Link>
+              </div>
+              <div className="space-y-2">
+                <p className="font-medium text-[#2a2825]">Legal</p>
+                <Link href="/privacy" className="block text-[#6b6560] hover:text-[#2a2825]">
+                  Privacy Policy
+                </Link>
+                <Link href="/terms" className="block text-[#6b6560] hover:text-[#2a2825]">
+                  Terms of Service
+                </Link>
+                <Link href="/disclaimer" className="block text-[#6b6560] hover:text-[#2a2825]">
+                  Health disclaimer
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="pt-6 border-t border-[#e5dfd5] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#6b6560]">
+            <p>© {new Date().getFullYear()} iAffirm. All rights reserved.</p>
+            <p>Not a substitute for professional mental health care.</p>
+          </div>
         </div>
       </footer>
     </div>
