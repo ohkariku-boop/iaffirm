@@ -13,7 +13,7 @@ export const PREMIUM = {
     {
       id: "full-library",
       title: "Full affirmation library",
-      description: "Every category and line — confidence, calm, resilience, and more.",
+      description: "15 categories and 750+ lines — including career, parenthood, and creativity.",
     },
     {
       id: "unlimited-recordings",
