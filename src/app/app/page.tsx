@@ -7,6 +7,7 @@ import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { PersonalAffirmation } from "@/components/PersonalAffirmation";
 import { PremiumModal, type PremiumReason } from "@/components/PremiumModal";
 import { LimitBanner } from "@/components/LimitBanner";
+import { AboutPractice } from "@/components/AboutPractice";
 import { User, Loader2, Heart, Check } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
@@ -44,6 +45,7 @@ export default function AppPage() {
   const [premiumReason, setPremiumReason] = useState<PremiumReason>("general");
   const [practiceText, setPracticeText] = useState<string | null>(null);
   const [saveNudge, setSaveNudge] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
   const [loading, setLoading] = useState(true);
   const [usingMock, setUsingMock] = useState(true);
 
@@ -248,9 +250,18 @@ export default function AppPage() {
         <div className="max-w-lg mx-auto px-8 h-14 flex items-center justify-between text-muted-foreground text-[11px]">
           <button className="text-primary font-medium">Today</button>
           <button className="hover:text-foreground transition-colors">Library</button>
-          <button className="hover:text-foreground transition-colors">You</button>
+          <button
+            onClick={() => setShowAbout(true)}
+            className="hover:text-foreground transition-colors"
+          >
+            You
+          </button>
         </div>
       </nav>
+
+      {showAbout && (
+        <AboutPractice open={showAbout} onClose={() => setShowAbout(false)} />
+      )}
 
       {showPremium && (
         <PremiumModal

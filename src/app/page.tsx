@@ -78,6 +78,49 @@ export default function LandingPage() {
         </div>
       </section>
 
+
+      <section className="max-w-3xl mx-auto px-6 py-24">
+        <h2 className="text-sm tracking-wide text-[#5b8a72] mb-4">
+          How & why it works
+        </h2>
+        <p className="text-[#6b6560] leading-relaxed max-w-lg mb-12">
+          A simple practice, grounded in how habits and self-talk form — not in hype.
+        </p>
+        <div className="space-y-10 max-w-lg">
+          <div>
+            <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Your own voice</h3>
+            <p className="text-[#6b6560] leading-relaxed">
+              The mind learns from what it hears often. Words you speak and hear in your own
+              voice can land differently than a stranger’s quote on a screen.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Short and repeated</h3>
+            <p className="text-[#6b6560] leading-relaxed">
+              Small, regular practice is how habits form. A few honest lines, returned to often,
+              matter more than a long list you never revisit.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Make it personal</h3>
+            <p className="text-[#6b6560] leading-relaxed">
+              Lines that feel true are easier to say and easier to believe. If a phrase feels
+              false, change it until it fits.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">What this is not</h3>
+            <p className="text-[#6b6560] leading-relaxed">
+              iAffirm is a gentle self-talk practice, not therapy or medical treatment.
+              If you’re struggling, please reach out to a professional or local support.{" "}
+              <Link href="/disclaimer" className="text-[#5b8a72] underline underline-offset-2">
+                Health disclaimer
+              </Link>
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="border-t border-[#e5dfd5] bg-white/70 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-6 py-24 text-center">
           <h2 className="text-2xl sm:text-3xl font-medium mb-6 leading-snug text-[#2c2a26]">
