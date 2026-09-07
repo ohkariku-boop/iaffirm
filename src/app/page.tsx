@@ -5,7 +5,7 @@ import { Logo } from "@/components/Logo";
 export default function LandingPage() {
   return (
     <div className="min-h-screen landing-atmosphere text-[#2a2825]">
-      <header className="sticky top-0 z-50 bg-[#f7f3ed]/95 backdrop-blur-md border-b border-[#e8e2d9]/80">
+      <header className="sticky top-0 z-50 bg-[#f7f3ed]/75 backdrop-blur-md border-b border-[#e8e2d9]/70">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 h-14 flex items-center justify-between">
           <Logo size="sm" />
           <Link
@@ -47,7 +47,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="border-y border-[#e5dfd5] bg-white/80">
+      <section className="border-y border-[#e5dfd5]/80 bg-white/50 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 py-8 sm:py-10">
           <p className="text-lg sm:text-xl font-medium leading-snug text-[#2c2a26] max-w-2xl mx-auto text-center">
             “I am learning to speak to myself the way I would speak to someone I love.”
@@ -123,7 +123,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="border-t border-[#e5dfd5] bg-white/60">
+      <section className="border-t border-[#e5dfd5]/80 bg-white/45 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 py-10 sm:py-12">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5">
             <div>
@@ -142,13 +142,13 @@ export default function LandingPage() {
             </Link>
           </div>
           <div className="grid sm:grid-cols-2 gap-3">
-            <div className="rounded-xl border border-[#e5dfd5] bg-white/90 px-4 py-3">
+            <div className="rounded-xl border border-[#e5dfd5]/90 bg-white/65 backdrop-blur-sm px-4 py-3">
               <p className="text-sm font-medium text-[#2c2a26] mb-1.5">iPhone · Safari</p>
               <p className="text-xs text-[#6b6560] leading-relaxed">
                 Share → Add to Home Screen → Add
               </p>
             </div>
-            <div className="rounded-xl border border-[#e5dfd5] bg-white/90 px-4 py-3">
+            <div className="rounded-xl border border-[#e5dfd5]/90 bg-white/65 backdrop-blur-sm px-4 py-3">
               <p className="text-sm font-medium text-[#2c2a26] mb-1.5">Android · Chrome</p>
               <p className="text-xs text-[#6b6560] leading-relaxed">
                 Menu ⋮ → Install app or Add to Home screen
@@ -179,7 +179,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-[#e8e2d9] bg-[#f7f3ed]/90">
+      <footer className="border-t border-[#e8e2d9]/80 bg-[#f7f3ed]/70 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 py-8">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
             <div className="space-y-1.5 max-w-xs">
