@@ -13,6 +13,7 @@ import { ThemePicker } from "@/components/ThemePicker";
 import { SoundPicker } from "@/components/SoundPicker";
 import { Onboarding } from "@/components/Onboarding";
 import { TodayRitual } from "@/components/TodayRitual";
+import { Pagination } from "@/components/Pagination";
 import { RemindersPanel } from "@/components/RemindersPanel";
 import { Logo } from "@/components/Logo";
 import { User, Loader2, Heart, Check, Lock } from "lucide-react";
@@ -35,6 +36,7 @@ import {
   markDailyPracticed,
 } from "@/lib/daily";
 import type { Affirmation } from "@/types";
+import { paginate, LIBRARY_PAGE_SIZE } from "@/lib/pagination";
 
 type Tab = "today" | "library" | "you";
 
@@ -56,6 +58,7 @@ export default function AppPage() {
   const [dailyDone, setDailyDone] = useState(false);
   const [focusSlug, setFocusSlugState] = useState<string | null>(null);
   const [openRecorderAfterOnboard, setOpenRecorderAfterOnboard] = useState(false);
+  const [libraryPage, setLibraryPage] = useState(0);
 
   const premium = usePremium();
   const library = useLibrary();
@@ -96,6 +99,12 @@ export default function AppPage() {
     ? affirmations.filter((a) => a.category?.slug === selectedCategory)
     : affirmations;
 
+  const listSource = premium.isPremium ? filtered : filtered.slice(0, 6);
+  const libraryPageData = useMemo(
+    () => paginate(listSource, libraryPage, LIBRARY_PAGE_SIZE),
+    [listSource, libraryPage]
+  );
+
   const current = filtered[currentIndex % (filtered.length || 1)] || filtered[0];
 
   const dailyPool = useMemo(() => {
@@ -114,6 +123,7 @@ export default function AppPage() {
   // Reset index when category or tier changes
   useEffect(() => {
     setCurrentIndex(0);
+    setLibraryPage(0);
   }, [selectedCategory, premium.isPremium]);
 
   const openPremium = (reason: PremiumReason = "general") => {
@@ -416,10 +426,7 @@ export default function AppPage() {
                 </span>
               </div>
               <div className="grid gap-3">
-                {(premium.isPremium
-                  ? filtered
-                  : filtered.slice(0, 6)
-                ).map((a: Affirmation) => (
+                {libraryPageData.pageItems.map((a: Affirmation) => (
                   <AffirmationCard
                     key={a.id}
                     affirmation={a}
@@ -429,6 +436,21 @@ export default function AppPage() {
                   />
                 ))}
               </div>
+              {libraryPageData.totalItems > LIBRARY_PAGE_SIZE && (
+                <Pagination
+                  pageIndex={libraryPageData.pageIndex}
+                  totalPages={libraryPageData.totalPages}
+                  from={libraryPageData.from}
+                  to={libraryPageData.to}
+                  totalItems={libraryPageData.totalItems}
+                  hasPrev={libraryPageData.hasPrev}
+                  hasNext={libraryPageData.hasNext}
+                  onPrev={() => setLibraryPage((p) => Math.max(0, p - 1))}
+                  onNext={() => setLibraryPage((p) => p + 1)}
+                  accent={theme.accent}
+                  muted={theme.muted}
+                />
+              )}
               {!premium.isPremium && (
                 <button
                   onClick={() => openPremium("general")}
