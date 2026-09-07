@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Mic, Square, Play, Pause, Trash2, Check, X, Volume2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type AmbienceType = "pad" | "rain" | "bowls" | "off";
+type AmbienceType = "pad" | "rain" | "bowls" | "river" | "ethereal" | "off";
 
 interface VoiceRecorderProps {
   affirmationText: string;
@@ -147,7 +147,8 @@ export function VoiceRecorder({
   const noiseSourceRef = useRef<AudioBufferSourceNode | null>(null);
 
   useEffect(() => {
-    const allowed = isPremium || defaultAmbience === "pad" || defaultAmbience === "off";
+    const freeOk = defaultAmbience === "pad" || defaultAmbience === "off";
+    const allowed = isPremium || freeOk;
     setAmbience(allowed ? defaultAmbience : "pad");
   }, [defaultAmbience, isPremium]);
 
@@ -185,15 +186,16 @@ export function VoiceRecorder({
     }
   }, []);
 
+
   const startPad = (ctx: AudioContext, master: GainNode) => {
-    master.gain.value = 0.032;
-    const freqs = [65.41, 98.0, 130.81, 164.81];
+    master.gain.value = 0.07;
+    const freqs = [65.41, 98.0, 130.81, 196.0];
     oscRefs.current = freqs.map((freq, i) => {
       const osc = ctx.createOscillator();
       const g = ctx.createGain();
       osc.type = "sine";
       osc.frequency.value = freq;
-      g.gain.value = 0.2 / (i + 1);
+      g.gain.value = 0.28 / (i + 1);
       osc.connect(g);
       g.connect(master);
       osc.start();
@@ -202,7 +204,7 @@ export function VoiceRecorder({
   };
 
   const startRain = (ctx: AudioContext, master: GainNode) => {
-    master.gain.value = 0.045;
+    master.gain.value = 0.09;
     const bufferSize = 2 * ctx.sampleRate;
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -212,10 +214,10 @@ export function VoiceRecorder({
     noise.loop = true;
     const filter = ctx.createBiquadFilter();
     filter.type = "bandpass";
-    filter.frequency.value = 900;
-    filter.Q.value = 0.6;
+    filter.frequency.value = 1100;
+    filter.Q.value = 0.55;
     const g = ctx.createGain();
-    g.gain.value = 0.35;
+    g.gain.value = 0.5;
     noise.connect(filter);
     filter.connect(g);
     g.connect(master);
@@ -223,24 +225,92 @@ export function VoiceRecorder({
     noiseSourceRef.current = noise;
   };
 
+  /** Flowing river: layered filtered noise + slow amplitude motion */
+  const startRiver = (ctx: AudioContext, master: GainNode) => {
+    master.gain.value = 0.085;
+    const bufferSize = 3 * ctx.sampleRate;
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+    const makeLayer = (freq: number, q: number, gain: number, rate: number) => {
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      noise.loop = true;
+      const filter = ctx.createBiquadFilter();
+      filter.type = "bandpass";
+      filter.frequency.value = freq;
+      filter.Q.value = q;
+      const g = ctx.createGain();
+      g.gain.value = gain;
+      const lfo = ctx.createOscillator();
+      const lfoG = ctx.createGain();
+      lfo.frequency.value = rate;
+      lfoG.gain.value = gain * 0.25;
+      lfo.connect(lfoG);
+      lfoG.connect(g.gain);
+      noise.connect(filter);
+      filter.connect(g);
+      g.connect(master);
+      noise.start();
+      lfo.start();
+      return noise;
+    };
+
+    // Keep one ref for stop; others stop when context closes
+    noiseSourceRef.current = makeLayer(400, 0.7, 0.35, 0.07);
+    makeLayer(900, 0.5, 0.22, 0.11);
+    makeLayer(1800, 0.4, 0.12, 0.09);
+  };
+
   const startBowls = (ctx: AudioContext, master: GainNode) => {
-    master.gain.value = 0.028;
-    const freqs = [174.61, 220.0, 261.63];
+    master.gain.value = 0.065;
+    const freqs = [174.61, 220.0, 261.63, 329.63];
     oscRefs.current = freqs.map((freq, i) => {
       const osc = ctx.createOscillator();
       const g = ctx.createGain();
       osc.type = "sine";
       osc.frequency.value = freq;
-      g.gain.value = 0.15 / (i + 1);
+      g.gain.value = 0.2 / (i + 1);
       const lfo = ctx.createOscillator();
       const lfoG = ctx.createGain();
-      lfo.frequency.value = 0.08 + i * 0.03;
-      lfoG.gain.value = 0.02;
+      lfo.frequency.value = 0.06 + i * 0.025;
+      lfoG.gain.value = 0.03;
       lfo.connect(lfoG);
       lfoG.connect(g.gain);
       osc.connect(g);
       g.connect(master);
       osc.start();
+      lfo.start();
+      return osc;
+    });
+  };
+
+  /** Soft ethereal: airy stacked sines with slow chorus-like motion */
+  const startEthereal = (ctx: AudioContext, master: GainNode) => {
+    master.gain.value = 0.075;
+    const freqs = [130.81, 196.0, 261.63, 329.63, 392.0, 523.25];
+    oscRefs.current = freqs.map((freq, i) => {
+      const osc = ctx.createOscillator();
+      const osc2 = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = "sine";
+      osc2.type = "sine";
+      osc.frequency.value = freq;
+      osc2.frequency.value = freq * 1.003; // slight detune
+      g.gain.value = 0.12 / Math.sqrt(i + 1);
+      const lfo = ctx.createOscillator();
+      const lfoG = ctx.createGain();
+      lfo.frequency.value = 0.04 + i * 0.015;
+      lfoG.gain.value = 0.025;
+      lfo.connect(lfoG);
+      lfoG.connect(g.gain);
+      // soft high shelf feel via lowpass on a parallel path is heavy; keep pure
+      osc.connect(g);
+      osc2.connect(g);
+      g.connect(master);
+      osc.start();
+      osc2.start();
       lfo.start();
       return osc;
     });
@@ -255,7 +325,9 @@ export function VoiceRecorder({
     master.connect(ctx.destination);
     if (type === "pad") startPad(ctx, master);
     else if (type === "rain") startRain(ctx, master);
+    else if (type === "river") startRiver(ctx, master);
     else if (type === "bowls") startBowls(ctx, master);
+    else if (type === "ethereal") startEthereal(ctx, master);
   };
 
   const startRecording = async () => {
@@ -339,7 +411,7 @@ export function VoiceRecorder({
   };
 
   const changeAmbience = async (type: AmbienceType) => {
-    if (!isPremium && (type === "rain" || type === "bowls")) {
+    if (!isPremium && type !== "pad" && type !== "off") {
       onUpgrade?.();
       return;
     }
@@ -371,7 +443,9 @@ export function VoiceRecorder({
   const ambienceOptions: { id: AmbienceType; label: string; premium?: boolean }[] = [
     { id: "pad", label: "Soft pad" },
     { id: "rain", label: "Soft rain", premium: true },
+    { id: "river", label: "Flowing river", premium: true },
     { id: "bowls", label: "Quiet bowls", premium: true },
+    { id: "ethereal", label: "Ethereal", premium: true },
     { id: "off", label: "Voice only" },
   ];
 

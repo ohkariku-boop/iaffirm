@@ -25,7 +25,7 @@ export type Theme = {
   affirmTracking: string;
   affirmWeight: number;
   affirmSize: string;
-  ambientDefault: "pad" | "rain" | "bowls" | "off";
+  ambientDefault: "pad" | "rain" | "bowls" | "river" | "ethereal" | "off";
   /** Sample line for preview */
   previewLine: string;
 };

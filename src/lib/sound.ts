@@ -1,4 +1,4 @@
-export type AmbienceId = "pad" | "rain" | "bowls" | "off";
+export type AmbienceId = "pad" | "rain" | "bowls" | "river" | "ethereal" | "off";
 
 export type SoundOption = {
   id: AmbienceId;
@@ -21,9 +21,21 @@ export const SOUND_OPTIONS: SoundOption[] = [
     premium: true,
   },
   {
+    id: "river",
+    name: "Flowing river",
+    description: "Steady water flow, calm and continuous",
+    premium: true,
+  },
+  {
     id: "bowls",
     name: "Quiet bowls",
-    description: "Soft resonant tones with slow beats",
+    description: "Soft resonant tones with slow motion",
+    premium: true,
+  },
+  {
+    id: "ethereal",
+    name: "Ethereal",
+    description: "Soft floating tones — light and spacious",
     premium: true,
   },
   {
@@ -41,7 +53,9 @@ export function loadPreferredAmbience(): AmbienceId {
   try {
     const v = localStorage.getItem(KEY) as AmbienceId | null;
     if (v && SOUND_OPTIONS.some((s) => s.id === v)) return v;
-  } catch { /* */ }
+  } catch {
+    /* */
+  }
   return "pad";
 }
 

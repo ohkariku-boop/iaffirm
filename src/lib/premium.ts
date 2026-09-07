@@ -28,7 +28,7 @@ export const PREMIUM = {
     {
       id: "all-ambient",
       title: "All background sounds",
-      description: "Soft pad, soft rain, quiet bowls under your voice.",
+      description: "Soft pad, rain, river, bowls, and ethereal tones under your voice.",
     },
     {
       id: "ai-personal",
