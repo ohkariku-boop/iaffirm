@@ -121,7 +121,44 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="border-t border-[#e5dfd5] bg-white/70 backdrop-blur-sm">
+      
+      <section className="max-w-3xl mx-auto px-6 py-24">
+        <h2 className="text-sm tracking-wide text-[#5b8a72] mb-4">
+          Use it from your home screen
+        </h2>
+        <p className="text-[#6b6560] leading-relaxed max-w-lg mb-10">
+          Add iAffirm like an app so today&apos;s practice is one tap away.
+          Your recordings stay on this device.
+        </p>
+        <div className="grid sm:grid-cols-2 gap-6 mb-8">
+          <div className="rounded-2xl border border-[#e5dfd5] bg-white/80 p-5 space-y-3">
+            <p className="text-sm font-medium text-[#2c2a26]">iPhone</p>
+            <ol className="text-sm text-[#6b6560] space-y-2 list-decimal list-inside leading-relaxed">
+              <li>Open in <strong className="text-[#2c2a26] font-medium">Safari</strong></li>
+              <li>Tap <strong className="text-[#2c2a26] font-medium">Share</strong></li>
+              <li>Tap <strong className="text-[#2c2a26] font-medium">Add to Home Screen</strong></li>
+              <li>Tap <strong className="text-[#2c2a26] font-medium">Add</strong></li>
+            </ol>
+          </div>
+          <div className="rounded-2xl border border-[#e5dfd5] bg-white/80 p-5 space-y-3">
+            <p className="text-sm font-medium text-[#2c2a26]">Android</p>
+            <ol className="text-sm text-[#6b6560] space-y-2 list-decimal list-inside leading-relaxed">
+              <li>Open in <strong className="text-[#2c2a26] font-medium">Chrome</strong></li>
+              <li>Tap the <strong className="text-[#2c2a26] font-medium">menu</strong> (⋮)</li>
+              <li>Tap <strong className="text-[#2c2a26] font-medium">Install app</strong> or <strong className="text-[#2c2a26] font-medium">Add to Home screen</strong></li>
+              <li>Confirm</li>
+            </ol>
+          </div>
+        </div>
+        <Link
+          href="/install"
+          className="text-sm font-medium text-[#5b8a72] hover:underline underline-offset-2"
+        >
+          Full install guide →
+        </Link>
+      </section>
+
+<section className="border-t border-[#e5dfd5] bg-white/70 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-6 py-24 text-center">
           <h2 className="text-2xl sm:text-3xl font-medium mb-6 leading-snug text-[#2c2a26]">
             Better days often begin<br />with how we speak to ourselves.
@@ -160,6 +197,9 @@ export default function LandingPage() {
                 </Link>
                 <Link href="/app" className="block text-[#6b6560] hover:text-[#2a2825]">
                   Full practice
+                </Link>
+                <Link href="/install" className="block text-[#6b6560] hover:text-[#2a2825]">
+                  Add to home screen
                 </Link>
               </div>
               <div className="space-y-2">
