@@ -5,9 +5,9 @@ import { Logo } from "@/components/Logo";
 export default function LandingPage() {
   return (
     <div className="min-h-screen landing-atmosphere text-[#2a2825]">
-      <header className="sticky top-0 z-50 bg-[#f7f3ed]/90 backdrop-blur-md border-b border-[#e8e2d9]/80">
-        <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Logo />
+      <header className="sticky top-0 z-50 bg-[#f7f3ed]/95 backdrop-blur-md border-b border-[#e8e2d9]/80">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 h-14 flex items-center justify-between">
+          <Logo size="sm" />
           <Link
             href="/app"
             className="text-sm text-[#6b6560] hover:text-[#2c2a26] transition-colors"
@@ -17,105 +17,102 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* Full-bleed background across the top */}
-      <section className="landing-hero">
-        <div className="flex-1 flex flex-col justify-end max-w-3xl mx-auto w-full px-6 pt-16 pb-20 sm:pb-24">
-          <p className="text-sm tracking-wide text-[#5b8a72] mb-6">
+      <section className="landing-hero landing-hero--tight">
+        <div className="flex-1 flex flex-col justify-end max-w-5xl mx-auto w-full px-5 sm:px-6 pt-10 pb-12 sm:pb-14">
+          <p className="text-xs sm:text-sm tracking-wide text-[#5b8a72] mb-3">
             A quiet practice for better days
           </p>
-          <h1 className="text-4xl sm:text-5xl md:text-[3.25rem] font-semibold leading-[1.15] tracking-tight mb-6 text-[#2c2a26] drop-shadow-sm">
+          <h1 className="text-3xl sm:text-4xl md:text-[2.75rem] font-semibold leading-[1.15] tracking-tight mb-4 text-[#2c2a26] max-w-2xl">
             The words you speak to yourself matter.
           </h1>
-          <p className="text-lg sm:text-xl text-[#3d3a36]/90 leading-relaxed max-w-xl mb-10">
-            iAffirm is a simple space to practice positive self-talk.
-            Record affirmations in your own voice. Return to them when you need lifting.
-            Build a kinder relationship with your mind — one day at a time.
+          <p className="text-base sm:text-lg text-[#3d3a36]/90 leading-relaxed max-w-xl mb-6">
+            Practice positive self-talk in your own voice. Record a line, play it back when you
+            need lifting — one day at a time.
           </p>
-          <Link
-            href="/app"
-            className="inline-flex items-center gap-2 text-[15px] font-medium bg-[#5b8a72] text-white px-6 py-3 rounded-full hover:bg-[#4a7a62] transition-colors w-fit shadow-sm"
-          >
-            Begin
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="/app"
+              className="inline-flex items-center gap-2 text-sm font-medium bg-[#5b8a72] text-white px-5 py-2.5 rounded-full hover:bg-[#4a7a62] transition-colors shadow-sm"
+            >
+              Begin
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/install"
+              className="text-sm text-[#6b6560] hover:text-[#2c2a26] transition-colors"
+            >
+              Add to home screen
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="border-y border-[#e5dfd5] bg-white/70 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-6 py-20 text-center">
-          <p className="text-2xl sm:text-3xl font-medium leading-snug text-[#2c2a26] max-w-lg mx-auto">
+      <section className="border-y border-[#e5dfd5] bg-white/80">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 py-8 sm:py-10">
+          <p className="text-lg sm:text-xl font-medium leading-snug text-[#2c2a26] max-w-2xl mx-auto text-center">
             “I am learning to speak to myself the way I would speak to someone I love.”
           </p>
         </div>
       </section>
 
-      <section className="max-w-5xl mx-auto px-6 py-24">
-        <div className="grid md:grid-cols-2 gap-12 md:gap-14 lg:gap-16 items-start">
-          {/* What you’ll find */}
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 py-12 sm:py-14">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-start">
           <div>
-            <h2 className="text-sm tracking-wide text-[#5b8a72] mb-8">
+            <h2 className="text-xs tracking-wide text-[#5b8a72] uppercase mb-5">
               What you’ll find here
             </h2>
-            <div className="space-y-10">
+            <div className="space-y-5">
               <div>
-                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Your voice, not a stranger’s</h3>
-                <p className="text-[#6b6560] leading-relaxed text-[15px]">
-                  Hearing an affirmation in your own voice can make it land differently.
-                  Record the words that feel true for you. Play them back when the day feels heavy.
+                <h3 className="text-base font-medium mb-1 text-[#2c2a26]">Your voice, not a stranger’s</h3>
+                <p className="text-sm text-[#6b6560] leading-relaxed">
+                  Record lines that feel true. Play them back when the day feels heavy.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Words for the moments that need them</h3>
-                <p className="text-[#6b6560] leading-relaxed text-[15px]">
-                  Confidence. Calm. Self-compassion. Motivation. Gratitude.
-                  Choose what you need today — or write your own.
+                <h3 className="text-base font-medium mb-1 text-[#2c2a26]">Words for the moment</h3>
+                <p className="text-sm text-[#6b6560] leading-relaxed">
+                  Confidence, calm, self-compassion, motivation, gratitude — or write your own.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">A practice that stays gentle</h3>
-                <p className="text-[#6b6560] leading-relaxed text-[15px]">
-                  No streaks that shame you. No noise. Just a quiet place to return to
-                  when you want to lift your own spirit a little.
+                <h3 className="text-base font-medium mb-1 text-[#2c2a26]">A gentle practice</h3>
+                <p className="text-sm text-[#6b6560] leading-relaxed">
+                  No shame streaks. A quiet place to return when you want a little lift.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* How & why */}
           <div>
-            <h2 className="text-sm tracking-wide text-[#5b8a72] mb-3">
+            <h2 className="text-xs tracking-wide text-[#5b8a72] uppercase mb-2">
               How & why it works
             </h2>
-            <p className="text-[#6b6560] leading-relaxed text-[15px] mb-8">
-              A simple practice, grounded in how habits and self-talk form — not in hype.
+            <p className="text-sm text-[#6b6560] leading-relaxed mb-5">
+              Simple practice, grounded in habit and self-talk — not hype.
             </p>
-            <div className="space-y-8">
+            <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Your own voice</h3>
-                <p className="text-[#6b6560] leading-relaxed text-[15px]">
-                  The mind learns from what it hears often. Words you speak and hear in your own
-                  voice can land differently than a stranger’s quote on a screen.
+                <h3 className="text-base font-medium mb-1 text-[#2c2a26]">Your own voice</h3>
+                <p className="text-sm text-[#6b6560] leading-relaxed">
+                  The mind learns from what it hears often. Your voice lands differently than a quote on a screen.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Short and repeated</h3>
-                <p className="text-[#6b6560] leading-relaxed text-[15px]">
-                  Small, regular practice is how habits form. A few honest lines, returned to often,
-                  matter more than a long list you never revisit.
+                <h3 className="text-base font-medium mb-1 text-[#2c2a26]">Short and repeated</h3>
+                <p className="text-sm text-[#6b6560] leading-relaxed">
+                  A few honest lines, returned to often, beat a long list you never revisit.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Make it personal</h3>
-                <p className="text-[#6b6560] leading-relaxed text-[15px]">
-                  Lines that feel true are easier to say and easier to believe. If a phrase feels
-                  false, change it until it fits.
+                <h3 className="text-base font-medium mb-1 text-[#2c2a26]">Make it personal</h3>
+                <p className="text-sm text-[#6b6560] leading-relaxed">
+                  If a phrase feels false, change it until it fits.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">What this is not</h3>
-                <p className="text-[#6b6560] leading-relaxed text-[15px]">
-                  iAffirm is a gentle self-talk practice, not therapy or medical treatment.
-                  If you’re struggling, please reach out to a professional or local support.{" "}
+                <h3 className="text-base font-medium mb-1 text-[#2c2a26]">What this is not</h3>
+                <p className="text-sm text-[#6b6560] leading-relaxed">
+                  Not therapy or medical treatment.{" "}
                   <Link href="/disclaimer" className="text-[#5b8a72] underline underline-offset-2">
                     Health disclaimer
                   </Link>
@@ -126,58 +123,55 @@ export default function LandingPage() {
         </div>
       </section>
 
-      
-      <section className="max-w-3xl mx-auto px-6 py-24">
-        <h2 className="text-sm tracking-wide text-[#5b8a72] mb-4">
-          Use it from your home screen
-        </h2>
-        <p className="text-[#6b6560] leading-relaxed max-w-lg mb-10">
-          Add iAffirm like an app so today&apos;s practice is one tap away.
-          Your recordings stay on this device.
-        </p>
-        <div className="grid sm:grid-cols-2 gap-6 mb-8">
-          <div className="rounded-2xl border border-[#e5dfd5] bg-white/80 p-5 space-y-3">
-            <p className="text-sm font-medium text-[#2c2a26]">iPhone</p>
-            <ol className="text-sm text-[#6b6560] space-y-2 list-decimal list-inside leading-relaxed">
-              <li>Open in <strong className="text-[#2c2a26] font-medium">Safari</strong></li>
-              <li>Tap <strong className="text-[#2c2a26] font-medium">Share</strong></li>
-              <li>Tap <strong className="text-[#2c2a26] font-medium">Add to Home Screen</strong></li>
-              <li>Tap <strong className="text-[#2c2a26] font-medium">Add</strong></li>
-            </ol>
+      <section className="border-t border-[#e5dfd5] bg-white/60">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 py-10 sm:py-12">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5">
+            <div>
+              <h2 className="text-xs tracking-wide text-[#5b8a72] uppercase mb-1">
+                Home screen
+              </h2>
+              <p className="text-sm text-[#6b6560]">
+                Add iAffirm like an app. Recordings stay on this device.
+              </p>
+            </div>
+            <Link
+              href="/install"
+              className="text-sm font-medium text-[#5b8a72] hover:underline underline-offset-2 shrink-0"
+            >
+              Full guide →
+            </Link>
           </div>
-          <div className="rounded-2xl border border-[#e5dfd5] bg-white/80 p-5 space-y-3">
-            <p className="text-sm font-medium text-[#2c2a26]">Android</p>
-            <ol className="text-sm text-[#6b6560] space-y-2 list-decimal list-inside leading-relaxed">
-              <li>Open in <strong className="text-[#2c2a26] font-medium">Chrome</strong></li>
-              <li>Tap the <strong className="text-[#2c2a26] font-medium">menu</strong> (⋮)</li>
-              <li>Tap <strong className="text-[#2c2a26] font-medium">Install app</strong> or <strong className="text-[#2c2a26] font-medium">Add to Home screen</strong></li>
-              <li>Confirm</li>
-            </ol>
+          <div className="grid sm:grid-cols-2 gap-3">
+            <div className="rounded-xl border border-[#e5dfd5] bg-white/90 px-4 py-3">
+              <p className="text-sm font-medium text-[#2c2a26] mb-1.5">iPhone · Safari</p>
+              <p className="text-xs text-[#6b6560] leading-relaxed">
+                Share → Add to Home Screen → Add
+              </p>
+            </div>
+            <div className="rounded-xl border border-[#e5dfd5] bg-white/90 px-4 py-3">
+              <p className="text-sm font-medium text-[#2c2a26] mb-1.5">Android · Chrome</p>
+              <p className="text-xs text-[#6b6560] leading-relaxed">
+                Menu ⋮ → Install app or Add to Home screen
+              </p>
+            </div>
           </div>
         </div>
-        <Link
-          href="/install"
-          className="text-sm font-medium text-[#5b8a72] hover:underline underline-offset-2"
-        >
-          Full install guide →
-        </Link>
       </section>
 
-<section className="border-t border-[#e5dfd5] bg-white/70 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-6 py-24 text-center">
-          <h2 className="text-2xl sm:text-3xl font-medium mb-6 leading-snug text-[#2c2a26]">
-            Better days often begin<br />with how we speak to ourselves.
+      <section className="border-t border-[#e5dfd5]">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 py-12 sm:py-14 text-center">
+          <h2 className="text-xl sm:text-2xl font-medium mb-3 leading-snug text-[#2c2a26]">
+            Better days often begin with how we speak to ourselves.
           </h2>
-          <p className="text-[#6b6560] mb-6 max-w-md mx-auto leading-relaxed">
-            Start with one affirmation. See how it feels.
-            The web app is ready when you are. Native apps are on the way.
+          <p className="text-sm text-[#6b6560] mb-2 max-w-md mx-auto leading-relaxed">
+            Start with one affirmation. Native apps are on the way.
           </p>
-          <p className="text-sm text-[#6b6560]/80 mb-10">
+          <p className="text-xs text-[#6b6560]/90 mb-6">
             Free to try · Full practice from $3.99/month
           </p>
           <Link
             href="/app"
-            className="inline-flex items-center gap-2 text-[15px] font-medium bg-[#5b8a72] text-white px-7 py-3.5 rounded-full hover:bg-[#4a7a62] transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium bg-[#5b8a72] text-white px-6 py-2.5 rounded-full hover:bg-[#4a7a62] transition-colors"
           >
             Open iAffirm
             <ArrowRight className="w-4 h-4" />
@@ -185,44 +179,41 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-[#e8e2d9] bg-[#f7f3ed]/80">
-        <div className="max-w-3xl mx-auto px-6 py-12 space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-8">
-            <div className="space-y-3 max-w-xs">
-              <Logo />
-              <p className="text-sm text-[#6b6560] leading-relaxed">
-                A quiet space for kinder self-talk — in your own voice.
+      <footer className="border-t border-[#e8e2d9] bg-[#f7f3ed]/90">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 py-8">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
+            <div className="space-y-1.5 max-w-xs">
+              <Logo size="sm" />
+              <p className="text-xs text-[#6b6560] leading-relaxed">
+                Kinder self-talk — in your own voice.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-8 text-sm">
-              <div className="space-y-2">
-                <p className="font-medium text-[#2a2825]">Product</p>
-                <Link href="/app" className="block text-[#6b6560] hover:text-[#2a2825]">
+            <div className="flex flex-wrap gap-x-10 gap-y-4 text-sm">
+              <div className="space-y-1.5">
+                <p className="text-xs font-medium text-[#2a2825] uppercase tracking-wide">Product</p>
+                <Link href="/app" className="block text-xs text-[#6b6560] hover:text-[#2a2825]">
                   Open app
                 </Link>
-                <Link href="/app" className="block text-[#6b6560] hover:text-[#2a2825]">
-                  Full practice
-                </Link>
-                <Link href="/install" className="block text-[#6b6560] hover:text-[#2a2825]">
-                  Add to home screen
+                <Link href="/install" className="block text-xs text-[#6b6560] hover:text-[#2a2825]">
+                  Home screen
                 </Link>
               </div>
-              <div className="space-y-2">
-                <p className="font-medium text-[#2a2825]">Legal</p>
-                <Link href="/privacy" className="block text-[#6b6560] hover:text-[#2a2825]">
-                  Privacy Policy
+              <div className="space-y-1.5">
+                <p className="text-xs font-medium text-[#2a2825] uppercase tracking-wide">Legal</p>
+                <Link href="/privacy" className="block text-xs text-[#6b6560] hover:text-[#2a2825]">
+                  Privacy
                 </Link>
-                <Link href="/terms" className="block text-[#6b6560] hover:text-[#2a2825]">
-                  Terms of Service
+                <Link href="/terms" className="block text-xs text-[#6b6560] hover:text-[#2a2825]">
+                  Terms
                 </Link>
-                <Link href="/disclaimer" className="block text-[#6b6560] hover:text-[#2a2825]">
-                  Health disclaimer
+                <Link href="/disclaimer" className="block text-xs text-[#6b6560] hover:text-[#2a2825]">
+                  Disclaimer
                 </Link>
               </div>
             </div>
           </div>
-          <div className="pt-6 border-t border-[#e5dfd5] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#6b6560]">
-            <p>© {new Date().getFullYear()} iAffirm. All rights reserved.</p>
+          <div className="mt-6 pt-4 border-t border-[#e5dfd5] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-[#6b6560]">
+            <p>© {new Date().getFullYear()} iAffirm</p>
             <p>Not a substitute for professional mental health care.</p>
           </div>
         </div>
