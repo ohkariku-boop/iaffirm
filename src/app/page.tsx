@@ -5,7 +5,7 @@ import { Logo } from "@/components/Logo";
 export default function LandingPage() {
   return (
     <div className="min-h-screen landing-atmosphere text-[#2a2825]">
-      <header className="sticky top-0 z-50 bg-[#f7f3ed]/85 backdrop-blur-md border-b border-[#e8e2d9]">
+      <header className="sticky top-0 z-50 bg-[#f7f3ed]/90 backdrop-blur-md border-b border-[#e8e2d9]/80">
         <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
           <Logo />
           <Link
@@ -17,25 +17,28 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <section className="max-w-3xl mx-auto px-6 pt-24 pb-28">
-        <p className="text-sm tracking-wide text-[#5b8a72] mb-8">
-          A quiet practice for better days
-        </p>
-        <h1 className="text-4xl sm:text-5xl md:text-[3.25rem] font-semibold leading-[1.15] tracking-tight mb-8 text-[#2c2a26]">
-          The words you speak to yourself matter.
-        </h1>
-        <p className="text-lg sm:text-xl text-[#6b6560] leading-relaxed max-w-xl mb-12">
-          iAffirm is a simple space to practice positive self-talk.
-          Record affirmations in your own voice. Return to them when you need lifting.
-          Build a kinder relationship with your mind — one day at a time.
-        </p>
-        <Link
-          href="/app"
-          className="inline-flex items-center gap-2 text-[15px] font-medium bg-[#5b8a72] text-white px-6 py-3 rounded-full hover:bg-[#4a7a62] transition-colors"
-        >
-          Begin
-          <ArrowRight className="w-4 h-4" />
-        </Link>
+      {/* Full-bleed background across the top */}
+      <section className="landing-hero">
+        <div className="flex-1 flex flex-col justify-end max-w-3xl mx-auto w-full px-6 pt-16 pb-20 sm:pb-24">
+          <p className="text-sm tracking-wide text-[#5b8a72] mb-6">
+            A quiet practice for better days
+          </p>
+          <h1 className="text-4xl sm:text-5xl md:text-[3.25rem] font-semibold leading-[1.15] tracking-tight mb-6 text-[#2c2a26] drop-shadow-sm">
+            The words you speak to yourself matter.
+          </h1>
+          <p className="text-lg sm:text-xl text-[#3d3a36]/90 leading-relaxed max-w-xl mb-10">
+            iAffirm is a simple space to practice positive self-talk.
+            Record affirmations in your own voice. Return to them when you need lifting.
+            Build a kinder relationship with your mind — one day at a time.
+          </p>
+          <Link
+            href="/app"
+            className="inline-flex items-center gap-2 text-[15px] font-medium bg-[#5b8a72] text-white px-6 py-3 rounded-full hover:bg-[#4a7a62] transition-colors w-fit shadow-sm"
+          >
+            Begin
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
       </section>
 
       <section className="border-y border-[#e5dfd5] bg-white/70 backdrop-blur-sm">
