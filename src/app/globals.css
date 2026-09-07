@@ -75,29 +75,14 @@ html {
 }
 
 /* Hero sits on the shared page background — no second photo */
-.landing-hero {
+.landing-hero,
+.landing-hero--tight {
   position: relative;
   width: 100%;
-  min-height: auto;
-  display: flex;
-  flex-direction: column;
+  min-height: 0;
+  height: auto;
+  display: block;
   background: transparent;
-}
-
-@media (min-width: 768px) {
-  .landing-hero {
-    min-height: auto;
-  }
-}
-
-.landing-hero--tight {
-  min-height: auto;
-}
-
-@media (min-width: 768px) {
-  .landing-hero--tight {
-    min-height: auto;
-  }
 }
 
 .affirmation-hero {
