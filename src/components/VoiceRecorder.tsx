@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Mic, Square, Play, Pause, Trash2, Check, X, Volume2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type AmbienceType = "pad" | "rain" | "bowls" | "river" | "ethereal" | "off";
+type AmbienceType = "drone" | "rain" | "bowls" | "ethereal" | "off";
 
 interface VoiceRecorderProps {
   affirmationText: string;
@@ -123,7 +123,7 @@ export function VoiceRecorder({
   onClose,
   onUpgrade,
   isPremium = false,
-  defaultAmbience = "pad",
+  defaultAmbience = "drone",
 }: VoiceRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -147,9 +147,9 @@ export function VoiceRecorder({
   const noiseSourceRef = useRef<AudioBufferSourceNode | null>(null);
 
   useEffect(() => {
-    const freeOk = defaultAmbience === "pad" || defaultAmbience === "off";
+    const freeOk = defaultAmbience === "drone" || defaultAmbience === "off";
     const allowed = isPremium || freeOk;
-    setAmbience(allowed ? defaultAmbience : "pad");
+    setAmbience(allowed ? defaultAmbience : "drone");
   }, [defaultAmbience, isPremium]);
 
   useEffect(() => {
@@ -204,7 +204,8 @@ export function VoiceRecorder({
   };
 
   const startRain = (ctx: AudioContext, master: GainNode) => {
-    master.gain.value = 0.09;
+    // Bright, light patter — distinct from old river (deeper flow)
+    master.gain.value = 0.08;
     const bufferSize = 2 * ctx.sampleRate;
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -212,56 +213,23 @@ export function VoiceRecorder({
     const noise = ctx.createBufferSource();
     noise.buffer = buffer;
     noise.loop = true;
-    const filter = ctx.createBiquadFilter();
-    filter.type = "bandpass";
-    filter.frequency.value = 1100;
-    filter.Q.value = 0.55;
+    const high = ctx.createBiquadFilter();
+    high.type = "bandpass";
+    high.frequency.value = 2800;
+    high.Q.value = 0.45;
+    const air = ctx.createBiquadFilter();
+    air.type = "highpass";
+    air.frequency.value = 600;
     const g = ctx.createGain();
-    g.gain.value = 0.5;
-    noise.connect(filter);
-    filter.connect(g);
+    g.gain.value = 0.42;
+    noise.connect(air);
+    air.connect(high);
+    high.connect(g);
     g.connect(master);
     noise.start();
     noiseSourceRef.current = noise;
   };
 
-  /** Flowing river: layered filtered noise + slow amplitude motion */
-  const startRiver = (ctx: AudioContext, master: GainNode) => {
-    master.gain.value = 0.085;
-    const bufferSize = 3 * ctx.sampleRate;
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-
-    const makeLayer = (freq: number, q: number, gain: number, rate: number) => {
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-      noise.loop = true;
-      const filter = ctx.createBiquadFilter();
-      filter.type = "bandpass";
-      filter.frequency.value = freq;
-      filter.Q.value = q;
-      const g = ctx.createGain();
-      g.gain.value = gain;
-      const lfo = ctx.createOscillator();
-      const lfoG = ctx.createGain();
-      lfo.frequency.value = rate;
-      lfoG.gain.value = gain * 0.25;
-      lfo.connect(lfoG);
-      lfoG.connect(g.gain);
-      noise.connect(filter);
-      filter.connect(g);
-      g.connect(master);
-      noise.start();
-      lfo.start();
-      return noise;
-    };
-
-    // Keep one ref for stop; others stop when context closes
-    noiseSourceRef.current = makeLayer(400, 0.7, 0.35, 0.07);
-    makeLayer(900, 0.5, 0.22, 0.11);
-    makeLayer(1800, 0.4, 0.12, 0.09);
-  };
 
   const startBowls = (ctx: AudioContext, master: GainNode) => {
     master.gain.value = 0.065;
@@ -323,9 +291,8 @@ export function VoiceRecorder({
     audioCtxRef.current = ctx;
     const master = ctx.createGain();
     master.connect(ctx.destination);
-    if (type === "pad") startPad(ctx, master);
+    if (type === "drone") startPad(ctx, master);
     else if (type === "rain") startRain(ctx, master);
-    else if (type === "river") startRiver(ctx, master);
     else if (type === "bowls") startBowls(ctx, master);
     else if (type === "ethereal") startEthereal(ctx, master);
   };
@@ -411,7 +378,7 @@ export function VoiceRecorder({
   };
 
   const changeAmbience = async (type: AmbienceType) => {
-    if (!isPremium && type !== "pad" && type !== "off") {
+    if (!isPremium && type !== "drone" && type !== "off") {
       onUpgrade?.();
       return;
     }
@@ -441,9 +408,8 @@ export function VoiceRecorder({
     `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
 
   const ambienceOptions: { id: AmbienceType; label: string; premium?: boolean }[] = [
-    { id: "pad", label: "Soft pad" },
+    { id: "drone", label: "Warm drone" },
     { id: "rain", label: "Soft rain", premium: true },
-    { id: "river", label: "Flowing river", premium: true },
     { id: "bowls", label: "Quiet bowls", premium: true },
     { id: "ethereal", label: "Ethereal", premium: true },
     { id: "off", label: "Voice only" },

@@ -7,7 +7,7 @@ export const PREMIUM = {
     recordings: 3,
     customAffirmations: 5,
     aiGenerations: 3,
-    ambientTypes: ["pad", "off"] as const,
+    ambientTypes: ["drone", "off"] as const,
   },
   features: [
     {
@@ -28,7 +28,7 @@ export const PREMIUM = {
     {
       id: "all-ambient",
       title: "All background sounds",
-      description: "Soft pad, rain, river, bowls, and ethereal tones under your voice.",
+      description: "Warm drone, soft rain, quiet bowls, and ethereal tones under your voice.",
     },
     {
       id: "ai-personal",

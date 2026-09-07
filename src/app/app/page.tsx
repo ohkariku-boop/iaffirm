@@ -53,7 +53,7 @@ export default function AppPage() {
   const [showAbout, setShowAbout] = useState(false);
   const [themeId, setThemeId] = useState<ThemeId>("sage");
   const [themeReady, setThemeReady] = useState(false);
-  const [ambientId, setAmbientId] = useState<AmbienceId>("pad");
+  const [ambientId, setAmbientId] = useState<AmbienceId>("drone");
   const [previewThemeId, setPreviewThemeId] = useState<ThemeId | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [dailyDone, setDailyDone] = useState(false);
@@ -174,7 +174,7 @@ export default function AppPage() {
     saveThemeId(id);
     // Align default sound with theme when user picks an atmosphere
     const t = getTheme(id);
-    if (premium.isPremium || t.ambientDefault === "pad" || t.ambientDefault === "off") {
+    if (premium.isPremium || t.ambientDefault === "drone" || t.ambientDefault === "off") {
       setAmbientId(t.ambientDefault);
       savePreferredAmbience(t.ambientDefault);
     }

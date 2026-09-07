@@ -25,7 +25,7 @@ export type Theme = {
   affirmTracking: string;
   affirmWeight: number;
   affirmSize: string;
-  ambientDefault: "pad" | "rain" | "bowls" | "river" | "ethereal" | "off";
+  ambientDefault: "drone" | "rain" | "bowls" | "ethereal" | "off";
   /** Sample line for preview */
   previewLine: string;
 };
@@ -53,7 +53,7 @@ export const THEMES: Theme[] = [
     affirmTracking: "-0.02em",
     affirmWeight: 500,
     affirmSize: "1.45rem",
-    ambientDefault: "pad",
+    ambientDefault: "drone",
     previewLine: "I am enough exactly as I am right now.",
   },
   {
@@ -78,7 +78,7 @@ export const THEMES: Theme[] = [
     affirmTracking: "-0.01em",
     affirmWeight: 500,
     affirmSize: "1.5rem",
-    ambientDefault: "pad",
+    ambientDefault: "drone",
     previewLine: "I meet this day with warmth and quiet courage.",
   },
   {
@@ -153,7 +153,7 @@ export const THEMES: Theme[] = [
     affirmTracking: "0.02em",
     affirmWeight: 400,
     affirmSize: "1.42rem",
-    ambientDefault: "pad",
+    ambientDefault: "drone",
     previewLine: "I grow at my own pace, rooted and patient.",
   },
   {

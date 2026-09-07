@@ -1,4 +1,4 @@
-export type AmbienceId = "pad" | "rain" | "bowls" | "river" | "ethereal" | "off";
+export type AmbienceId = "drone" | "rain" | "bowls" | "ethereal" | "off";
 
 export type SoundOption = {
   id: AmbienceId;
@@ -7,35 +7,30 @@ export type SoundOption = {
   premium: boolean;
 };
 
+/** Focused set: one steady bed, one water, two tonal, voice only */
 export const SOUND_OPTIONS: SoundOption[] = [
   {
-    id: "pad",
-    name: "Soft pad",
-    description: "Warm, low drone under your voice",
+    id: "drone",
+    name: "Warm drone",
+    description: "Low, steady bed under your voice",
     premium: false,
   },
   {
     id: "rain",
     name: "Soft rain",
-    description: "Gentle filtered rain texture",
-    premium: true,
-  },
-  {
-    id: "river",
-    name: "Flowing river",
-    description: "Steady water flow, calm and continuous",
+    description: "Light, bright water texture",
     premium: true,
   },
   {
     id: "bowls",
     name: "Quiet bowls",
-    description: "Soft resonant tones with slow motion",
+    description: "Soft resonant tones",
     premium: true,
   },
   {
     id: "ethereal",
     name: "Ethereal",
-    description: "Soft floating tones — light and spacious",
+    description: "Airy floating tones",
     premium: true,
   },
   {
@@ -48,15 +43,21 @@ export const SOUND_OPTIONS: SoundOption[] = [
 
 const KEY = "iaffirm_ambient_v1";
 
+/** Map legacy ids from older builds */
+function migrateId(v: string | null): AmbienceId {
+  if (!v) return "drone";
+  if (v === "pad" || v === "river") return v === "river" ? "rain" : "drone";
+  if (SOUND_OPTIONS.some((s) => s.id === v)) return v as AmbienceId;
+  return "drone";
+}
+
 export function loadPreferredAmbience(): AmbienceId {
-  if (typeof window === "undefined") return "pad";
+  if (typeof window === "undefined") return "drone";
   try {
-    const v = localStorage.getItem(KEY) as AmbienceId | null;
-    if (v && SOUND_OPTIONS.some((s) => s.id === v)) return v;
+    return migrateId(localStorage.getItem(KEY));
   } catch {
-    /* */
+    return "drone";
   }
-  return "pad";
 }
 
 export function savePreferredAmbience(id: AmbienceId) {
