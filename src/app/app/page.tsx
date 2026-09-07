@@ -95,15 +95,18 @@ export default function AppPage() {
     [premium.isPremium]
   );
 
-  const filtered = selectedCategory
-    ? affirmations.filter((a) => a.category?.slug === selectedCategory)
-    : affirmations;
-
-  const listSource = premium.isPremium ? filtered : filtered.slice(0, 6);
-  const libraryPageData = useMemo(
-    () => paginate(listSource, libraryPage, LIBRARY_PAGE_SIZE),
-    [listSource, libraryPage]
+  const filtered = useMemo(
+    () =>
+      selectedCategory
+        ? affirmations.filter((a) => a.category?.slug === selectedCategory)
+        : affirmations,
+    [affirmations, selectedCategory]
   );
+
+  const libraryPageData = useMemo(() => {
+    const source = premium.isPremium ? filtered : filtered.slice(0, 6);
+    return paginate(source, libraryPage, LIBRARY_PAGE_SIZE);
+  }, [filtered, premium.isPremium, libraryPage]);
 
   const current = filtered[currentIndex % (filtered.length || 1)] || filtered[0];
 
