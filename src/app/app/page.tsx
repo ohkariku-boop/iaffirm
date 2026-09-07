@@ -18,6 +18,7 @@ import { RemindersPanel } from "@/components/RemindersPanel";
 import { Logo } from "@/components/Logo";
 import { User, Loader2, Heart, Check, Lock } from "lucide-react";
 import { usePremium } from "@/hooks/usePremium";
+import { useAffirmationsPage } from "@/hooks/useAffirmationsPage";
 import { useLibrary } from "@/hooks/useLibrary";
 import {
   getAffirmationsForTier,
@@ -58,10 +59,16 @@ export default function AppPage() {
   const [dailyDone, setDailyDone] = useState(false);
   const [focusSlug, setFocusSlugState] = useState<string | null>(null);
   const [openRecorderAfterOnboard, setOpenRecorderAfterOnboard] = useState(false);
-  const [libraryPage, setLibraryPage] = useState(0);
 
   const premium = usePremium();
   const library = useLibrary();
+
+  const remotePage = useAffirmationsPage({
+    categorySlug: selectedCategory,
+    isPremium: premium.isPremium,
+    enabled: tab === "today" && premium.ready,
+  });
+
 
   useEffect(() => {
     setThemeId(loadThemeId());
@@ -103,10 +110,6 @@ export default function AppPage() {
     [affirmations, selectedCategory]
   );
 
-  const libraryPageData = useMemo(() => {
-    const source = premium.isPremium ? filtered : filtered.slice(0, 6);
-    return paginate(source, libraryPage, LIBRARY_PAGE_SIZE);
-  }, [filtered, premium.isPremium, libraryPage]);
 
   const current = filtered[currentIndex % (filtered.length || 1)] || filtered[0];
 
@@ -126,7 +129,6 @@ export default function AppPage() {
   // Reset index when category or tier changes
   useEffect(() => {
     setCurrentIndex(0);
-    setLibraryPage(0);
   }, [selectedCategory, premium.isPremium]);
 
   const openPremium = (reason: PremiumReason = "general") => {
@@ -424,12 +426,18 @@ export default function AppPage() {
                   More in {selectedCategory ? categories.find((c) => c.slug === selectedCategory)?.name : "your library"}
                 </h2>
                 <span className="text-[11px]" style={{ color: theme.muted }}>
-                  {filtered.length} lines
+                  {remotePage.loading ? "…" : `${remotePage.total} lines`}
                   {!premium.isPremium && ` · ${ALL_AFFIRMATIONS.length} in full practice`}
+                  {remotePage.source === "supabase" && " · cloud"}
                 </span>
               </div>
               <div className="grid gap-3">
-                {libraryPageData.pageItems.map((a: Affirmation) => (
+                {remotePage.loading && remotePage.items.length === 0 && (
+                  <p className="text-sm text-center py-6" style={{ color: theme.muted }}>
+                    Loading lines…
+                  </p>
+                )}
+                {remotePage.items.map((a: Affirmation) => (
                   <AffirmationCard
                     key={a.id}
                     affirmation={a}
@@ -439,17 +447,17 @@ export default function AppPage() {
                   />
                 ))}
               </div>
-              {libraryPageData.totalItems > LIBRARY_PAGE_SIZE && (
+              {remotePage.total > remotePage.pageSize && (
                 <Pagination
-                  pageIndex={libraryPageData.pageIndex}
-                  totalPages={libraryPageData.totalPages}
-                  from={libraryPageData.from}
-                  to={libraryPageData.to}
-                  totalItems={libraryPageData.totalItems}
-                  hasPrev={libraryPageData.hasPrev}
-                  hasNext={libraryPageData.hasNext}
-                  onPrev={() => setLibraryPage((p) => Math.max(0, p - 1))}
-                  onNext={() => setLibraryPage((p) => p + 1)}
+                  pageIndex={remotePage.pageIndex}
+                  totalPages={remotePage.totalPages}
+                  from={remotePage.from}
+                  to={remotePage.to}
+                  totalItems={remotePage.total}
+                  hasPrev={remotePage.pageIndex > 0}
+                  hasNext={remotePage.pageIndex < remotePage.totalPages - 1}
+                  onPrev={remotePage.prev}
+                  onNext={remotePage.next}
                   accent={theme.accent}
                   muted={theme.muted}
                 />
