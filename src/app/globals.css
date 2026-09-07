@@ -78,7 +78,7 @@ html {
 .landing-hero {
   position: relative;
   width: 100%;
-  min-height: min(56vh, 480px);
+  min-height: auto;
   display: flex;
   flex-direction: column;
   background: transparent;
@@ -86,17 +86,17 @@ html {
 
 @media (min-width: 768px) {
   .landing-hero {
-    min-height: min(60vh, 520px);
+    min-height: auto;
   }
 }
 
 .landing-hero--tight {
-  min-height: min(52vh, 420px);
+  min-height: auto;
 }
 
 @media (min-width: 768px) {
   .landing-hero--tight {
-    min-height: min(56vh, 480px);
+    min-height: auto;
   }
 }
 

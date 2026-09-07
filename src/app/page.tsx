@@ -18,14 +18,14 @@ export default function LandingPage() {
       </header>
 
       <section className="landing-hero landing-hero--tight">
-        <div className="flex-1 flex flex-col justify-end max-w-5xl mx-auto w-full px-5 sm:px-6 pt-10 pb-12 sm:pb-14">
-          <p className="text-xs sm:text-sm tracking-wide text-[#5b8a72] mb-3">
+        <div className="flex flex-col max-w-5xl mx-auto w-full px-5 sm:px-6 pt-8 pb-8 sm:pt-10 sm:pb-10">
+          <p className="text-xs sm:text-sm tracking-wide text-[#5b8a72] mb-2">
             A quiet practice for better days
           </p>
-          <h1 className="text-3xl sm:text-4xl md:text-[2.75rem] font-semibold leading-[1.15] tracking-tight mb-4 text-[#2c2a26] max-w-2xl">
+          <h1 className="text-3xl sm:text-4xl md:text-[2.75rem] font-semibold leading-[1.15] tracking-tight mb-3 text-[#2c2a26] max-w-2xl">
             The words you speak to yourself matter.
           </h1>
-          <p className="text-base sm:text-lg text-[#3d3a36]/90 leading-relaxed max-w-xl mb-6">
+          <p className="text-base sm:text-lg text-[#3d3a36]/90 leading-relaxed max-w-xl mb-5">
             Practice positive self-talk in your own voice. Record a line, play it back when you
             need lifting — one day at a time.
           </p>
