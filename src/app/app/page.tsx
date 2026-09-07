@@ -69,9 +69,6 @@ export default function AppPage() {
     const f = getFocusSlug();
     setFocusSlugState(f);
     if (f) setSelectedCategory(f);
-    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js").catch(() => {});
-    }
   }, []);
 
   const theme = getTheme(themeId);
