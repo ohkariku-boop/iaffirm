@@ -6,8 +6,9 @@ import { paginate, LIBRARY_PAGE_SIZE } from "@/lib/pagination"
 /**
  * GET /api/affirmations?category=calm&page=0&pageSize=5&premium=1
  *
- * Tries Supabase range query first; falls back to in-memory catalog
- * (same page contract) when DB is empty or unavailable.
+ * System catalog is served from the bundled library (750 lines) with
+ * server-side page math. Supabase is used when it has a full/equal set
+ * for that filter (e.g. after a complete seed).
  */
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams
@@ -19,36 +20,13 @@ export async function GET(req: NextRequest) {
   )
   const isPremium = sp.get("premium") === "1" || sp.get("premium") === "true"
 
-  // 1) Supabase server-side range
-  const remote = await getAffirmationsPage({
-    categorySlug: category,
-    pageIndex,
-    pageSize,
-  })
-
-  if (remote.total > 0 && remote.items.length > 0) {
-    return NextResponse.json({
-      ...remote,
-      source: "supabase",
-    })
-  }
-
-  // 2) Local catalog fallback (bundled content)
-  let list = getAffirmationsForTier(isPremium)
+  // Local system catalog (source of truth for the 15×50 library)
+  let list = isPremium ? ALL_AFFIRMATIONS : getAffirmationsForTier(false)
   if (category) {
     list = list.filter((a) => a.category?.slug === category)
-  } else if (!isPremium) {
-    list = list // already free-tier limited
   }
-
-  // When premium and no category, still paginate full set
-  if (isPremium && !category) {
-    list = ALL_AFFIRMATIONS
-  }
-
   const local = paginate(list, pageIndex, pageSize)
-
-  return NextResponse.json({
+  const localPayload = {
     items: local.pageItems,
     total: local.totalItems,
     pageIndex: local.pageIndex,
@@ -56,6 +34,25 @@ export async function GET(req: NextRequest) {
     from: local.from,
     to: local.to,
     totalPages: local.totalPages,
-    source: "local",
-  })
+    source: "local" as const,
+  }
+
+  // Optional: prefer Supabase when it has at least as many rows as local
+  try {
+    const remote = await getAffirmationsPage({
+      categorySlug: category,
+      pageIndex,
+      pageSize,
+    })
+    if (remote.total > 0 && remote.total >= local.totalItems) {
+      return NextResponse.json({
+        ...remote,
+        source: "supabase",
+      })
+    }
+  } catch {
+    /* fall through to local */
+  }
+
+  return NextResponse.json(localPayload)
 }

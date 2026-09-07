@@ -447,7 +447,7 @@ export default function AppPage() {
                   />
                 ))}
               </div>
-              {remotePage.total > remotePage.pageSize && (
+              {remotePage.totalPages > 1 && (
                 <Pagination
                   pageIndex={remotePage.pageIndex}
                   totalPages={remotePage.totalPages}
@@ -461,6 +461,11 @@ export default function AppPage() {
                   accent={theme.accent}
                   muted={theme.muted}
                 />
+              )}
+              {remotePage.totalPages > 1 && (
+                <p className="text-[11px] text-center" style={{ color: theme.muted }}>
+                  5 lines per page — use Next to browse the full category
+                </p>
               )}
               {!premium.isPremium && (
                 <button
