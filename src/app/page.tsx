@@ -49,77 +49,79 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="max-w-3xl mx-auto px-6 py-24">
-        <h2 className="text-sm tracking-wide text-[#5b8a72] mb-12">
-          What you’ll find here
-        </h2>
-
-        <div className="space-y-16">
+      <section className="max-w-5xl mx-auto px-6 py-24">
+        <div className="grid md:grid-cols-2 gap-12 md:gap-14 lg:gap-16 items-start">
+          {/* What you’ll find */}
           <div>
-            <h3 className="text-xl font-medium mb-3 text-[#2c2a26]">Your voice, not a stranger’s</h3>
-            <p className="text-[#6b6560] leading-relaxed max-w-lg">
-              Hearing an affirmation in your own voice can make it land differently.
-              Record the words that feel true for you. Play them back when the day feels heavy.
-            </p>
+            <h2 className="text-sm tracking-wide text-[#5b8a72] mb-8">
+              What you’ll find here
+            </h2>
+            <div className="space-y-10">
+              <div>
+                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Your voice, not a stranger’s</h3>
+                <p className="text-[#6b6560] leading-relaxed text-[15px]">
+                  Hearing an affirmation in your own voice can make it land differently.
+                  Record the words that feel true for you. Play them back when the day feels heavy.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Words for the moments that need them</h3>
+                <p className="text-[#6b6560] leading-relaxed text-[15px]">
+                  Confidence. Calm. Self-compassion. Motivation. Gratitude.
+                  Choose what you need today — or write your own.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">A practice that stays gentle</h3>
+                <p className="text-[#6b6560] leading-relaxed text-[15px]">
+                  No streaks that shame you. No noise. Just a quiet place to return to
+                  when you want to lift your own spirit a little.
+                </p>
+              </div>
+            </div>
           </div>
 
+          {/* How & why */}
           <div>
-            <h3 className="text-xl font-medium mb-3 text-[#2c2a26]">Words for the moments that need them</h3>
-            <p className="text-[#6b6560] leading-relaxed max-w-lg">
-              Confidence. Calm. Self-compassion. Motivation. Gratitude.
-              Choose what you need today — or write your own.
+            <h2 className="text-sm tracking-wide text-[#5b8a72] mb-3">
+              How & why it works
+            </h2>
+            <p className="text-[#6b6560] leading-relaxed text-[15px] mb-8">
+              A simple practice, grounded in how habits and self-talk form — not in hype.
             </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-medium mb-3 text-[#2c2a26]">A practice that stays gentle</h3>
-            <p className="text-[#6b6560] leading-relaxed max-w-lg">
-              No streaks that shame you. No noise. Just a quiet place to return to
-              when you want to lift your own spirit a little.
-            </p>
-          </div>
-        </div>
-      </section>
-
-
-      <section className="max-w-3xl mx-auto px-6 py-24">
-        <h2 className="text-sm tracking-wide text-[#5b8a72] mb-4">
-          How & why it works
-        </h2>
-        <p className="text-[#6b6560] leading-relaxed max-w-lg mb-12">
-          A simple practice, grounded in how habits and self-talk form — not in hype.
-        </p>
-        <div className="space-y-10 max-w-lg">
-          <div>
-            <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Your own voice</h3>
-            <p className="text-[#6b6560] leading-relaxed">
-              The mind learns from what it hears often. Words you speak and hear in your own
-              voice can land differently than a stranger’s quote on a screen.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Short and repeated</h3>
-            <p className="text-[#6b6560] leading-relaxed">
-              Small, regular practice is how habits form. A few honest lines, returned to often,
-              matter more than a long list you never revisit.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Make it personal</h3>
-            <p className="text-[#6b6560] leading-relaxed">
-              Lines that feel true are easier to say and easier to believe. If a phrase feels
-              false, change it until it fits.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">What this is not</h3>
-            <p className="text-[#6b6560] leading-relaxed">
-              iAffirm is a gentle self-talk practice, not therapy or medical treatment.
-              If you’re struggling, please reach out to a professional or local support.{" "}
-              <Link href="/disclaimer" className="text-[#5b8a72] underline underline-offset-2">
-                Health disclaimer
-              </Link>
-            </p>
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Your own voice</h3>
+                <p className="text-[#6b6560] leading-relaxed text-[15px]">
+                  The mind learns from what it hears often. Words you speak and hear in your own
+                  voice can land differently than a stranger’s quote on a screen.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Short and repeated</h3>
+                <p className="text-[#6b6560] leading-relaxed text-[15px]">
+                  Small, regular practice is how habits form. A few honest lines, returned to often,
+                  matter more than a long list you never revisit.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">Make it personal</h3>
+                <p className="text-[#6b6560] leading-relaxed text-[15px]">
+                  Lines that feel true are easier to say and easier to believe. If a phrase feels
+                  false, change it until it fits.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium mb-2 text-[#2c2a26]">What this is not</h3>
+                <p className="text-[#6b6560] leading-relaxed text-[15px]">
+                  iAffirm is a gentle self-talk practice, not therapy or medical treatment.
+                  If you’re struggling, please reach out to a professional or local support.{" "}
+                  <Link href="/disclaimer" className="text-[#5b8a72] underline underline-offset-2">
+                    Health disclaimer
+                  </Link>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
