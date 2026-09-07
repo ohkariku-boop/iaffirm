@@ -416,7 +416,10 @@ export default function AppPage() {
                 </span>
               </div>
               <div className="grid gap-3">
-                {filtered.slice(0, premium.isPremium ? 12 : 6).map((a: Affirmation) => (
+                {(premium.isPremium
+                  ? filtered
+                  : filtered.slice(0, 6)
+                ).map((a: Affirmation) => (
                   <AffirmationCard
                     key={a.id}
                     affirmation={a}
