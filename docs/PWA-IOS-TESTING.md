@@ -155,3 +155,29 @@ Use a **physical iPhone** when possible (simulator ≠ real mic / A2HS).
 - Recordings and Full practice demo state are **on-device** — say so in UI/legal.  
 - Native app later for widgets, stronger notifications, store billing.  
 - Prefer **PNG** home-screen icons before marketing “install as app” widely.
+
+---
+
+## 7. Service worker caching (iAffirm)
+
+| Strategy | Used for |
+|----------|----------|
+| **Precache** | Icons (PNG), manifest, `/install` — `iaffirm-static-v2` |
+| **Cache-first** | Static assets under `/icons/`, images, fonts |
+| **Network-first** | HTML navigations (`/`, `/app`) — avoids sticky old deploys |
+| **Network-only** | `/api/*` — never cache checkout, AI, affirmation pages API |
+
+Bump `CACHE` to `v3` when precache list changes so activate deletes old caches.
+
+---
+
+## 8. Web app manifest best practices (applied)
+
+- `id`, `scope`, `start_url` aligned (`/` scope, `/app` start)
+- `display: standalone` + `display_override`
+- **PNG 192 + 512** for `any`, separate **maskable** icons
+- `theme_color` / `background_color` match brand
+- `shortcuts` for Today
+- `prefer_related_applications: false` while web-first
+- `apple-touch-icon` 180 PNG for iOS home screen
+- Avoid relying on SVG alone for installability on Android

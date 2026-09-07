@@ -5,12 +5,15 @@
  * - Push + local notification helpers
  */
 
-const CACHE = "iaffirm-static-v1";
+const CACHE = "iaffirm-static-v2";
 
 const PRECACHE = [
   "/favicon.svg",
-  "/icons/icon-192.svg",
-  "/icons/icon-512.svg",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png",
+  "/icons/icon-192-maskable.png",
+  "/icons/icon-512-maskable.png",
+  "/icons/apple-touch-icon.png",
   "/manifest.json",
   "/install",
 ];
@@ -132,8 +135,8 @@ self.addEventListener("push", (event) => {
   event.waitUntil(
     self.registration.showNotification(data.title || "iAffirm", {
       body: data.body,
-      icon: "/icons/icon-192.svg",
-      badge: "/icons/icon-192.svg",
+      icon: "/icons/icon-192.png",
+      badge: "/icons/icon-192.png",
       data: { url: data.url || "/app" },
       tag: data.tag || "iaffirm-reminder",
       renotify: true,
@@ -166,7 +169,7 @@ self.addEventListener("message", (event) => {
     event.waitUntil(
       self.registration.showNotification(title || "iAffirm", {
         body: body || "Time for a short affirmation practice.",
-        icon: "/icons/icon-192.svg",
+        icon: "/icons/icon-192.png",
         data: { url: url || "/app" },
         tag: "iaffirm-local",
       })

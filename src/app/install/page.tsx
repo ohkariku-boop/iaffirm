@@ -64,6 +64,11 @@ export default function InstallPage() {
             Open iAffirm first
             <ArrowRight className="w-4 h-4" />
           </Link>
+
+          <p className="text-xs text-[#6b6560] leading-relaxed max-w-md">
+            After install: open from the home screen, complete a short recording, and allow the
+            microphone when asked — that confirms the full path works on your device.
+          </p>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-6">

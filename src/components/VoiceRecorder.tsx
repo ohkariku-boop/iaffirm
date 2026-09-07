@@ -341,9 +341,22 @@ export function VoiceRecorder({
       levelTimerRef.current = setInterval(() => {
         setLevel((n) => Math.min(1, 0.35 + Math.random() * 0.45));
       }, 120);
-    } catch (e) {
+    } catch (e: unknown) {
       console.error(e);
-      setError("Microphone access is needed to record. Check browser permissions.");
+      const name = e && typeof e === "object" && "name" in e ? String((e as { name: string }).name) : "";
+      if (name === "NotAllowedError" || name === "PermissionDeniedError") {
+        setError(
+          "Microphone is blocked. On iPhone: Settings → Safari → Microphone, allow this site, then try again. On Android: site settings → allow mic."
+        );
+      } else if (name === "NotFoundError" || name === "DevicesNotFoundError") {
+        setError("No microphone found. Connect a mic or use a phone with a built-in microphone.");
+      } else if (name === "NotReadableError" || name === "TrackStartError") {
+        setError("Microphone is in use by another app. Close it and try again.");
+      } else if (name === "SecurityError") {
+        setError("Microphone needs a secure connection (HTTPS) and a user tap to start.");
+      } else {
+        setError("Microphone access is needed to record. Check browser permissions and try again.");
+      }
     }
   };
 
