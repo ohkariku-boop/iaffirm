@@ -19,12 +19,12 @@ export function Logo({
     <span className={cn("inline-flex items-center gap-2", className)}>
       <span
         className={cn(
-          "relative flex items-center justify-center rounded-full bg-primary text-primary-foreground font-bold leading-none select-none",
+          "relative inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground font-bold leading-none select-none",
           size === "sm" ? "w-7 h-7 text-[11px]" : "w-8 h-8 text-xs"
         )}
         aria-hidden
       >
-        iA
+        <span className="block translate-y-[0.05em] tracking-tight">iA</span>
       </span>
       {showWordmark && (
         <span
