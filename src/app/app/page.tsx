@@ -228,12 +228,20 @@ export default function AppPage() {
         <div className="max-w-lg mx-auto px-5 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Logo href="/" size="sm" />
-            {premium.isPremium && (
+            {premium.isPaid && (
               <span
                 className="text-[10px] px-1.5 py-0.5 rounded-full font-medium"
                 style={{ background: theme.accentSoft, color: theme.accent }}
               >
                 full practice
+              </span>
+            )}
+            {premium.isTrialActive && (
+              <span
+                className="text-[10px] px-1.5 py-0.5 rounded-full font-medium"
+                style={{ background: theme.accentSoft, color: theme.accent }}
+              >
+                trial · {premium.trialDaysLeft}d left
               </span>
             )}
           </div>
@@ -246,6 +254,15 @@ export default function AppPage() {
               >
                 <Heart className="w-3.5 h-3.5" />
                 Full practice
+              </button>
+            )}
+            {premium.isTrialActive && (
+              <button
+                onClick={() => openPremium("general")}
+                className="hidden sm:flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full transition-colors"
+                style={{ background: theme.accentSoft, color: theme.accent }}
+              >
+                Keep access
               </button>
             )}
             <button
@@ -497,9 +514,11 @@ export default function AppPage() {
             <div>
               <h2 className="text-lg font-semibold mb-1">You</h2>
               <p className="text-sm" style={{ color: theme.muted }}>
-                {premium.isPremium
+                {premium.isPaid
                   ? "Full practice is on. Themes, sounds, and the full library are yours."
-                  : "Free practice with limits. Upgrade anytime for the full experience."}
+                  : premium.isTrialActive
+                    ? `Free trial — ${premium.trialDaysLeft} day${premium.trialDaysLeft === 1 ? "" : "s"} left. Enjoy the full library, themes, and sounds.`
+                    : "Free plan — upgrade anytime for the full library and unlimited recordings."}
               </p>
             </div>
 
@@ -542,13 +561,13 @@ export default function AppPage() {
               <ul className="text-sm space-y-2" style={{ color: theme.muted }}>
                 <li>
                   Recordings:{" "}
-                  {premium.isPremium
+                  {premium.isPaid
                     ? "Unlimited"
                     : `${premium.usage.recordingsUsed} / 3 used`}
                 </li>
                 <li>
                   Personal lines:{" "}
-                  {premium.isPremium
+                  {premium.isPaid
                     ? "Unlimited"
                     : `${premium.usage.aiGenerationsUsed} / 3 used`}
                 </li>

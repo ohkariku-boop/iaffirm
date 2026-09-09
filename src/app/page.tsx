@@ -58,7 +58,7 @@ export default function LandingPage() {
               href="/app"
               className="inline-flex items-center gap-2 text-sm font-medium bg-[#5b8a72] text-white px-5 py-2.5 rounded-full hover:bg-[#4a7a62] transition-colors shadow-sm"
             >
-              Start practicing free
+              Start free trial
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
@@ -261,7 +261,7 @@ export default function LandingPage() {
             <ArrowRight className="w-4 h-4" />
           </Link>
           <p className="text-[11px] text-[#6b6560] mt-4">
-            Free to try · Full practice from $3.99/month · Web app · Native apps planned
+            Free 10-day Full practice trial · Then from $3.99/month · Web app · Native apps planned
           </p>
         </div>
       </section>

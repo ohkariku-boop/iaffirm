@@ -12,6 +12,8 @@ interface PremiumModalProps {
   onClose: () => void;
   onSubscribe?: (plan: PlanId) => void;
   reason?: PremiumReason;
+  trialDaysLeft?: number;
+  isTrialActive?: boolean;
 }
 
 const REASON_COPY: Record<
@@ -35,7 +37,7 @@ const REASON_COPY: Record<
   },
   general: {
     title: "Your practice, a little deeper",
-    body: "Unlimited recordings in your voice, personal lines for your situation, and gentle sounds under them.",
+    body: "Unlimited recordings in your voice, personal lines, atmospheres, and gentle sounds — with a 10-day free trial on this device.",
     icon: Heart,
   },
 };
@@ -45,6 +47,8 @@ export function PremiumModal({
   onClose,
   onSubscribe,
   reason = "general",
+  trialDaysLeft = 0,
+  isTrialActive = false,
 }: PremiumModalProps) {
   const [plan, setPlan] = useState<PlanId>("yearly");
   const [loading, setLoading] = useState(false);
@@ -180,8 +184,14 @@ export function PremiumModal({
             Not now — keep browsing
           </button>
           {err && <p className="text-center text-[11px] text-red-600">{err}</p>}
-          <p className="text-center text-[11px] text-muted-foreground">
-            Secure checkout when Stripe is configured. Otherwise unlocks on this device for demo.
+          <p className="text-center text-[11px] text-muted-foreground leading-relaxed">
+            {isTrialActive
+              ? `Your free Full practice trial has ${trialDaysLeft} day${trialDaysLeft === 1 ? "" : "s"} left on this device. Subscribe to keep access after the trial.`
+              : trialDaysLeft === 0
+                ? "Your 10-day free trial has ended. Subscribe for Full practice, or continue with free limits."
+                : "New on iAffirm? Full practice includes a 10-day free trial on this device."}
+            {" "}
+            Stripe charges when configured; until then, subscribe unlocks this device for demo.
           </p>
         </div>
       </div>
