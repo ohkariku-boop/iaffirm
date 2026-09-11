@@ -8,7 +8,7 @@ interface LogoProps {
   showWordmark?: boolean;
 }
 
-/** Simple wordmark: soft leaf mark + bold type */
+/** Brand mark: gradient chip + serif IA / iAffirm wordmark */
 export function Logo({
   href = "/",
   className,
@@ -16,24 +16,30 @@ export function Logo({
   showWordmark = true,
 }: LogoProps) {
   const mark = (
-    <span className={cn("inline-flex items-center gap-2", className)}>
+    <span className={cn("inline-flex items-center gap-2.5", className)}>
       <span
         className={cn(
-          "relative inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground font-bold leading-none select-none",
-          size === "sm" ? "w-7 h-7 text-[11px]" : "w-8 h-8 text-xs"
+          "relative inline-flex items-center justify-center rounded-lg font-medium leading-none select-none tracking-wide text-[#1a1a1a]",
+          size === "sm" ? "w-7 h-7 text-[9px]" : "w-8 h-8 text-[10px]"
         )}
+        style={{
+          background: "linear-gradient(110deg, #9fd4d0 0%, #c5dfb0 50%, #e4eb9a 100%)",
+        }}
         aria-hidden
       >
-        <span className="block translate-y-[0.05em] tracking-tight">iA</span>
+        <span className="block translate-y-[0.04em]" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
+          IA
+        </span>
       </span>
       {showWordmark && (
         <span
           className={cn(
-            "font-bold tracking-tight text-foreground",
-            size === "sm" ? "text-[15px]" : "text-lg"
+            "font-medium tracking-[0.18em] text-[#1a1a1a] uppercase",
+            size === "sm" ? "text-[11px]" : "text-[13px]"
           )}
+          style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
         >
-          iAffirm
+          I Affirm
         </span>
       )}
     </span>

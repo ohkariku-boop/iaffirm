@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9fd4d0"/>
+      <stop offset="45%" stop-color="#c5dfb0"/>
+      <stop offset="100%" stop-color="#e4eb9a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  <text
+    x="600"
+    y="210"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', Times, serif"
+    font-weight="400"
+    font-size="92"
+    letter-spacing="0.28em"
+    fill="#1a1a1a"
+  >I AFFIRM</text>
+</svg>

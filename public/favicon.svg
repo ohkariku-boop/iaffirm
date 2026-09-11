@@ -1,15 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <circle cx="16" cy="16" r="16" fill="#5b8a72"/>
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9fd4d0"/>
+      <stop offset="100%" stop-color="#e4eb9a"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#g)"/>
   <text
     x="16"
-    y="16"
+    y="17"
     text-anchor="middle"
     dominant-baseline="middle"
-    dy="0.06em"
-    font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    font-weight="700"
-    font-size="13"
-    fill="#ffffff"
-    letter-spacing="-0.02em"
-  >iA</text>
+    font-family="Georgia, 'Times New Roman', Times, serif"
+    font-weight="600"
+    font-size="11"
+    letter-spacing="0.04em"
+    fill="#1a1a1a"
+  >IA</text>
 </svg>
