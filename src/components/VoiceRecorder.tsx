@@ -428,79 +428,146 @@ export function VoiceRecorder({
     { id: "off", label: "Voice only" },
   ];
 
+  const ts = themeStyle ?? {
+    pageBackground: "#f4f0ea",
+    pageBg: "#f4f0ea",
+    cardBackground: "rgba(255,255,255,0.95)",
+    cardBorder: "rgba(74,124,104,0.14)",
+    cardShadow: "0 10px 36px rgba(74,124,104,0.09)",
+    text: "#2a2825",
+    muted: "#6f6a63",
+    accent: "#4a7c68",
+    accentSoft: "#e8f0eb",
+    fontAffirmation: "var(--font-affirm-serif), Georgia, serif",
+    affirmTracking: "0.01em",
+    affirmWeight: 500,
+    affirmSize: "1.35rem",
+    heroWash: "none",
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-border overflow-hidden">
-        <div className="flex items-center justify-between px-5 pt-5 pb-2">
-          <h3 className="text-base font-medium text-foreground">Practice in your voice</h3>
+    <div
+      className="fixed inset-0 z-50 flex flex-col"
+      style={{ background: ts.pageBackground, color: ts.text }}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Record affirmation"
+    >
+      {/* Atmosphere wash */}
+      {ts.heroWash && ts.heroWash !== "none" && (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-90"
+          style={{ background: ts.heroWash }}
+          aria-hidden
+        />
+      )}
+
+      <div className="relative z-10 flex flex-col flex-1 max-w-lg mx-auto w-full px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+        <div className="flex items-center justify-between shrink-0">
+          <p
+            className="text-[11px] font-medium tracking-[0.14em] uppercase"
+            style={{ color: ts.muted }}
+          >
+            Practice in your voice
+          </p>
           <button
+            type="button"
             onClick={() => {
               reset();
               onClose?.();
             }}
-            className="p-1.5 rounded-full text-muted-foreground hover:bg-muted"
+            className="p-2 rounded-full transition-opacity hover:opacity-80"
+            style={{ color: ts.muted, background: `${ts.accent}12` }}
             aria-label="Close"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="px-5 pb-6 space-y-5">
-          <p className="text-[15px] leading-relaxed text-foreground/90 text-center px-2 font-medium">
-            {affirmationText}
-          </p>
+        <div className="flex-1 flex flex-col justify-center min-h-0 py-6">
+          <div
+            className="relative rounded-[1.75rem] px-6 py-10 sm:px-8 sm:py-12 text-center"
+            style={{
+              background: ts.cardBackground,
+              border: `1px solid ${ts.cardBorder}`,
+              boxShadow: ts.cardShadow,
+            }}
+          >
+            <p
+              className="leading-snug"
+              style={{
+                color: ts.text,
+                fontFamily: ts.fontAffirmation,
+                letterSpacing: ts.affirmTracking,
+                fontWeight: ts.affirmWeight,
+                fontSize: ts.affirmSize,
+              }}
+            >
+              {affirmationText}
+            </p>
+          </div>
 
           {error && (
-            <p className="text-xs text-center text-red-600/90 bg-red-50 rounded-xl px-3 py-2">{error}</p>
+            <p className="mt-4 text-xs text-center text-red-700/90 bg-red-50/90 rounded-xl px-3 py-2">
+              {error}
+            </p>
           )}
+        </div>
 
-          <div className="flex flex-col items-center gap-3 py-2">
+        <div className="shrink-0 space-y-5 pb-2">
+          <div className="flex flex-col items-center gap-3">
             {!audioUrl ? (
               <>
                 <button
+                  type="button"
                   onClick={isRecording ? stopRecording : startRecording}
                   className={cn(
-                    "w-20 h-20 rounded-full flex items-center justify-center transition-all shadow-md",
-                    isRecording
-                      ? "bg-red-500 text-white animate-pulse"
-                      : "bg-primary text-primary-foreground hover:opacity-90"
+                    "w-20 h-20 rounded-full flex items-center justify-center transition-all shadow-lg",
+                    isRecording ? "bg-red-500 text-white animate-pulse" : "text-white hover:opacity-90"
                   )}
+                  style={!isRecording ? { background: ts.accent } : undefined}
                   aria-label={isRecording ? "Stop recording" : "Start recording"}
                 >
                   {isRecording ? <Square className="w-7 h-7" /> : <Mic className="w-8 h-8" />}
                 </button>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm" style={{ color: ts.muted }}>
                   {isRecording ? `Recording · ${formatTime(duration)}` : "Tap to record"}
                 </p>
                 {isRecording && (
-                  <div className="w-40 h-1.5 rounded-full bg-muted overflow-hidden">
+                  <div
+                    className="w-40 h-1.5 rounded-full overflow-hidden"
+                    style={{ background: `${ts.accent}22` }}
+                  >
                     <div
-                      className="h-full rounded-full bg-primary transition-all duration-100"
-                      style={{ width: `${Math.max(8, level * 100)}%` }}
+                      className="h-full rounded-full transition-all duration-100"
+                      style={{
+                        width: `${Math.max(8, level * 100)}%`,
+                        background: ts.accent,
+                      }}
                     />
                   </div>
-                )}
-                {!isRecording && (
-                  <p className="text-[11px] text-muted-foreground text-center max-w-[260px] leading-relaxed">
-                    Noise reduction is on — find a quieter spot, hold the phone close, and speak clearly.
-                  </p>
                 )}
               </>
             ) : (
               <>
                 <button
+                  type="button"
                   onClick={togglePlay}
-                  className="w-16 h-16 rounded-full bg-[#e8f0eb] text-primary flex items-center justify-center hover:bg-[#dce8e0] transition-colors"
+                  className="w-20 h-20 rounded-full flex items-center justify-center text-white shadow-lg hover:opacity-90 transition-opacity"
+                  style={{ background: ts.accent }}
                   aria-label={isPlaying ? "Pause" : "Play"}
                 >
-                  {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
+                  {isPlaying ? <Pause className="w-7 h-7" /> : <Play className="w-8 h-8 ml-1" />}
                 </button>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm" style={{ color: ts.muted }}>
                   {isPlaying ? "Playing with background…" : "Listen to your recording"}
                 </p>
 
                 <div className="w-full space-y-2 pt-1">
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground justify-center">
+                  <div
+                    className="flex items-center gap-1.5 text-xs justify-center"
+                    style={{ color: ts.muted }}
+                  >
                     <Volume2 className="w-3.5 h-3.5" />
                     <span>Background sound</span>
                   </div>
@@ -508,13 +575,22 @@ export function VoiceRecorder({
                     {ambienceOptions.map((opt) => (
                       <button
                         key={opt.id}
+                        type="button"
                         onClick={() => changeAmbience(opt.id)}
-                        className={cn(
-                          "text-xs px-3 py-1.5 rounded-full border transition-colors",
+                        className="text-xs px-3 py-1.5 rounded-full border transition-colors"
+                        style={
                           ambience === opt.id
-                            ? "border-primary/50 text-primary bg-[#e8f0eb]"
-                            : "border-border text-muted-foreground hover:border-primary/30"
-                        )}
+                            ? {
+                                borderColor: `${ts.accent}66`,
+                                color: ts.accent,
+                                background: ts.accentSoft,
+                              }
+                            : {
+                                borderColor: `${ts.accent}28`,
+                                color: ts.muted,
+                                background: "transparent",
+                              }
+                        }
                       >
                         {opt.label}
                         {opt.premium && !isPremium ? " · Full" : ""}
@@ -524,8 +600,10 @@ export function VoiceRecorder({
                 </div>
 
                 <button
+                  type="button"
                   onClick={reset}
-                  className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mt-1"
+                  className="flex items-center gap-1.5 text-sm transition-opacity hover:opacity-80 mt-1"
+                  style={{ color: ts.muted }}
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   Record again
@@ -534,20 +612,24 @@ export function VoiceRecorder({
             )}
           </div>
 
-          <div className="flex gap-3 pt-1">
+          <div className="flex gap-3">
             <button
+              type="button"
               onClick={() => {
                 reset();
                 onClose?.();
               }}
-              className="flex-1 py-3 rounded-xl bg-muted text-sm font-medium text-foreground hover:bg-muted/80 transition-colors"
+              className="flex-1 py-3.5 rounded-2xl text-sm font-medium transition-opacity hover:opacity-90"
+              style={{ background: `${ts.accent}18`, color: ts.text }}
             >
               Cancel
             </button>
             {audioUrl && (
               <button
+                type="button"
                 onClick={handleSave}
-                className="flex-1 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+                className="flex-1 py-3.5 rounded-2xl text-sm font-medium text-white flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+                style={{ background: ts.accent }}
               >
                 <Check className="w-4 h-4" />
                 Save

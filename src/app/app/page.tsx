@@ -663,6 +663,22 @@ export default function AppPage() {
           }}
           isPremium={premium.isPremium}
           defaultAmbience={ambientId}
+          themeStyle={{
+            pageBackground: theme.pageBackground,
+            pageBg: theme.pageBg,
+            cardBackground: theme.cardBackground,
+            cardBorder: theme.cardBorder,
+            cardShadow: theme.cardShadow,
+            text: theme.text,
+            muted: theme.muted,
+            accent: theme.accent,
+            accentSoft: theme.accentSoft,
+            fontAffirmation: theme.fontAffirmation,
+            affirmTracking: theme.affirmTracking,
+            affirmWeight: theme.affirmWeight,
+            affirmSize: theme.affirmSize,
+            heroWash: theme.heroWash,
+          }}
           onUpgrade={() => {
             setShowRecorder(false);
             openPremium("ambient");
