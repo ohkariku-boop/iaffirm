@@ -5,43 +5,50 @@ interface LogoProps {
   href?: string;
   className?: string;
   size?: "sm" | "md";
-  /** Kept for API compat; wordmark is always the full I AFFIRM */
   showWordmark?: boolean;
 }
 
-/** Full I AFFIRM wordmark — gradient chip optional on larger sizes */
+/** AFFIRM mark — tall center I, matching brand artwork */
 export function Logo({
   href = "/",
   className,
   size = "md",
-  showWordmark = true,
 }: LogoProps) {
+  const serif = { fontFamily: "Georgia, 'Times New Roman', Times, serif" } as const;
+
   const mark = (
-    <span className={cn("inline-flex items-center gap-2", className)}>
-      {size === "md" && (
-        <span
-          className="relative hidden sm:inline-flex items-center justify-center w-8 h-8 rounded-lg leading-none select-none text-[#1a1a1a] text-[8px] tracking-[0.14em] font-medium"
-          style={{
-            background: "linear-gradient(110deg, #9fd4d0 0%, #c5dfb0 50%, #e4eb9a 100%)",
-            fontFamily: "Georgia, 'Times New Roman', Times, serif",
-          }}
-          aria-hidden
-        >
-          <span className="block translate-y-[0.04em] px-0.5 text-center leading-tight">
-            I
-            <br />
-            A
-          </span>
-        </span>
+    <span
+      className={cn(
+        "inline-flex items-baseline justify-center select-none text-[#1a1a1a]",
+        className
       )}
+      style={serif}
+      aria-label="I Affirm"
+    >
       <span
         className={cn(
-          "font-medium tracking-[0.22em] text-[#1a1a1a] uppercase whitespace-nowrap",
-          size === "sm" ? "text-[11px] sm:text-[12px]" : "text-[13px] sm:text-[14px]"
+          "font-semibold tracking-[0.06em]",
+          size === "sm" ? "text-[13px]" : "text-[15px]"
         )}
-        style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
       >
-        I Affirm
+        AFF
+      </span>
+      <span
+        className={cn(
+          "font-semibold leading-none mx-[0.02em]",
+          size === "sm" ? "text-[22px]" : "text-[26px]"
+        )}
+        style={{ ...serif, transform: "translateY(0.06em)" }}
+      >
+        I
+      </span>
+      <span
+        className={cn(
+          "font-semibold tracking-[0.06em]",
+          size === "sm" ? "text-[13px]" : "text-[15px]"
+        )}
+      >
+        RM
       </span>
     </span>
   );
