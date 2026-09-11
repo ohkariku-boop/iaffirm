@@ -26,7 +26,7 @@ export default function LandingPage() {
               href="/install"
               className="hidden sm:inline text-sm text-[#6b6560] hover:text-[#2c2a26] transition-colors"
             >
-              Home screen
+              How to install
             </Link>
             <Link
               href="/app"
@@ -284,7 +284,7 @@ export default function LandingPage() {
                   Open app
                 </Link>
                 <Link href="/install" className="block text-xs text-[#6b6560] hover:text-[#2a2825]">
-                  Add to home screen
+                  How to install
                 </Link>
               </div>
               <div className="space-y-1.5">

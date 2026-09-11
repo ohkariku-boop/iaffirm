@@ -3,8 +3,8 @@ import { Logo } from "@/components/Logo";
 import { ArrowRight, Share, MoreVertical } from "lucide-react";
 
 export const metadata = {
-  title: "Add to Home Screen — iAffirm",
-  description: "Use iAffirm from your home screen on iPhone or Android.",
+  title: "How to install — iAffirm",
+  description: "How to install iAffirm on iPhone or Android.",
 };
 
 function Step({ n, children }: { n: number; children: React.ReactNode }) {
@@ -49,9 +49,9 @@ export default function InstallPage() {
 
       <main className="max-w-2xl mx-auto px-6 py-12 space-y-12">
         <div className="space-y-4">
-          <p className="text-sm tracking-wide text-[#5b8a72]">Home screen</p>
+          <p className="text-sm tracking-wide text-[#5b8a72]">How to install</p>
           <h1 className="text-3xl font-semibold tracking-tight leading-snug">
-            Use iAffirm like an app
+            How to install iAffirm
           </h1>
           <p className="text-[#6b6560] leading-relaxed max-w-lg">
             Add it to your home screen so today&apos;s practice is one tap away.
