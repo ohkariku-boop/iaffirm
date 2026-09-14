@@ -5,7 +5,7 @@
  * - Push + local notification helpers
  */
 
-const CACHE = "iaffirm-static-v5";
+const CACHE = "iaffirm-static-v6";
 
 const PRECACHE = [
   "/favicon.svg",
