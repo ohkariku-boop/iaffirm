@@ -556,18 +556,64 @@ export default function AppPage() {
               muted={theme.muted}
             />
 
+            <div
+              id="you-pricing"
+              className="rounded-2xl border bg-white px-4 py-4 space-y-3"
+              style={{ borderColor: `${theme.accent}20` }}
+            >
+              <p className="text-sm font-medium">Plans</p>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div
+                  className="rounded-xl border px-3 py-2.5"
+                  style={{ borderColor: `${theme.accent}22` }}
+                >
+                  <p className="font-medium mb-1" style={{ color: theme.text }}>
+                    Free
+                  </p>
+                  <p style={{ color: theme.muted }}>$0 · 3 recordings · sample library</p>
+                </div>
+                <div
+                  className="rounded-xl border px-3 py-2.5"
+                  style={{
+                    borderColor: `${theme.accent}55`,
+                    background: theme.accentSoft,
+                  }}
+                >
+                  <p className="font-medium mb-1" style={{ color: theme.text }}>
+                    Full practice
+                  </p>
+                  <p style={{ color: theme.muted }}>$3.99/mo or $29.99/yr</p>
+                  <p className="mt-1" style={{ color: theme.muted }}>
+                    10-day trial · unlimited + full library
+                  </p>
+                </div>
+              </div>
+              {!premium.isPaid && (
+                <button
+                  type="button"
+                  onClick={() => openPremium("general")}
+                  className="w-full py-2.5 rounded-xl text-sm font-medium text-white"
+                  style={{ background: theme.accent }}
+                >
+                  {premium.isTrialActive
+                    ? `Keep Full practice (${premium.trialDaysLeft}d left in trial)`
+                    : "View Full practice plans"}
+                </button>
+              )}
+            </div>
+
             <div className="rounded-2xl border bg-white px-4 py-4 space-y-3" style={{ borderColor: `${theme.accent}20` }}>
               <p className="text-sm font-medium">Practice status</p>
               <ul className="text-sm space-y-2" style={{ color: theme.muted }}>
                 <li>
                   Recordings:{" "}
-                  {premium.isPaid
+                  {premium.isPremium
                     ? "Unlimited"
                     : `${premium.usage.recordingsUsed} / 3 used`}
                 </li>
                 <li>
                   Personal lines:{" "}
-                  {premium.isPaid
+                  {premium.isPremium
                     ? "Unlimited"
                     : `${premium.usage.aiGenerationsUsed} / 3 used`}
                 </li>

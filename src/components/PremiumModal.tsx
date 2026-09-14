@@ -108,6 +108,20 @@ export function PremiumModal({
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
             {copy.body}
           </p>
+
+          <div className="mt-4 grid grid-cols-2 gap-2 text-[11px]">
+            <div className="rounded-xl border border-border px-3 py-2.5">
+              <p className="font-medium text-foreground mb-1">Free</p>
+              <p className="text-muted-foreground leading-snug">3 recordings · 3 personal lines · sample library</p>
+            </div>
+            <div className="rounded-xl border border-primary/40 bg-[#e8f0eb]/50 px-3 py-2.5">
+              <p className="font-medium text-foreground mb-1">Full practice</p>
+              <p className="text-muted-foreground leading-snug">Unlimited · all 750+ lines · all atmospheres</p>
+            </div>
+          </div>
+          <p className="mt-2 text-[11px] text-muted-foreground">
+            10-day free trial of Full practice on this device, then choose a plan below.
+          </p>
         </div>
 
         <div className="px-6 space-y-3">
@@ -175,7 +189,9 @@ export function PremiumModal({
           >
             {loading
               ? "Redirecting…"
-              : `Continue · ${plan === "yearly" ? `$${PREMIUM.yearlyPrice}/year` : `$${PREMIUM.monthlyPrice}/month`}`}
+              : plan === "yearly"
+                ? `Get Full practice · $${PREMIUM.yearlyPrice}/year`
+                : `Get Full practice · $${PREMIUM.monthlyPrice}/month`}
           </button>
           <button
             onClick={onClose}

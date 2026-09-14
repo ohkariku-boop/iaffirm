@@ -62,7 +62,7 @@ export default function LandingPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              href="#why"
+              href="#pricing"
               className="text-sm text-[#6b6560] hover:text-[#2c2a26] transition-colors"
             >
               Why this matters
@@ -243,6 +243,97 @@ export default function LandingPage() {
         </div>
       </section>
 
+
+      {/* Pricing */}
+      <section id="pricing" className="border-t border-[#e5dfd5]/90 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 py-10 sm:py-12">
+          <h2 className="text-xs font-medium tracking-[0.12em] uppercase text-[#5b8a72] mb-2">
+            Pricing
+          </h2>
+          <p className="text-xl sm:text-2xl font-semibold tracking-tight text-[#2c2a26] mb-2 max-w-xl">
+            Start free. Try Full practice. Keep what helps.
+          </p>
+          <p className="text-sm text-[#6b6560] leading-relaxed max-w-xl mb-8">
+            Every new device gets a <strong className="font-medium text-[#2c2a26]">10-day Full practice trial</strong>.
+            After that, stay on Free or continue with a simple subscription.
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 max-w-3xl">
+            {/* Free */}
+            <div className="rounded-2xl border border-[#e5dfd5] bg-white/80 p-5 sm:p-6 flex flex-col">
+              <p className="text-[11px] font-medium tracking-[0.12em] uppercase text-[#6b6560] mb-1">
+                Free
+              </p>
+              <p className="text-2xl font-semibold text-[#2c2a26] mb-1">$0</p>
+              <p className="text-sm text-[#6b6560] mb-5">Always available</p>
+              <ul className="space-y-2.5 text-sm text-[#3d3a36] flex-1 mb-6">
+                {[
+                  "Today’s practice line",
+                  "Core categories (sample lines)",
+                  "3 voice recordings",
+                  "3 personal lines",
+                  "Warm drone or voice only",
+                  "Sage atmosphere",
+                ].map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span className="text-[#5b8a72]">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/app"
+                className="text-center text-sm font-medium py-2.5 rounded-full border border-[#e5dfd5] text-[#2c2a26] hover:bg-[#f7f3ed] transition-colors"
+              >
+                Open free
+              </Link>
+            </div>
+
+            {/* Full */}
+            <div className="rounded-2xl border-2 border-[#5b8a72] bg-white p-5 sm:p-6 flex flex-col shadow-sm relative">
+              <span className="absolute -top-2.5 left-5 text-[10px] font-medium tracking-wide uppercase bg-[#5b8a72] text-white px-2.5 py-0.5 rounded-full">
+                Includes 10-day trial
+              </span>
+              <p className="text-[11px] font-medium tracking-[0.12em] uppercase text-[#5b8a72] mb-1">
+                Full practice
+              </p>
+              <p className="text-2xl font-semibold text-[#2c2a26] mb-1">
+                $3.99<span className="text-base font-medium text-[#6b6560]">/month</span>
+              </p>
+              <p className="text-sm text-[#6b6560] mb-5">
+                or $29.99/year · about $2.50/mo
+              </p>
+              <ul className="space-y-2.5 text-sm text-[#3d3a36] flex-1 mb-6">
+                {[
+                  "Everything in Free",
+                  "Full library — 15 categories, 750+ lines",
+                  "Unlimited voice recordings",
+                  "Unlimited personal lines",
+                  "All atmospheres & background sounds",
+                  "Reminders (when available on your device)",
+                ].map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span className="text-[#5b8a72]">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/app"
+                className="text-center text-sm font-medium py-2.5 rounded-full bg-[#5b8a72] text-white hover:bg-[#4a7a62] transition-colors"
+              >
+                Start 10-day trial
+              </Link>
+            </div>
+          </div>
+
+          <p className="text-[11px] text-[#6b6560] mt-6 max-w-2xl leading-relaxed">
+            Trial and membership are stored on this device until accounts and live payments are fully
+            connected. Cancel anytime once Stripe billing is active. Not a medical service.
+          </p>
+        </div>
+      </section>
+
       {/* Close */}
       <section className="border-t border-[#e5dfd5]/90 bg-white/55 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 py-10 sm:py-12 text-center">
@@ -261,7 +352,7 @@ export default function LandingPage() {
             <ArrowRight className="w-4 h-4" />
           </Link>
           <p className="text-[11px] text-[#6b6560] mt-4">
-            Free 10-day Full practice trial · Then from $3.99/month · Web app · Native apps planned
+            Free plan forever · 10-day Full trial · Then $3.99/mo or $29.99/yr
           </p>
         </div>
       </section>
