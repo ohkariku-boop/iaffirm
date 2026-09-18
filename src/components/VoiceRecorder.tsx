@@ -6,13 +6,32 @@ import { cn } from "@/lib/utils";
 
 type AmbienceType = "drone" | "rain" | "bowls" | "ethereal" | "off";
 
+/** Theme tokens passed from the app so the recorder matches the chosen atmosphere */
+export type VoiceRecorderThemeStyle = {
+  pageBackground: string;
+  pageBg: string;
+  cardBackground: string;
+  cardBorder: string;
+  cardShadow: string;
+  text: string;
+  muted: string;
+  accent: string;
+  accentSoft: string;
+  fontAffirmation: string;
+  affirmTracking: string;
+  affirmWeight: number | string;
+  affirmSize: string;
+  heroWash: string;
+};
+
 interface VoiceRecorderProps {
   affirmationText: string;
-  onSave?: (audioBlob: Blob) => void;
+  onSave?: (audioBlob: Blob) => void | Promise<void>;
   onClose?: () => void;
   onUpgrade?: () => void;
   isPremium?: boolean;
   defaultAmbience?: AmbienceType;
+  themeStyle?: VoiceRecorderThemeStyle;
 }
 
 /**
@@ -124,6 +143,7 @@ export function VoiceRecorder({
   onUpgrade,
   isPremium = false,
   defaultAmbience = "drone",
+  themeStyle,
 }: VoiceRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
