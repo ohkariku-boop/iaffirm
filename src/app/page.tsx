@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Mic, Heart, Shield } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { PhoneMockup } from "@/components/PhoneMockup";
 
 export const metadata: Metadata = {
   title: "iAffirm — Affirmations in your own voice",
@@ -40,33 +41,43 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section className="landing-hero">
-        <div className="max-w-5xl mx-auto w-full px-5 sm:px-6 pt-6 pb-8 sm:pt-8 sm:pb-10">
-          <p className="text-xs sm:text-sm font-medium tracking-[0.12em] uppercase text-[#5b8a72] mb-2">
-            Self-talk · in your voice
-          </p>
-          <h1 className="text-3xl sm:text-4xl md:text-[2.85rem] font-semibold leading-[1.12] tracking-tight text-[#2c2a26] max-w-2xl mb-3">
-            The most important conversation you have is the one with yourself.
-          </h1>
-          <p className="text-base sm:text-[1.05rem] text-[#3d3a36]/95 leading-relaxed max-w-xl mb-5">
-            In a world that rarely slows down, the way you speak to yourself can steady you —
-            or wear you down. iAffirm is a simple practice: choose a true line,{" "}
-            <strong className="font-medium text-[#2c2a26]">say it in your own voice</strong>, and
-            return to it when you need strength.
-          </p>
-          <div className="flex flex-wrap items-center gap-3">
-            <Link
-              href="/app"
-              className="inline-flex items-center gap-2 text-sm font-medium bg-[#5b8a72] text-white px-5 py-2.5 rounded-full hover:bg-[#4a7a62] transition-colors shadow-sm"
-            >
-              Start free trial
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="#pricing"
-              className="text-sm text-[#6b6560] hover:text-[#2c2a26] transition-colors"
-            >
-              Why this matters
-            </Link>
+        <div className="max-w-5xl mx-auto w-full px-5 sm:px-6 pt-6 pb-10 sm:pt-8 sm:pb-14">
+          <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
+            {/* Copy */}
+            <div>
+              <p className="text-xs sm:text-sm font-medium tracking-[0.12em] uppercase text-[#5b8a72] mb-2">
+                Self-talk · in your voice
+              </p>
+              <h1 className="text-3xl sm:text-4xl md:text-[2.85rem] font-semibold leading-[1.12] tracking-tight text-[#2c2a26] max-w-2xl mb-3">
+                The most important conversation you have is the one with yourself.
+              </h1>
+              <p className="text-base sm:text-[1.05rem] text-[#3d3a36]/95 leading-relaxed max-w-xl mb-5">
+                In a world that rarely slows down, the way you speak to yourself can steady you —
+                or wear you down. iAffirm is a simple practice: choose a true line,{" "}
+                <strong className="font-medium text-[#2c2a26]">say it in your own voice</strong>, and
+                return to it when you need strength.
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Link
+                  href="/app"
+                  className="inline-flex items-center gap-2 text-sm font-medium bg-[#5b8a72] text-white px-5 py-2.5 rounded-full hover:bg-[#4a7a62] transition-colors shadow-sm"
+                >
+                  Start free trial
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="#pricing"
+                  className="text-sm text-[#6b6560] hover:text-[#2c2a26] transition-colors"
+                >
+                  Why this matters
+                </Link>
+              </div>
+            </div>
+
+            {/* Phone mockup — shows the app in a real device frame */}
+            <div className="flex justify-center lg:justify-end">
+              <PhoneMockup className="drop-shadow-xl" />
+            </div>
           </div>
         </div>
       </section>
