@@ -3,7 +3,7 @@ import { Logo } from "@/components/Logo";
 import { ArrowRight, Share, MoreVertical } from "lucide-react";
 
 export const metadata = {
-  title: "How to install — iAffirm",
+  title: "How to install. iAffirm",
   description: "How to install iAffirm on iPhone or Android.",
 };
 
@@ -67,7 +67,7 @@ export default function InstallPage() {
 
           <p className="text-xs text-[#6b6560] leading-relaxed max-w-md">
             After install: open from the home screen, complete a short recording, and allow the
-            microphone when asked — that confirms the full path works on your device.
+            microphone when asked. that confirms the full path works on your device.
           </p>
         </div>
 
@@ -92,7 +92,7 @@ export default function InstallPage() {
               </Step>
             </ol>
             <div className="rounded-xl bg-[#f7f3ed] border border-[#e5dfd5] px-3 py-2 text-xs text-[#6b6560] leading-relaxed">
-              Tip: If you don&apos;t see Share, you may be in Instagram/Chrome&apos;s browser — open the
+              Tip: If you don&apos;t see Share, you may be in Instagram/Chrome&apos;s browser. open the
               link in Safari instead.
             </div>
           </PhoneFrame>
@@ -117,14 +117,14 @@ export default function InstallPage() {
               </Step>
             </ol>
             <div className="rounded-xl bg-[#f7f3ed] border border-[#e5dfd5] px-3 py-2 text-xs text-[#6b6560] leading-relaxed">
-              Tip: Some Android browsers show a small install banner automatically — you can use that
+              Tip: Some Android browsers show a small install banner automatically. you can use that
               too.
             </div>
           </PhoneFrame>
         </div>
 
         <section className="rounded-2xl border border-[#e5dfd5] bg-white/80 px-5 py-6 space-y-2">
-          <h2 className="text-base font-medium">What this does — and doesn&apos;t</h2>
+          <h2 className="text-base font-medium">What this does. and doesn&apos;t</h2>
           <ul className="text-sm text-[#6b6560] space-y-2 leading-relaxed">
             <li>Gives you a home-screen icon and a fuller-screen experience.</li>
             <li>Helps you return for today&apos;s practice more easily.</li>

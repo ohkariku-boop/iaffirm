@@ -92,7 +92,7 @@ export function ThemePicker({
         </p>
         <PreviewPhone theme={activePreview} />
         <p className="text-[11px] text-muted-foreground text-center mt-4 leading-relaxed">
-          Each atmosphere has its own colors, type, and card style — built for practice, not only looking pretty.
+          Each atmosphere has its own colors, type, and card style.
         </p>
       </div>
 

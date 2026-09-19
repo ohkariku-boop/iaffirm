@@ -9,7 +9,7 @@ const SLIDES = [
   },
   {
     category: "Calm",
-    line: "I can meet this moment with softness.",
+    line: "I can meet this moment calmly.",
   },
   {
     category: "Self-Love",
@@ -93,7 +93,7 @@ export function PhoneMockup({ className = "" }: { className?: string }) {
 
           {/* App content */}
           <div className="absolute inset-0 pt-11 pb-6 px-3.5 flex flex-col">
-            {/* Mini header — same AFFIRM mark as landing (black on cream) */}
+            {/* Mini header */}
             <div className="flex items-center justify-between mb-3 px-0.5">
               <span
                 className="inline-flex items-baseline select-none text-[#1a1a1a]"
@@ -113,7 +113,7 @@ export function PhoneMockup({ className = "" }: { className?: string }) {
               </span>
             </div>
 
-            {/* Affirmation card — fades between categories */}
+            {/* Affirmation card */}
             <div className="flex-1 flex flex-col justify-center min-h-[120px]">
               <div
                 className="rounded-2xl bg-white/90 border border-[#e5dfd5]/80 shadow-sm px-4 py-5 text-center transition-all ease-out"

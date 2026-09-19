@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/Logo";
 
 export const metadata = {
-  title: "Privacy Policy — iAffirm",
+  title: "Privacy Policy | iAffirm",
   description: "How iAffirm collects, uses, and protects your information.",
 };
 
@@ -36,22 +36,22 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-semibold mb-2">Information we collect</h2>
             <ul className="list-disc pl-5 space-y-2">
               <li>
-                <strong>Account information</strong> — if you sign up: email address and display name.
+                <strong>Account information</strong>. if you sign up: email address and display name.
               </li>
               <li>
-                <strong>Usage data</strong> — features you use (e.g. recordings started, categories viewed),
+                <strong>Usage data</strong>. features you use (e.g. recordings started, categories viewed),
                 approximate limits for free trials, and basic device/browser information.
               </li>
               <li>
-                <strong>Content you create</strong> — custom affirmations, favorites, and voice recordings
+                <strong>Content you create</strong>. custom affirmations, favorites, and voice recordings
                 you choose to save. Recordings are stored so you can play them back.
               </li>
               <li>
-                <strong>Payment information</strong> — if you subscribe, payments are processed by a third-party
+                <strong>Payment information</strong>. if you subscribe, payments are processed by a third-party
                 provider (e.g. Stripe). We do not store full card numbers on our servers.
               </li>
               <li>
-                <strong>Local device data</strong> — some preferences and free-tier usage may be stored in your
+                <strong>Local device data</strong>. some preferences and free-tier usage may be stored in your
                 browser (localStorage) for demo and continuity before an account is linked.
               </li>
             </ul>

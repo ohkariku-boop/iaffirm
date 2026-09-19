@@ -101,7 +101,7 @@ export function useReminders() {
       sessionStorage.setItem(firedKey, "1");
 
       const title = "iAffirm";
-      const body = "A quiet moment for kinder self-talk. Open and practice when you can.";
+      const body = "Time for a short practice. Open the app when you can.";
 
       if (navigator.serviceWorker?.controller) {
         navigator.serviceWorker.controller.postMessage({
@@ -130,12 +130,12 @@ export function useReminders() {
       navigator.serviceWorker.controller.postMessage({
         type: "SHOW_NOTIFICATION",
         title: "iAffirm",
-        body: "Test reminder — your practice is one tap away.",
+        body: "Test reminder: your practice is one tap away.",
         url: "/app",
       });
     } else {
       new Notification("iAffirm", {
-        body: "Test reminder — your practice is one tap away.",
+        body: "Test reminder: your practice is one tap away.",
         icon: "/icons/icon-192.png",
       });
     }

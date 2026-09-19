@@ -177,7 +177,7 @@ export function PersonalAffirmation({
               )}
 
               <p className="text-[11px] text-muted-foreground leading-relaxed">
-                Suggestions only — not medical or therapeutic advice. Edit anything that doesn’t feel true for you.
+                Suggestions only. Not medical or therapeutic advice. Edit anything that does not feel true.
               </p>
             </div>
           </div>

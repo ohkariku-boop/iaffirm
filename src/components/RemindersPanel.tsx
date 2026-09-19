@@ -34,7 +34,7 @@ export function RemindersPanel({
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium">Gentle reminders</p>
           <p className="text-xs mt-0.5 leading-relaxed" style={{ color: muted }}>
-            Optional browser notifications at times you choose. Not a streak — just a soft nudge.
+            Optional browser notifications at times you choose. A simple reminder, not a streak.
           </p>
         </div>
       </div>

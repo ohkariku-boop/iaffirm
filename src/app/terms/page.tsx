@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/Logo";
 
 export const metadata = {
-  title: "Terms of Service — iAffirm",
+  title: "Terms of Service | iAffirm",
   description: "Terms governing use of the iAffirm application.",
 };
 

@@ -32,9 +32,9 @@ const affirmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "iAffirm — Affirmations in your own voice",
+  title: "iAffirm: Affirmations in your own voice",
   description:
-    "A quiet space to practice positive self-talk. Record affirmations in your voice and return to them when you need lifting.",
+    "Record affirmations in your own voice and play them back when you need them.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

@@ -15,7 +15,7 @@ export const PREMIUM = {
     {
       id: "full-library",
       title: "Full affirmation library",
-      description: "15 categories and 750+ lines — including career, parenthood, and creativity.",
+      description: "15 categories and 750+ lines, including career, parenthood, and creativity.",
     },
     {
       id: "unlimited-recordings",
@@ -25,7 +25,7 @@ export const PREMIUM = {
     {
       id: "themes",
       title: "Atmospheres & themes",
-      description: "Dawn, ocean, dusk, sand, lavender — colors that match your mood.",
+      description: "Dawn, ocean, dusk, sand, lavender, and more.",
     },
     {
       id: "all-ambient",
@@ -114,7 +114,7 @@ export function startTrial(usage: PremiumUsage, now = Date.now()): PremiumUsage 
   };
 }
 
-/** Ensure trial has started once — call on first app ready */
+/** Ensure trial has started once. call on first app ready */
 export function ensureTrialStarted(usage: PremiumUsage, now = Date.now()): PremiumUsage {
   if (usage.isPremium || usage.trialStartedAt) return usage;
   return startTrial(usage, now);

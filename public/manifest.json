@@ -2,7 +2,7 @@
   "id": "/",
   "name": "iAffirm",
   "short_name": "iAffirm",
-  "description": "Practice positive self-talk in your own voice. Record affirmations and return when you need lifting.",
+  "description": "Record affirmations in your own voice and play them back when you need them.",
   "start_url": "/app",
   "scope": "/",
   "display": "standalone",

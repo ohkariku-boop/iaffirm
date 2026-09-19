@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/Logo";
 
 export const metadata = {
-  title: "Health & Wellness Disclaimer — iAffirm",
+  title: "Health & Wellness Disclaimer | iAffirm",
   description: "Important information about the nature of iAffirm.",
 };
 
@@ -27,8 +27,8 @@ export default function DisclaimerPage() {
             <h2 className="text-lg font-semibold mb-2">General wellbeing only</h2>
             <p>
               iAffirm offers tools for positive self-talk, reflection, and personal affirmations.
-              Content on the Service — including curated affirmations, user-created text, voice
-              recordings, and AI-generated suggestions — is for general wellness and educational
+              Content on the Service. including curated affirmations, user-created text, voice
+              recordings, and AI-generated suggestions. is for general wellness and educational
               purposes only.
             </p>
           </section>

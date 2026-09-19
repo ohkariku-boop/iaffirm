@@ -37,7 +37,7 @@ export function LimitBanner({ recordingsLeft, aiLeft, onUpgrade }: LimitBannerPr
           <Heart className="w-4 h-4 text-[#b85c5c] mt-0.5 shrink-0" />
           <div>
             <p className="text-sm font-medium text-foreground">
-              Free tries used — ready to go further?
+              Free tries used. Ready for more?
             </p>
             <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
               Open the full practice for unlimited recordings and personal lines.

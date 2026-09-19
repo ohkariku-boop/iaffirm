@@ -22,7 +22,7 @@ const REASON_COPY: Record<
 > = {
   recordings: {
     title: "You’ve used your free recordings",
-    body: "Keep going in your own voice — unlimited recordings when you’re ready for a fuller practice.",
+    body: "Keep recording in your own voice with unlimited takes on Full practice.",
     icon: Mic,
   },
   ai: {
@@ -37,7 +37,7 @@ const REASON_COPY: Record<
   },
   general: {
     title: "Your practice, a little deeper",
-    body: "Unlimited recordings in your voice, personal lines, atmospheres, and gentle sounds — with a 10-day free trial on this device.",
+    body: "Unlimited recordings, personal lines, atmospheres, and background sounds. Includes a 10-day free trial on this device.",
     icon: Heart,
   },
 };
@@ -69,7 +69,7 @@ export function PremiumModal({
         window.location.href = data.url;
         return;
       }
-      // Stripe not configured — demo unlock on device
+      // Stripe not configured. demo unlock on device
       if (data.demo || res.status === 503) {
         onSubscribe?.(plan);
         onClose();
@@ -197,7 +197,7 @@ export function PremiumModal({
             onClick={onClose}
             className="w-full py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            Not now — keep browsing
+            Not now
           </button>
           {err && <p className="text-center text-[11px] text-red-600">{err}</p>}
           <p className="text-center text-[11px] text-muted-foreground leading-relaxed">

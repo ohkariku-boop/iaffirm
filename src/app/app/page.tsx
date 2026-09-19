@@ -481,7 +481,7 @@ export default function AppPage() {
               )}
               {remotePage.totalPages > 1 && (
                 <p className="text-[11px] text-center" style={{ color: theme.muted }}>
-                  5 lines per page — use Next to browse the full category
+                  5 lines per page. Use Next to browse the full category.
                 </p>
               )}
               {!premium.isPremium && (
@@ -517,8 +517,8 @@ export default function AppPage() {
                 {premium.isPaid
                   ? "Full practice is on. Themes, sounds, and the full library are yours."
                   : premium.isTrialActive
-                    ? `Free trial — ${premium.trialDaysLeft} day${premium.trialDaysLeft === 1 ? "" : "s"} left. Enjoy the full library, themes, and sounds.`
-                    : "Free plan — upgrade anytime for the full library and unlimited recordings."}
+                    ? `Free trial. ${premium.trialDaysLeft} day${premium.trialDaysLeft === 1 ? "" : "s"} left. Enjoy the full library, themes, and sounds.`
+                    : "Free plan. Upgrade anytime for the full library and unlimited recordings."}
               </p>
             </div>
 

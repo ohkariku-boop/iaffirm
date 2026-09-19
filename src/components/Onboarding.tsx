@@ -31,8 +31,8 @@ export function Onboarding({ categories, onComplete }: OnboardingProps) {
                 The words you speak to yourself matter.
               </h1>
               <p className="text-[#6b6560] leading-relaxed">
-                iAffirm is a quiet place to practice kinder self-talk — in your own voice.
-                Record a line. Listen back. Let it land.
+                iAffirm helps you practice self-talk in your own voice.
+                Record a line, then listen back.
               </p>
             </div>
             <button
@@ -101,7 +101,7 @@ export function Onboarding({ categories, onComplete }: OnboardingProps) {
                 </li>
                 <li className="flex gap-2">
                   <span className="text-[#5b8a72] font-medium">3.</span>
-                  Play it back — let the words land
+                  Play it back
                 </li>
               </ul>
               <p className="text-xs text-[#6b6560]/90 leading-relaxed">

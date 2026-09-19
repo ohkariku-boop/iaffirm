@@ -53,7 +53,7 @@ export function AboutPractice({ open, onClose }: AboutPracticeProps) {
           <div className="rounded-2xl bg-[#f7f3ed] border border-border px-4 py-3">
             <p className="font-medium text-foreground mb-1">What this is not</p>
             <p className="text-muted-foreground">
-              iAffirm is a gentle self-talk practice, not therapy or medical treatment. If you
+              iAffirm is a self-talk practice tool, not therapy or medical treatment. If you
               need professional support, please reach out to a qualified provider or local
               resources.{" "}
               <Link href="/disclaimer" className="text-primary underline underline-offset-2">

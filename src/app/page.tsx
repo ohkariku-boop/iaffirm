@@ -5,13 +5,13 @@ import { Logo } from "@/components/Logo";
 import { PhoneMockup } from "@/components/PhoneMockup";
 
 export const metadata: Metadata = {
-  title: "iAffirm — Affirmations in your own voice",
+  title: "iAffirm: Affirmations in your own voice",
   description:
-    "The words you speak to yourself shape how you meet the day. iAffirm helps you practice kinder self-talk by recording affirmations in your own voice — private, simple, on your device.",
+    "Record affirmations in your own voice. Private, simple, and stored on your device.",
   openGraph: {
-    title: "iAffirm — Affirmations in your own voice",
+    title: "iAffirm: Affirmations in your own voice",
     description:
-      "Practice positive self-talk where it lands deepest: in your own voice. A quiet daily practice for a noisy world.",
+      "Record affirmations in your own voice. Simple, private, on your device.",
     type: "website",
   },
 };
@@ -49,13 +49,12 @@ export default function LandingPage() {
                 Self-talk · in your voice
               </p>
               <h1 className="text-3xl sm:text-4xl md:text-[2.85rem] font-semibold leading-[1.12] tracking-tight text-[#2c2a26] max-w-2xl mb-3">
-                The most important conversation you have is the one with yourself.
+                Talk to yourself the way you would talk to a friend.
               </h1>
               <p className="text-base sm:text-[1.05rem] text-[#3d3a36]/95 leading-relaxed max-w-xl mb-5">
-                In a world that rarely slows down, the way you speak to yourself can steady you —
-                or wear you down. iAffirm is a simple practice: choose a true line,{" "}
+                How you speak to yourself shapes your day. iAffirm is simple: pick a line,{" "}
                 <strong className="font-medium text-[#2c2a26]">say it in your own voice</strong>, and
-                return to it when you need strength.
+                play it back when you need it.
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <Link
@@ -74,7 +73,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Phone mockup — shows the app in a real device frame */}
+            {/* Phone mockup */}
             <div className="flex justify-center lg:justify-end">
               <PhoneMockup className="drop-shadow-xl" />
             </div>
@@ -91,27 +90,21 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             <div>
               <p className="text-[15px] sm:text-base text-[#3d3a36] leading-relaxed mb-4">
-                We live in a constant stream of news, comparison, deadlines, and noise. It is easy
-                for the inner voice to turn harsh — rehearsing worry, self-criticism, and “not
-                enough.”
+                News, comparison, and deadlines make it easy for your inner voice to turn harsh. Worry and “not enough” get a lot of airtime.
               </p>
               <p className="text-[15px] sm:text-base text-[#3d3a36] leading-relaxed">
-                Affirmations are not magic spells. They are{" "}
-                <strong className="font-medium text-[#2c2a26]">intentional self-talk</strong>:
-                short, honest statements you choose to practice so that kindness and steadiness get
-                repetition — the same way stress gets repetition if we leave the mind on autopilot.
+                Affirmations are not magic. They are{" "}
+                <strong className="font-medium text-[#2c2a26]">deliberate self-talk</strong>:
+                short, honest lines you repeat on purpose, the same way stress gets repeated if you leave your mind on autopilot.
               </p>
             </div>
             <div>
               <p className="text-[15px] sm:text-base text-[#3d3a36] leading-relaxed mb-4">
-                Research on self-talk and habits suggests that what we repeat shapes what feels
-                familiar. A few grounded lines, practiced often, can support calmer focus and a more
-                compassionate stance toward yourself — especially on hard days.
+                What you repeat tends to feel more familiar. A few grounded lines, practiced often, can help on hard days.
               </p>
               <p className="text-[15px] sm:text-base text-[#3d3a36] leading-relaxed">
-                That matters for mental wellbeing in this era: not as a cure-all, but as a{" "}
-                <strong className="font-medium text-[#2c2a26]">daily skill</strong> you can own —
-                quiet, private, and always available.
+                It is not a cure-all. It is a{" "}
+                <strong className="font-medium text-[#2c2a26]">simple skill</strong> you can use privately, anytime.
               </p>
             </div>
           </div>
@@ -143,8 +136,7 @@ export default function LandingPage() {
             </div>
             <h4 className="text-sm font-semibold text-[#2c2a26] mb-1.5">It becomes practice</h4>
             <p className="text-sm text-[#6b6560] leading-relaxed">
-              Recording takes a moment of presence. Playback is a return visit — the habit that
-              turns a nice idea into something you actually use.
+              Recording takes a moment of focus. Playing it back turns a line into something you actually use.
             </p>
           </div>
           <div className="rounded-2xl border border-[#e5dfd5]/90 bg-white/65 backdrop-blur-sm p-4 sm:p-5">
@@ -153,8 +145,7 @@ export default function LandingPage() {
             </div>
             <h4 className="text-sm font-semibold text-[#2c2a26] mb-1.5">It stays yours</h4>
             <p className="text-sm text-[#6b6560] leading-relaxed">
-              Your recordings stay on this device. No performance for an audience — just you,
-              building a kinder inner voice in private.
+              Your recordings stay on this device. Just you, practicing in private.
             </p>
           </div>
         </div>
@@ -174,8 +165,7 @@ export default function LandingPage() {
               <div>
                 <h4 className="text-sm font-semibold text-[#2c2a26] mb-1">Choose a line</h4>
                 <p className="text-sm text-[#6b6560] leading-relaxed">
-                  From today’s practice, a category that fits your season, or words you write for
-                  yourself.
+                  From today’s practice, a category, or words you write yourself.
                 </p>
               </div>
             </li>
@@ -186,8 +176,7 @@ export default function LandingPage() {
               <div>
                 <h4 className="text-sm font-semibold text-[#2c2a26] mb-1">Record it</h4>
                 <p className="text-sm text-[#6b6560] leading-relaxed">
-                  Speak slowly. Let the words be true enough to say out loud — not forced
-                  positivity.
+                  Speak slowly. Say something true enough to say out loud, not forced positivity.
                 </p>
               </div>
             </li>
@@ -215,19 +204,16 @@ export default function LandingPage() {
               Built for real life
             </h2>
             <h3 className="text-xl font-semibold tracking-tight text-[#2c2a26] mb-3 leading-snug">
-              A small practice for a loud age.
+              A short practice you can actually keep.
             </h3>
             <p className="text-sm text-[#6b6560] leading-relaxed mb-3">
-              You do not need an hour of silence. You need a few honest sentences and a way to hear
-              them in a voice you trust — yours.
+              You do not need an hour of silence. A few honest lines in your own voice are enough.
             </p>
             <p className="text-sm text-[#6b6560] leading-relaxed mb-3">
-              Practising self-affirmation is one way to interrupt automatic harshness and give your
-              mind a steadier script. Used gently and regularly, it can support emotional balance
-              alongside sleep, movement, relationships, and professional care when you need it.
+              Repeating a few grounded lines can help interrupt harsh self-talk. Use it alongside rest, movement, relationships, and professional care when you need those.
             </p>
             <p className="text-xs text-[#6b6560] leading-relaxed">
-              iAffirm is a self-talk practice tool — not therapy or medical treatment.{" "}
+              iAffirm is a self-talk practice tool, not therapy or medical treatment.{" "}
               <Link href="/disclaimer" className="text-[#5b8a72] underline underline-offset-2">
                 Health disclaimer
               </Link>
@@ -235,7 +221,7 @@ export default function LandingPage() {
           </div>
           <ul className="space-y-3 text-sm text-[#3d3a36]">
             {[
-              "Today’s line — one clear focus for the day",
+              "Today’s line: one focus for the day",
               "Hundreds of affirmations across life seasons",
               "Record and play back in your own voice",
               "Optional calm sound under playback",
@@ -317,7 +303,7 @@ export default function LandingPage() {
               <ul className="space-y-2.5 text-sm text-[#3d3a36] flex-1 mb-6">
                 {[
                   "Everything in Free",
-                  "Full library — 15 categories, 750+ lines",
+                  "Full library: 15 categories, 750+ lines",
                   "Unlimited voice recordings",
                   "Unlimited personal lines",
                   "All atmospheres & background sounds",
@@ -349,11 +335,10 @@ export default function LandingPage() {
       <section className="border-t border-[#e5dfd5]/90 bg-white/55 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 py-10 sm:py-12 text-center">
           <p className="text-lg sm:text-xl font-medium leading-snug text-[#2c2a26] max-w-xl mx-auto mb-2">
-            Better days often begin with how we speak to ourselves.
+            Start with one line in your own voice.
           </p>
           <p className="text-sm text-[#6b6560] max-w-md mx-auto mb-5 leading-relaxed">
-            Start with one line. Hear it in your voice. Build the habit the world rarely teaches —
-            talking to yourself with care.
+            Pick a line, record it, and listen back.
           </p>
           <Link
             href="/app"
@@ -374,7 +359,7 @@ export default function LandingPage() {
             <div className="space-y-1.5 max-w-xs">
               <Logo size="sm" />
               <p className="text-xs text-[#6b6560] leading-relaxed">
-                Kinder self-talk — in your own voice. Private practice for a noisy world.
+                Affirmations in your own voice. Private and on your device.
               </p>
             </div>
             <div className="flex flex-wrap gap-x-10 gap-y-4">
