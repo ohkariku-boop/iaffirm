@@ -1,8 +1,61 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+const SLIDES = [
+  {
+    category: "Confidence",
+    line: "I am allowed to take up space.",
+  },
+  {
+    category: "Calm",
+    line: "I can meet this moment with softness.",
+  },
+  {
+    category: "Self-Love",
+    line: "I speak to myself with care.",
+  },
+  {
+    category: "Motivation",
+    line: "Small steps still count as progress.",
+  },
+  {
+    category: "Gratitude",
+    line: "There is enough good here today.",
+  },
+] as const;
+
+const INTERVAL_MS = 2800;
+const FADE_MS = 450;
+
 /**
  * Realistic phone frame showing a simplified iAffirm app screen.
- * Used on the landing page to make the product feel tangible.
+ * Cycles categories/affirmations with a smooth crossfade.
  */
 export function PhoneMockup({ className = "" }: { className?: string }) {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const reduceMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion) return;
+
+    const id = window.setInterval(() => {
+      setVisible(false);
+      window.setTimeout(() => {
+        setIndex((i) => (i + 1) % SLIDES.length);
+        setVisible(true);
+      }, FADE_MS);
+    }, INTERVAL_MS);
+
+    return () => window.clearInterval(id);
+  }, []);
+
+  const slide = SLIDES[index];
+
   return (
     <div
       className={`relative mx-auto w-[240px] sm:w-[260px] select-none ${className}`}
@@ -60,14 +113,21 @@ export function PhoneMockup({ className = "" }: { className?: string }) {
               </span>
             </div>
 
-            {/* Affirmation card */}
-            <div className="flex-1 flex flex-col justify-center">
-              <div className="rounded-2xl bg-white/90 border border-[#e5dfd5]/80 shadow-sm px-4 py-5 text-center">
+            {/* Affirmation card — fades between categories */}
+            <div className="flex-1 flex flex-col justify-center min-h-[120px]">
+              <div
+                className="rounded-2xl bg-white/90 border border-[#e5dfd5]/80 shadow-sm px-4 py-5 text-center transition-all ease-out"
+                style={{
+                  transitionDuration: `${FADE_MS}ms`,
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0)" : "translateY(6px)",
+                }}
+              >
                 <p className="text-[9px] uppercase tracking-[0.14em] text-[#5b8a72] mb-2.5 font-medium">
-                  Confidence
+                  {slide.category}
                 </p>
                 <p className="text-[13px] sm:text-[14px] leading-snug font-medium text-[#2c2a26]">
-                  I am allowed to take up space.
+                  {slide.line}
                 </p>
               </div>
             </div>
