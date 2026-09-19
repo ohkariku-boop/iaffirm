@@ -40,10 +40,20 @@ export function PhoneMockup({ className = "" }: { className?: string }) {
 
           {/* App content */}
           <div className="absolute inset-0 pt-11 pb-6 px-3.5 flex flex-col">
-            {/* Mini header */}
+            {/* Mini header — same AFFIRM mark as landing (black on cream) */}
             <div className="flex items-center justify-between mb-3 px-0.5">
-              <span className="text-[11px] font-semibold tracking-tight text-[#2c2a26]">
-                i<span className="text-[#5b8a72]">A</span>ffirm
+              <span
+                className="inline-flex items-baseline select-none text-[#1a1a1a]"
+                style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}
+              >
+                <span className="text-[10px] font-semibold tracking-[0.06em]">AFF</span>
+                <span
+                  className="text-[16px] font-semibold leading-none mx-[0.02em]"
+                  style={{ transform: "translateY(0.06em)" }}
+                >
+                  I
+                </span>
+                <span className="text-[10px] font-semibold tracking-[0.06em]">RM</span>
               </span>
               <span className="text-[9px] text-[#6b6560] bg-[#e8f0eb] px-1.5 py-0.5 rounded-full">
                 Today
